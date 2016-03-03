@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
+		<title><?js print(info['package'] ? info['package'].name + ' Documentation' : 'Documentation');?></title>
+	</head>
+	<body id="overview">
+
+		<header>
+			<div class="header">
+				<?js print(render('header.tmpl', this)); ?>
+
+				<h1>Events, Messages, Signals</h1>
+			</div>
+		</header>
+
+		<div class="content">
+			<h2>
+				<a name='events'></a>
+				Summary
+			</h2>
+			<?js print(render('events.tmpl', {events: docs, showParent:true})); ?>
+		</div>
+
+	</body>
+</html>

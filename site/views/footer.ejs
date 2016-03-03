@@ -1,0 +1,53 @@
+<div class="footer">
+  <div class="container">
+    <div class="row webMsg">
+      <div class="col-md-3">
+        <a class="mascot" href="/">
+        </a>
+      </div>
+      <div class="col-md-2 footAboutUs">
+        <h6>关于我们</h6>
+        <div class="menu">
+          <a ng-click="showAbout($event)" target="_blank">TEAM MEMBER</a>
+        </div>
+      </div>
+      <div class="col-md-5 footHelp">
+        <h6>帮助</h6>
+        <div class="menu">
+          Please send us your ideas, bug reports, suggestions! And feedback is very important fot us and would be greatly appreciated.
+          <br/> Support Email:
+          <a href="mailto:liujc@ctrip.com">liujc@ctrip.com</a>
+        </div>
+      </div>
+      <div class="col-md-2 footLinks">
+        <h6>友情链接</h6>
+        <div class="menu">
+          <a target="_blank" href="http://git.dev.sh.ctripcorp.com">git lab</a>
+          <br />
+          <a target="_blank" href="http://conf.ctripcorp.com/dashboard.action">confluence</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+     © 2005－2016 CIS SysDev, ctrip.com, all rights reserved
+  </div>
+</div>
+<% if(env === 'production') { %>
+  <script src="/js/pomy.js" type="text/javascript" async></script>
+  <!--
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-3312370-15']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  -->
+<% } else { %>
+  <script src="/js/pomy.js"></script>
+<% }%>

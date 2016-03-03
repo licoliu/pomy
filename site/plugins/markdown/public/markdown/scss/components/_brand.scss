@@ -1,0 +1,38 @@
+// *************************************
+//
+//   Brand link
+//   -> Logo Brand link
+//
+// -------------------------------------
+//   Template (Haml)
+// -------------------------------------
+//
+// .brand-link
+//
+// *************************************
+
+.brand {
+  border: none;
+  display: block;
+  padding: 5px 0px 4px 0px;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+
+  &:hover {
+    g {
+      fill: $c-highlight;
+    }
+  }
+}
+
+a.brand {
+  color: #FFFFFF
+}
+
+a.brand:hover {
+  color: $c-highlight
+}

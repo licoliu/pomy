@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
+		<title><?js print(info['package'] ? info['package'].name + ' Documentation' : 'Documentation');?></title>
+	</head>
+	<body id="overview">
+
+		<header>
+			<div class="header">
+				<?js print(render('header.tmpl', this)); ?>
+
+				<div class="type">Package</div>
+				<h1>LICENSE</h1>
+			</div>
+		</header>
+
+		<div class="content">
+			<pre class="license"><?js print(htmlsafe(docs.license)); ?></pre>
+		</div>
+
+	</body>
+</html>

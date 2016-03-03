@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-strict-di>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title><%= title %></title>
+  
+  <meta name="description" content="<%= description %>">
+  <meta name="keywords" content="<%= keywords %>">
+  <meta name="author" content="<%= author %>">
+  <meta name="fragment" content="!">
+
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  <link rel="stylesheet" href="/fonts/exo/Exo.css" type="text/css" />
+  <link href="/markdown/fonts/sourcesanspro/sourcesanspro.css" rel="stylesheet" type="text/css">
+  <link href="/markdown/fonts/ubuntumono/ubuntumono.css" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/pomy.css" type="text/css" />
+  <link href="/markdown/css/markdown.css" rel="stylesheet"> 
+</head>
+<body ng-controller="Base">
+
+  <div id="loading"><span class="title"><%= title%></span><span class="logo"></span></div>
+  <div class="wrapper">
+    <div class="page">
+      <%- include navbar %>
+
+      <div class="welcome-content container">
+        <div class="pom-site-welcome row">
+          <div class="content col-lg-12 col-sm-12 col-md-12 col-xs-12">
+              <header>
+                <h5 class="logo">
+                  <a href="/">
+                    <p>POMY</p>
+                    <%- include icons/logo-screen-noglow %>
+                  </a>
+                </h5>
+              </header>
+              <section>
+                <div class="column col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                    <h2>Welcome to <strong><%= name%> <%= version%></strong>!</h2>
+                    <p class="intro"><%= description%></p>
+                    <p class="intro">This is the biggest upgrade we've ever made to <%= name%> and we think you're going to love it.</p>
+
+                    <h3 class="links">More Links</h3>
+                    <p><a href="/markdown" class="more-icon">MARKDOWN</a></p>
+                    <p><a href="/api" class="more-icon">API Documents</a></p>
+                    <p><a href="/ui" class="more-icon">UI Design</a></p>
+                    <p><a href="/cy" class="more-icon">Community</a></p>
+                    <p><a href="/pi" class="more-icon">Project Information</a></p>
+                    <p><a href="/ut" class="more-icon">Test Reports</a></p>
+                </div>
+                <div class="column col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                    <div class="integrated-tree">
+                      <%- include icons/tree %>
+                    </div>
+                    <div class="column col-lg-7 col-sm-7 col-md-7 col-xs-12">
+                        <h3>Activity</h3>
+                        <p class="text-fluid">We have also been posting summaries of new features and changes to <a href="<%=homepage%>">our gitlab</a>:</p>
+                        <ul class="type13">
+                            <li><a href="javascript:void(0)" class="more-icon">Sprint 010</a></li>
+                            <li><a href="javascript:void(0)" class="more-icon">Sprint 009</a></li>
+                            <li><a href="javascript:void(0)" class="more-icon">Sprint 008</a></li>
+                            <li><a href="javascript:void(0)" class="more-icon">Sprint 007</a></li>
+                            <li><a href="javascript:void(0)">...</a></li>
+                        </ul>
+                    </div>
+                    <div class="column col-lg-5 col-sm-5 col-md-5 col-xs-12">
+                        <h3>Summary</h3>
+                        <p>First, check out our <a href="<%=homepage%>">sources &lt;<%=repository.url%>&gt;</a> to see all details.</p>
+
+                        <p>We also offers <a href="/um">User's Manual</a> and <a href="mailto:liujc@ctrip.com">Further Support</a> for companies wishing to use <%= name%> <%= version%>.</p>
+                    </div>
+                </div>
+              </section>
+          </div>
+          <div class="news col-lg-12 col-sm-12 col-md-12 col-xs-12">
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                  <h1>Updates</h1>
+                  <div class="item"><span class="date">Mar 13 2016</span> <%= name%> 1.0.0 Released</div>
+                  <div class="item"><span class="date">Oct 26 2015</span> <%= name%> 0.1.2 Released</div>
+                  <div class="item"><span class="date">Sep 8 2015</span> <%= name%> 0.1.0 Released</div>
+                  <div class="item"><span class="date">Aug 30 2015</span> <%= name%> 0.0.6 Released</div>
+                  <div class="item"><span class="date">Jul 24 2015</span> <%= name%> 0.0.5 Released</div>
+                  <div class="item"><span class="date">Jun 29 2015</span> <%= name%> 0.0.4 Released</div>
+                  <div class="item"><span class="date">Jun 14 2015</span> <%= name%> 0.0.3 Released</div>
+                  <div class="item"><span class="date">Jun 9 2015</span> <%= name%> 0.0.2 Released</div>
+                  <div class="item"><span class="date">Apr 26 2015</span> <%= name%> 0.0.1 Final Released</div>
+              </div>
+              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include footer %>
+</body>
+</html>

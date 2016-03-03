@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="styles/stylesheet.css">
+		<title>Package API</title>
+	</head>
+	<body id="overview">
+
+		<header>
+			<div class="header">
+				<?js print(render('header.tmpl', this)); ?>
+
+				<h1>Files</h1>
+			</div>
+		</header>
+
+		<div class="content">
+			<table>
+				<tbody>
+					<?js for(var filename in docs) { ?>
+					<?js if(docs.hasOwnProperty(filename)) { ?>
+					<tr>
+						<td>
+							<?js= linkto('file:' + docs[filename].cpath, filename) ?>
+						</td>
+						<td>
+							<?js= docs[filename].description ?>
+						</td>
+					</tr>
+					<?js } ?>
+					<?js } ?>
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+</html>
