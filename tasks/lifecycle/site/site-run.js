@@ -5,7 +5,7 @@ var
 	gutil = require('gulp-util'),
 	spawn = require('child_process').spawn;
 
-gulp.task('site:run', ['site'], function(cb) {
+gulp.task('site:run', function(cb) {
 
 	var domain = global.settings.env.domain;
 	var port = global.settings.env.port;

@@ -17,17 +17,23 @@ gulp.task('clean', ['pre-clean'], function(cb) {
         root + dest.template + '/*',
         root + dest.css + '/*',
         root + dest.skin + '/*',
-        // root + dest.jre + '/*',
+
         root + dest.jsrt + '/*',
+        root + dest.rt,
+
         root + dest.lib + '/*',
+
         root + dest.js + '/*',
+        root + dest.root,
 
         // root + src.css + '/**/*.css',
         // root + src.skin + '/**/*.css',
 
         root + target.root + "/*",
-    pomy + 'site/plugins/docs/public/docs/jsdoc/*'
 
+        //delete site's js and css
+        //delete markdown's js and css
+        pomy + 'site/plugins/docs/public/docs/jsdoc/*',
 
     ], function(err, deletedFiles) {
         console.log("##################################################");

@@ -4,8 +4,8 @@
         "dictionaries": ["jsdoc","closure"]
     },
     "source": {
-        "include": [ "../../src/", "../../jre/src"],
-        "exclude": [ "../../lib/" ],
+        "include": [ "../../../src/", "../../../jre/src"],
+        "exclude": [ "../../../lib/" ],
         "includePattern": ".+\\.js(doc)?$",
         "excludePattern": "(^|\\/|\\\\)_"
     },
@@ -15,9 +15,9 @@
         "monospaceLinks": false
     },
     "opts": {
-        "template": "./site/plugins/docs/public/docs/templates/jsdoc3Template",
+        "template": "./plugins/docs/public/docs/templates/jsdoc3Template",
         "encoding": "utf8",
-        "destination": "./site/plugins/docs/public/docs/jsdoc",
+        "destination": "./plugins/docs/public/docs/jsdoc",
         "recurse": true
     }
 }

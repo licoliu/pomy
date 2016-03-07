@@ -6,36 +6,8 @@ var
 	path = require('path'),
 	spawn = require('child_process').spawn;
 
-gulp.task('jsdoc', function(cb) {
+gulp.task('site', ['pre-site'], function() {
 
-	var command = null;
-
-	if (fs.existsSync(path.join(global.settings.cwd, '../.bin/jsdoc'))) {
-		command = '../.bin/jsdoc';
-	} else {
-		command = './node_modules/.bin/jsdoc';
-	}
-	var jsdoc = spawn(command, [
-		'-c', '.jsdoc'
-	], {
-		cwd: global.settings.cwd
-	});
-
-	jsdoc.stdout.on('data', function(data) {
-		console.log(data.toString());
-	});
-
-	jsdoc.stderr.on('data', function(data) {
-		console.error(data.toString());
-	});
-
-	jsdoc.on('exit', function(code) {
-		console.log('Finish jsdoc process');
-		cb();
-	});
-});
-
-gulp.task('site', ['jsdoc', 'pre-site'], function() {
 	var root = global.getRootPath();
 	var pomy = global.getPomyPath();
 
@@ -47,15 +19,13 @@ gulp.task('site', ['jsdoc', 'pre-site'], function() {
 		pomy + 'site/package.json',
 		pomy + 'site/plugins/**/*',
 		pomy + 'site/README.md',
-		pomy + 'package.json',
+		pomy + 'site/node_modules/**/*'
 
 		'!' + pomy + 'site/plugins/**/node_modules/**/*',
 		'!' + pomy + 'site/**/gulp/**/*',
 		'!' + pomy + 'site/**/gulpfile.js',
 		'!' + pomy + 'site/**/karma.cofig.js',
-		'!' + pomy + 'site/**/webpack.cofig.js',
-
-		pomy + 'node_modules/**/*'
+		'!' + pomy + 'site/**/webpack.cofig.js'
 	];
 
 	// var dependencies = require('../../../package.json').dependencies;
