@@ -14,9 +14,9 @@ var
 
 gulp.task('sass', function() {
 
-  var dest = './public/markdown/css';
+  var dest = './public/docs/css';
 
-  return gulp.src('./public/markdown/scss/app.{scss,sass}')
+  return gulp.src('./public/docs/scss/app.{scss,sass}')
     .pipe(sass({
       precision: 7,
       outputStyle: 'nested'

@@ -2,30 +2,14 @@
 
 var
 	gulp = require('gulp'),
-	fs = require('fs'),
-	path = require('path'),
-	spawn = require('child_process').spawn;
+	sequence = require('run-sequence'),
+	devTasks = ['webpack:dev', 'sass', 'doc'],
+	buildTasks = ['webpack:build', 'sass', 'doc'];
 
-gulp.task('build', function(cb) {
-
-	var command = './node_modules/.bin/jsdoc';
-
-	var jsdoc = spawn(command, [
-		'-c', '.jsdoc'
-	], {
-		cwd: '.'
+if (global.isProduction) {
+	gulp.task('build', function(cb) {
+		sequence(buildTasks, cb);
 	});
-
-	jsdoc.stdout.on('data', function(data) {
-		console.log(data.toString());
-	});
-
-	jsdoc.stderr.on('data', function(data) {
-		console.error(data.toString());
-	});
-
-	jsdoc.on('exit', function(code) {
-		console.log('Finish jsdoc process');
-		cb();
-	});
-});
+} else {
+	gulp.task('build', devTasks);
+}

@@ -1,4 +1,3 @@
-
 'use strict';
 
 module.exports =
@@ -6,15 +5,15 @@ module.exports =
   .module('diDocuments.sheet', [])
   .factory('Sheet', function() {
 
-  return function(sheetData) {
+    return function(sheetData) {
 
-    angular.extend(this, {
-      id: new Date().getTime(),
-      title: 'Untitled Document.md',
-      body: require('raw!../../../README.md')
-    });
+      angular.extend(this, {
+        id: new Date().getTime(),
+        title: 'Untitled Document.md',
+        body: require('raw!../../../../README.md')
+      });
 
-    return angular.extend(this, sheetData);
-  };
+      return angular.extend(this, sheetData);
+    };
 
-});
+  });

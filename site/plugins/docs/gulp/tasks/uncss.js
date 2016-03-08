@@ -7,9 +7,9 @@ var
 
 gulp.task("uncss", function() {
 
-  var dest = "public/markdown/test";
+  var dest = "public/docs/test";
 
-  return gulp.src("public/markdown/css/classes.all.css")
+  return gulp.src("public/docs/css/classes.all.css")
     .pipe(uncss({
       html: ["http://localhost:8080"],
       ignore: [/zen/, /document/, /modal/, /settings/, /button/, /btn/, /toggle/, /menu/, /sidebar/, /dropdown/, /ace/, /editor/, /sr/, /form/, /di/, /not/]

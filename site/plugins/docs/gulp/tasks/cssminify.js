@@ -9,8 +9,8 @@ size = require("gulp-size");
 handleErrors = require("../util/handleErrors");
 
 gulp.task("cssminify", function() {
-	var dest = "./public/markdown/css";
-	return gulp.src("./public/markdown/css/classes.all.css")
+	var dest = "./public/docs/css";
+	return gulp.src("./public/docs/css/classes.all.css")
 		.on("error", handleErrors)
 		.pipe(csso())
 		.pipe(gulp.dest(dest))

@@ -3,6 +3,6 @@
 var
 	gulp = require('gulp');
 
-gulp.task('pre-clean', ['config'], function(cb) {
+gulp.task('pre-clean', function(cb) {
 	cb();
 });

@@ -126,6 +126,35 @@ gulp.task('pom', function() {
 		global.settings.skin = skin;
 	}
 
+	if (!global.settings.site) {
+		global.settings.site = {};
+	}
+
+	var domain = gutil.env.domain;
+	if (domain) {
+		global.settings.site.domain = domain;
+	}
+
+	var port = gutil.env.port;
+	if (port) {
+		global.settings.site.port = port;
+	}
+
+	var syncPort = gutil.env.syncPort;
+	if (syncPort) {
+		global.settings.site.syncPort = syncPort;
+	}
+
+	global.settings.author = gutil.env.author || global.settings.author || '';
+
+	global.settings.keywords = gutil.env.keywords || global.settings.keywords || '';
+
+	global.settings.googleWebmasterMeta = gutil.env.googleWebmasterMeta || global.settings.googleWebmasterMeta || '';
+
+	global.settings.title = gutil.env.title || global.settings.title || '';
+
+	global.settings.description = gutil.env.description || global.settings.description || '';
+
 	var root = global.getRootPath();
 	return gulp.src(root + "pomy.json")
 		.pipe(jeditor(getConfigSettings()))
@@ -143,8 +172,12 @@ gulp.task('bower-config', ['pom'], function() {
 
 gulp.task('npm-config', ['pom'], function() {
 	var root = global.getRootPath();
+
+	var settings = getConfigSettings();
+	delete settings.dependencies;
+
 	return gulp.src(root + "package.json")
-		.pipe(jeditor(getConfigSettings()))
+		.pipe(jeditor(settings))
 		.pipe(gulp.dest(root));
 });
 

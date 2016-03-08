@@ -9,7 +9,7 @@ var
 	target = settings.target;
 
 gulp.task('package', ['prepare-package'], function() {
-	return gulp.src((global.settings.debug ? settings.src : target.classes) + "/**/*")
+	return gulp.src(target.classes + "/**/*")
 		.pipe(zip(name + "@" + version + '.zip'))
 		.pipe(gulp.dest(target.root));
 });

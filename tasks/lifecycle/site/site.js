@@ -12,6 +12,8 @@ gulp.task('site', ['pre-site'], function() {
 	var pomy = global.getPomyPath();
 
 	var srcs = [
+		pomy + 'package.json',
+
 		pomy + 'site/public/**/*',
 		pomy + 'site/routes/**/*',
 		pomy + 'site/views/**/*',
@@ -19,7 +21,7 @@ gulp.task('site', ['pre-site'], function() {
 		pomy + 'site/package.json',
 		pomy + 'site/plugins/**/*',
 		pomy + 'site/README.md',
-		pomy + 'site/node_modules/**/*'
+		pomy + 'site/node_modules/**/*',
 
 		'!' + pomy + 'site/plugins/**/node_modules/**/*',
 		'!' + pomy + 'site/**/gulp/**/*',

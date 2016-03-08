@@ -7,16 +7,13 @@ var
 
 module.exports = {
   cache: true,
-  entry: './public/markdown/js/app.js',
+  entry: './public/docs/js/app.js',
   output: {
-    path: path.join(__dirname, 'public/markdown/js'),
+    path: path.join(__dirname, 'public/docs/js'),
     filename: 'classes.all.js'
   },
   module: {
-    noParse: [
-      /brace/,
-      /angular/
-    ],
+    noParse: [],
     loaders: [{
       test: /\.css$/,
       loader: 'style-loader!css-loader',
@@ -29,17 +26,12 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules', 'plugins'],
     extensions: ['', '.webpack.js', '.web.js', '.js'],
-    alias: {
-      'angular': 'angular/angular',
-      'md': 'core/markdown-it'
-    }
+    alias: {}
   },
   resolveLoader: {
     root: nodeModulesPath
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      'angular': 'exports?angular!angular'
-    })
+
   ]
 };

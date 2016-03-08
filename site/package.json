@@ -1,37 +1,20 @@
 {
-    "name": "Dillinger",
-    "description": "Dillinger, the last Markdown editor you'll ever need, by your's truly, Joe McCann.",
-    "version": "3.2.10",
+    "name": "pomy",
+    "description": "pomy.",
+    "version": "1.0.4",
     "author": {
-        "name": "Joe McCann",
-        "email": "joe@nodesource.com"
+        "name": "lico",
+        "email": "lico.atom@gmail.com"
     },
     "license": "MIT",
-    "contributors": [{
-        "name": "Joe McCann",
-        "email": "joe@subprint.com"
-    }, {
-        "name": "Martin Broder",
-        "email": "hello@martinbroder.com"
-    }],
     "scripts": {
         "start": "node startup.js",
         "predeploy": "gulp build --prod"
     },
     "keywords": [
-        "dillinger",
-        "markdown",
-        "editor",
-        "ide",
-        "text",
-        "html",
-        "express",
-        "api"
+        "pomy",
+        "maven"
     ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/joemccann/dillinger"
-    },
     "engines": {
         "node": "4.x.x",
         "nsolid": "1.x.x"
@@ -98,6 +81,7 @@
         "gulp-if": "2.0.0",
         "gulp-notify": "^2.2.0",
         "gulp-open": "^0.3.0",
+        "gulp-rename": "^1.2.2",
         "gulp-rev-mtime": "^0.0.4",
         "gulp-rimraf": "0.2.0",
         "gulp-sass": "^2.0.4",

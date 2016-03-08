@@ -2,6 +2,8 @@
 bower_components/
 node_modules/
 site/plugins/docs/public/docs/jsdoc/
+classes.all.js
+classes.all.css
 
 # mac
 .DS_Store

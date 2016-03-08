@@ -1,15 +1,12 @@
 'use strict';
 
-'use strict';
-
 var
 	gulp = require('gulp'),
 	fs = require('fs'),
 	path = require('path'),
 	spawn = require('child_process').spawn;
 
-gulp.task('site-npm', ["config"], function(cb) {
-
+gulp.task('site-npm', function(cb) {
 	var npm = spawn("npm", [
 		'update',
 		"--registry",
@@ -32,28 +29,23 @@ gulp.task('site-npm', ["config"], function(cb) {
 	});
 });
 
-gulp.task('jsdoc', ["site-npm"], function(cb) {
-
-	var jsdoc = spawn('./node_modules/.bin/jsdoc', [
-		'-c', '.jsdoc'
+gulp.task('pre-site', ['site-npm'], function(cb) {
+	var build = spawn('./node_modules/.bin/gulp', [
+		'build', '--prod'
 	], {
 		cwd: path.join(global.settings.cwd, './site/')
 	});
 
-	jsdoc.stdout.on('data', function(data) {
+	build.stdout.on('data', function(data) {
 		console.log(data.toString());
 	});
 
-	jsdoc.stderr.on('data', function(data) {
+	build.stderr.on('data', function(data) {
 		console.error(data.toString());
 	});
 
-	jsdoc.on('exit', function(code) {
-		console.log('Finish jsdoc process');
+	build.on('exit', function(code) {
+		console.log('Finish site build process');
 		cb();
 	});
-});
-
-gulp.task('pre-site', ["jsdoc"], function(cb) {
-	cb()
 });

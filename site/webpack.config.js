@@ -10,7 +10,7 @@ module.exports = {
   entry: './public/js/app.js',
   output: {
     path: path.join(__dirname, 'public/js'),
-    filename: 'pomy.js'
+    filename: 'classes.all.js'
 
   },
   module: {

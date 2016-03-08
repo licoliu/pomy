@@ -6,10 +6,10 @@ var
 	gutil = require('gulp-util');
 
 gulp.task('browser-sync', function() {
-	var env = gutil.env;
+	var env = gutil.env || global.settings.site || {};
 	browserSync({
 		files: ['../src/main/**'],
-		proxy: (env.domain || 'localhost') + ":" + (env.port || 8000),
+		proxy: (env.domain || 'localhost') + ":" + (env.syncPort || 8000),
 		notify: false
 	});
 });

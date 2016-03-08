@@ -15,6 +15,7 @@ var
 	express = require('express'),
 	serveStatic = require('serve-static'),
 	errorHandler = require('errorhandler'),
+	minimist = require('minimist'),
 
 	routes = require('./routes'),
 	markdownRoutes = require('./plugins/markdown/routes'),
@@ -26,19 +27,28 @@ var
 	onedrive = require('./plugins/markdown/plugins/onedrive/server.js'),
 
 	config = require('config-file'),
-	getRootPath = function() {
-		if (/\/node_modules\/pomy$/g.test(process.cwd())) {
-
-			return '../../';
-		}
-		return './';
-	},
-	settings = config(getRootPath() + "pomy.json"),
+	settings = config("../../pomy.json"),
 
 	app = express();
 
-app.set('domain', process.env.domain || 'localhost')
-app.set('port', process.env.port || 8421)
+var argvs = minimist(process.argv.slice(2));
+
+var domain = argvs.domain || settings.site.domain || 'localhost';
+var port = argvs.port || settings.site.port || 8421;
+var target = argvs.target || settings.target;
+var debug = argvs.debug || settings.debug;
+
+var configs = require('../package.json');
+var version = configs.version;
+
+var author = configs.authors.toString();
+var keywords = configs.keywords;
+var googleWebmasterMeta = configs.googleWebmasterMeta;
+var title = configs.title;
+var description = configs.description;
+
+app.set('domain', domain)
+app.set('port', port)
 
 app.set('views', [path.join(__dirname, './views'),
 	path.join(__dirname, './plugins/markdown/views'),
@@ -50,7 +60,7 @@ app.set('view engine', 'ejs')
 // static assets. Just comment it out below.
 app.use(favicon(path.join(__dirname, './public/favicon.ico')))
 
-if (process.env.debug) {
+if (debug) {
 	app.use(logger('dev'))
 } else {
 	app.use(logger('short'))
@@ -75,24 +85,24 @@ app.use(serveStatic(path.join(__dirname, './plugins/markdown/public')))
 app.use(serveStatic(path.join(__dirname, './plugins/docs/public')))
 
 // Setup local variables to be available in the views.
-app.locals.title = process.env.title || 'POMY'
+app.locals.title = title;
 
-app.locals.description = process.env.description || 'POMY, base module of Ctrip CIS Surface Team.'
+app.locals.description = description;
 
-app.locals.googleWebmasterMeta = process.env.googleWebmasterMeta || "DAyGOgtsg8rJpq9VVktKzDkQ1UhXm1FYl8SD47hPkjA";
+app.locals.googleWebmasterMeta = googleWebmasterMeta;
 
-app.locals.keywords = process.env.keywords || "CIS, Ctrip, Surface, JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Bootstrap, Open Source";
+app.locals.keywords = keywords;
 
-app.locals.author = process.env.author || "lico <lico.atom@gmail.com>";
+app.locals.author = author;
 
 app.locals.node_version = process.version.replace('v', '')
-app.locals.app_version = process.env.version
-app.locals.env = process.env.target
+app.locals.app_version = version
+app.locals.env = target
 
 // At startup time so sync is ok.
 app.locals.readme = fs.readFileSync(path.resolve(__dirname, './README.md'), 'utf-8')
 
-if (process.env.debug) {
+if (debug) {
 	app.use(errorHandler())
 }
 

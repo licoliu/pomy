@@ -8,6 +8,7 @@ var
   csso = require('gulp-csso'),
   size = require('gulp-size'),
   gulpif = require('gulp-if'),
+  rename = require('gulp-rename'),
   handleErrors = require('../util/handleErrors'),
   browserSync = require('browser-sync');
 
@@ -15,8 +16,7 @@ gulp.task('sass', function() {
 
   var dest = './public/css';
 
-  return gulp.src('./public/scss/pomy.{scss,sass}')
-
+  return gulp.src('./public/scss/app.{scss,sass}')
     .pipe(sass({
       precision: 7,
       outputStyle: 'nested'
@@ -27,6 +27,7 @@ gulp.task('sass', function() {
       log: true
     })))
     .pipe(csso())
+    .pipe(rename("classes.all.css"))
     .pipe(gulp.dest(dest))
     .pipe(browserSync.reload({
       stream: true
