@@ -8,18 +8,14 @@ var
   browserSync = require('browser-sync'),
   src = global.settings.src;
 
-gulp.task('format-html', function() {
+gulp.task('format-html', ['jsbeautifyrc'], function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.template + "/**/*.html")
+  return gulp.src([
+      root + src.template + "/**/*.html",
+      root + src.template + "/**/*.ejs"
+    ])
     .pipe(prettify({
-      braceStyle: "collapse",
-      indentChar: " ",
-      indentScripts: "keep",
-      indentSize: 2,
-      maxPreserveNewlines: 10,
-      preserveNewlines: true,
-      unformatted: ["a", "sub", "sup", "b", "i", "u"],
-      wrapLineLength: 0
+      config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.template))
     .pipe(livereload())
@@ -28,12 +24,19 @@ gulp.task('format-html', function() {
     }));
 });
 
-gulp.task('format-css', function() {
+gulp.task('format-css', ['jsbeautifyrc'], function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.css + "/**/*.css")
+  return gulp.src([
+      root + src.css + "/**/*.css",
+      root + src.css + "/**/*.less",
+      root + src.css + "/**/*.sass",
+      root + src.css + "/**/*.scss",
+      root + src.less + "/**/*.less",
+      root + src.sass + "/**/*.sass",
+      root + src.scss + "/**/*.scss"
+    ])
     .pipe(prettify({
-      indentChar: " ",
-      indentSize: 2
+      config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.css))
     .pipe(livereload())
@@ -42,12 +45,16 @@ gulp.task('format-css', function() {
     }));
 });
 
-gulp.task('format-skin', function() {
+gulp.task('format-skin', ['jsbeautifyrc'], function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.skin + "/**/*.css")
+  return gulp.src([
+      root + src.skin + "/**/*.css",
+      root + src.skin + "/**/*.less",
+      root + src.skin + "/**/*.sass",
+      root + src.skin + "/**/*.scss"
+    ])
     .pipe(prettify({
-      indentChar: " ",
-      indentSize: 2
+      config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.skin))
     .pipe(livereload())

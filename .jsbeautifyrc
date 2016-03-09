@@ -20,5 +20,20 @@
   "eol": "\n",
   "wrap_attributes": "auto",
   "wrap_attributes_indent_size": 4,
-  "end_with_newline": true
+  "end_with_newline": false,
+
+  "selectorSeparatorNewline": true,
+
+  "indentScripts": "keep",
+  "unformatted": ["a", "sub", "sup", "b", "i", "u"],
+
+  "html": {
+    "file_types": [".html", ".ejs"]
+  },
+  "css": {
+    "file_types": [".css", ".less", ".sass", ".scss"]
+  },
+  "js": {
+    "file_types": [".js", ".json"]
+  }
 }

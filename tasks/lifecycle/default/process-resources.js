@@ -17,6 +17,7 @@ var
   del = require('del'),
   minifyCss = require('gulp-minify-css'),
   less = require('gulp-less'),
+  sass = require('gulp-sass'),
   minifyhtml = require('gulp-minify-html'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
@@ -98,19 +99,49 @@ gulp.task('template', function() {
 
 gulp.task('less', function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.css + '/**/*.less')
+  return gulp.src([
+      root + src.css + '/**/*.less',
+      root + src.less + '/**/*.less'
+    ])
     .pipe(less())
     .pipe(gulp.dest(root + src.css));
 });
 
 gulp.task('skin-less', function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.skin + '/*/css/**/*.less')
+  return gulp.src([
+      root + src.skin + '/*/css/**/*.less',
+      root + src.skin + '/*/less/**/*.less'
+    ])
     .pipe(less())
     .pipe(gulp.dest(root + src.skin));
 });
 
-gulp.task('css', ['less'], function() {
+gulp.task('sass', function() {
+  var root = global.getRootPath();
+  return gulp.src([
+      root + src.css + '/**/*.scss',
+      root + src.css + '/**/*.sass',
+      root + src.scss + '/**/*.scss',
+      root + src.sass + '/**/*.sass'
+    ])
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(root + src.css));
+});
+
+gulp.task('skin-sass', function() {
+  var root = global.getRootPath();
+  return gulp.src([
+      root + src.css + '/**/*.scss',
+      root + src.css + '/**/*.sass',
+      root + src.scss + '/**/*.scss',
+      root + src.sass + '/**/*.sass'
+    ])
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(root + src.skin));
+});
+
+gulp.task('css', ['less', 'sass'], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.css + "/**/*.css")
     .pipe(gulpif(!global.settings.debug, minifyCss()))
@@ -121,7 +152,7 @@ gulp.task('css', ['less'], function() {
     }));
 });
 
-gulp.task('skin-css', ['skin-less'], function() {
+gulp.task('skin-css', ['skin-less', 'skin-sass'], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.skin + "/*/css/**/*.css")
     .pipe(gulpif(!global.settings.debug, minifyCss()))
