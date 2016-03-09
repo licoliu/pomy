@@ -35,10 +35,12 @@ gulp.task('clean', ['pre-clean'], function(cb) {
         //delete markdown's js and css
         pomy + 'site/plugins/docs/public/docs/jsdoc/*',
 
-    ], function(err, deletedFiles) {
+    ]).then(function(deletedFiles) {
         console.log("##################################################");
         console.log("############### gulp clean finished. #############");
         console.log("##################################################");
+        cb();
+    }, function(err) {
         cb(err);
     });
 });

@@ -14,7 +14,6 @@ var
   //svgo = require('imagemin-svgo'),
   //jpegtran = require('imagemin-jpegtran'),
 
-  del = require('del'),
   minifyCss = require('gulp-minify-css'),
   less = require('gulp-less'),
   sass = require('gulp-sass'),
@@ -188,12 +187,7 @@ gulp.task('process-resources', ['generate-resources'], function(cb) {
         return cb(err);
       }
 
-      var error = del([
-        //src.css + '/**/*.css',
-        //src.skin + '/**/*.css',
-      ], function(err, deletedFiles) {
-        cb(err);
-      });
+      cb();
     });
   }
 });
