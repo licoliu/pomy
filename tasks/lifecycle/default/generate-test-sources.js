@@ -34,7 +34,7 @@ gulp.task('testunit', ['testunit-jsrt'], function() {
 
 gulp.task('generate-test-sources', ['process-classes'], function(cb) {
   if (global.settings.debug) {
-    exec('gulp testunit --process child', {
+    exec('./node_modules/.bin/gulp testunit --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);

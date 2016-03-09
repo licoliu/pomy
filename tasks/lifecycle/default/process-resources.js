@@ -169,7 +169,7 @@ gulp.task('resources', ['fonts', 'images', 'skin-images', 'template', 'css', 'sk
 gulp.task('process-resources', ['generate-resources'], function(cb) {
 
   if (global.settings.debug) {
-    exec('gulp less skin-less --process child', {
+    exec('./node_modules/.bin/gulp less skin-less --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);
@@ -179,7 +179,7 @@ gulp.task('process-resources', ['generate-resources'], function(cb) {
       cb();
     });
   } else {
-    exec('gulp resources --process child', {
+    exec('./node_modules/.bin/gulp resources --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);

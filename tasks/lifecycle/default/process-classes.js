@@ -230,7 +230,7 @@ gulp.task("define", ["repack-csslib", "repack-jslib"], function() {
 });
 
 gulp.task('process-classes', ['compile'], function(cb) {
-  exec('gulp define --process child', {
+  exec('./node_modules/.bin/gulp define --process child', {
     cwd: global.settings.cwd
   }, function(err, stdout, stderr) {
     console.log(stdout);
