@@ -1,35 +1,35 @@
 'use strict';
 
 var
-	connect = require('connect'),
-	http = require('http'),
-	path = require('path'),
-	fs = require('fs'),
-	methodOverride = require('method-override'),
-	logger = require('morgan'),
-	favicon = require('serve-favicon'),
-	compress = require('compression'),
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	cookieSession = require('cookie-session'),
-	express = require('express'),
-	serveStatic = require('serve-static'),
-	errorHandler = require('errorhandler'),
-	minimist = require('minimist'),
+    connect = require('connect'),
+    http = require('http'),
+    path = require('path'),
+    fs = require('fs'),
+    methodOverride = require('method-override'),
+    logger = require('morgan'),
+    favicon = require('serve-favicon'),
+    compress = require('compression'),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    cookieSession = require('cookie-session'),
+    express = require('express'),
+    serveStatic = require('serve-static'),
+    errorHandler = require('errorhandler'),
+    minimist = require('minimist'),
 
-	routes = require('./routes'),
-	markdownRoutes = require('./plugins/markdown/routes'),
-	docsRoutes = require('./plugins/docs/routes'),
-	core = require('./plugins/markdown/plugins/core/server.js'),
-	dropbox = require('./plugins/markdown/plugins/dropbox/server.js'),
-	github = require('./plugins/markdown/plugins/github/server.js'),
-	googledrive = require('./plugins/markdown/plugins/googledrive/server.js'),
-	onedrive = require('./plugins/markdown/plugins/onedrive/server.js'),
+    routes = require('./routes'),
+    markdownRoutes = require('./plugins/markdown/routes'),
+    docsRoutes = require('./plugins/docs/routes'),
+    core = require('./plugins/markdown/plugins/core/server.js'),
+    dropbox = require('./plugins/markdown/plugins/dropbox/server.js'),
+    github = require('./plugins/markdown/plugins/github/server.js'),
+    googledrive = require('./plugins/markdown/plugins/googledrive/server.js'),
+    onedrive = require('./plugins/markdown/plugins/onedrive/server.js'),
 
-	config = require('config-file'),
-	settings = config("../../pomy.json"),
+    config = require('config-file'),
+    settings = config("../../pomy.json"),
 
-	app = express();
+    app = express();
 
 var argvs = minimist(process.argv.slice(2));
 
@@ -51,8 +51,8 @@ app.set('domain', domain)
 app.set('port', port)
 
 app.set('views', [path.join(__dirname, './views'),
-	path.join(__dirname, './plugins/markdown/views'),
-	path.join(__dirname, './plugins/docs/views')
+    path.join(__dirname, './plugins/markdown/views'),
+    path.join(__dirname, './plugins/docs/views')
 ])
 app.set('view engine', 'ejs')
 
@@ -61,21 +61,21 @@ app.set('view engine', 'ejs')
 app.use(favicon(path.join(__dirname, './public/favicon.ico')))
 
 if (debug) {
-	app.use(logger('dev'))
+    app.use(logger('dev'))
 } else {
-	app.use(logger('short'))
+    app.use(logger('short'))
 }
 
 app.use(compress())
 app.use(bodyParser.urlencoded({
-	extended: false
+    extended: false
 }))
 app.use(bodyParser.json())
 app.use(methodOverride())
 app.use(cookieParser('your secret here'))
 app.use(cookieSession({
-	name: 'surface-session',
-	keys: ['open', 'source']
+    name: 'surface-session',
+    keys: ['open', 'source']
 }))
 
 // May not need to use serveStatic if using nginx for serving
@@ -103,7 +103,7 @@ app.locals.env = target
 app.locals.readme = fs.readFileSync(path.resolve(__dirname, './README.md'), 'utf-8')
 
 if (debug) {
-	app.use(errorHandler())
+    app.use(errorHandler())
 }
 
 app.get('/', routes.index)
@@ -118,6 +118,6 @@ app.use(googledrive)
 app.use(onedrive)
 
 http.createServer(app).listen(app.get('port'), function createServerCb() {
-	console.log('Express server listening on port ' + app.get('port'));
-	console.log('\nhttp://' + app.get('domain') + ':' + app.get('port') + '\n');
+    console.log('Express server listening on port ' + app.get('port'));
+    console.log('\nhttp://' + app.get('domain') + ':' + app.get('port') + '\n');
 })

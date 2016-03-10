@@ -28,16 +28,16 @@ Searchdoc = {};
 Searchdoc.Navigation = new function() {
     this.initNavigation = function() {
         var _this = this;
-        
+
         $(document).keydown(function(e) {
             _this.onkeydown(e);
         }).keyup(function(e) {
             _this.onkeyup(e);
         });
-        
+
         this.navigationActive = true;
     }
-    
+
     this.setNavigationActive = function(state) {
         this.navigationActive = state;
         this.clearMoveTimeout();
@@ -46,7 +46,7 @@ Searchdoc.Navigation = new function() {
 
     this.onkeyup = function(e) {
         if (!this.navigationActive) return;
-        switch(e.keyCode) {
+        switch (e.keyCode) {
             case 37: //Event.KEY_LEFT:
             case 38: //Event.KEY_UP:
             case 39: //Event.KEY_RIGHT:
@@ -61,12 +61,12 @@ Searchdoc.Navigation = new function() {
             case 78: // n
                 this.clearMoveTimeout();
                 break;
-            }
+        }
     }
 
     this.onkeydown = function(e) {
         if (!this.navigationActive) return;
-        switch(e.keyCode) {
+        switch (e.keyCode) {
             case 37: //Event.KEY_LEFT:
             case 74: // j (qwerty)
             case 72: // h (dvorak)
@@ -102,7 +102,7 @@ Searchdoc.Navigation = new function() {
     }
 
     this.clearMoveTimeout = function() {
-        clearTimeout(this.moveTimeout); 
+        clearTimeout(this.moveTimeout);
         this.moveTimeout = null;
     }
 
@@ -110,23 +110,20 @@ Searchdoc.Navigation = new function() {
         if (!$.browser.mozilla && !$.browser.opera) return;
         if (this.moveTimeout) this.clearMoveTimeout();
         var _this = this;
-    
+
         var go = function() {
             if (!_this.moveTimeout) return;
             _this[isDown ? 'moveDown' : 'moveUp']();
             _this.moveTimout = setTimeout(go, 100);
         }
         this.moveTimeout = setTimeout(go, 200);
-    }    
-    
-    this.moveRight = function() {
-    }
-    
-    this.moveLeft = function() {
     }
 
-    this.move = function(isDown) {
-    }
+    this.moveRight = function() {}
+
+    this.moveLeft = function() {}
+
+    this.move = function(isDown) {}
 
     this.moveUp = function() {
         return this.move(false);
@@ -134,7 +131,7 @@ Searchdoc.Navigation = new function() {
 
     this.moveDown = function() {
         return this.move(true);
-    }    
+    }
 }
 
 
@@ -165,7 +162,8 @@ Searchdoc.Searcher = function(data) {
 Searchdoc.Searcher.prototype = new function() {
     var CHUNK_SIZE = 1000, // search is performed in chunks of 1000 for non-bloking user input
         MAX_RESULTS = 100, // do not try to find more than 100 results
-        huid = 1, suid = 1,
+        huid = 1,
+        suid = 1,
         runs = 0;
 
 
@@ -173,19 +171,24 @@ Searchdoc.Searcher.prototype = new function() {
         var queries = splitQuery(query),
             regexps = buildRegexps(queries),
             highlighters = buildHilighters(queries),
-            state = { from: 0, pass: 0, limit: MAX_RESULTS, n: suid++},
+            state = {
+                from: 0,
+                pass: 0,
+                limit: MAX_RESULTS,
+                n: suid++
+            },
             _this = this;
         this.currentSuid = state.n;
-    
+
         if (!query) return;
-    
+
         var run = function() {
             // stop current search thread if new search started
             if (state.n != _this.currentSuid) return;
-            
+
             var results = performSearch(_this.data, regexps, queries, highlighters, state),
                 hasMore = (state.limit > 0 && state.pass < 3);
-                
+
             triggerResults.call(_this, results, !hasMore);
             if (hasMore) {
                 setTimeout(run, 2);
@@ -193,7 +196,7 @@ Searchdoc.Searcher.prototype = new function() {
             runs++;
         };
         runs = 0;
-        
+
         // start search thread
         run();
     }
@@ -206,16 +209,22 @@ Searchdoc.Searcher.prototype = new function() {
 
     /*  ----- Utilities ------  */
     function splitQuery(query) {
-        return jQuery.grep(query.split(/(\s+|\(\)?)/), function(string) { return string.match(/\S/) });
+        return jQuery.grep(query.split(/(\s+|\(\)?)/), function(string) {
+            return string.match(/\S/)
+        });
     }
 
     function buildRegexps(queries) {
-        return jQuery.map(queries, function(query) { return new RegExp(query.replace(/(.)/g, '([$1])([^$1]*?)'), 'i') });
+        return jQuery.map(queries, function(query) {
+            return new RegExp(query.replace(/(.)/g, '([$1])([^$1]*?)'), 'i')
+        });
     }
 
     function buildHilighters(queries) {
         return jQuery.map(queries, function(query) {
-            return jQuery.map( query.split(''), function(l, i){ return '\u0001$' + (i*2+1) + '\u0002$' + (i*2+2) } ).join('')
+            return jQuery.map(query.split(''), function(l, i) {
+                return '\u0001$' + (i * 2 + 1) + '\u0002$' + (i * 2 + 2)
+            }).join('')
         });
     }
 
@@ -225,12 +234,12 @@ Searchdoc.Searcher.prototype = new function() {
     //     };
     //     return true;
     // }
-    
-    
+
+
     /*  ----- Mathchers ------  */
     function matchPass1(index, longIndex, queries, regexps) {
         if (index.indexOf(queries[0]) != 0) return false;
-        for (var i=1, l = regexps.length; i < l; i++) {
+        for (var i = 1, l = regexps.length; i < l; i++) {
             if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) return false;
         };
         return true;
@@ -238,15 +247,15 @@ Searchdoc.Searcher.prototype = new function() {
 
     function matchPass2(index, longIndex, queries, regexps) {
         if (index.indexOf(queries[0]) == -1) return false;
-        for (var i=1, l = regexps.length; i < l; i++) {
+        for (var i = 1, l = regexps.length; i < l; i++) {
             if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) return false;
         };
         return true;
     }
-    
+
     function matchPassRegexp(index, longIndex, queries, regexps) {
         if (!index.match(regexps[0])) return false;
-        for (var i=1, l = regexps.length; i < l; i++) {
+        for (var i = 1, l = regexps.length; i < l; i++) {
             if (!index.match(regexps[i]) && !longIndex.match(regexps[i])) return false;
         };
         return true;
@@ -256,25 +265,27 @@ Searchdoc.Searcher.prototype = new function() {
     /*  ----- Highlighters ------  */
     function highlightRegexp(info, queries, regexps, highlighters) {
         var result = createResult(info);
-        for (var i=0, l = regexps.length; i < l; i++) {
+        for (var i = 0, l = regexps.length; i < l; i++) {
             result.title = result.title.replace(regexps[i], highlighters[i]);
             if (i > 0)
                 result.namespace = result.namespace.replace(regexps[i], highlighters[i]);
         };
         return result;
     }
-    
+
     function hltSubstring(string, pos, length) {
         return string.substring(0, pos) + '\u0001' + string.substring(pos, pos + length) + '\u0002' + string.substring(pos + length);
     }
-    
+
     function highlightQuery(info, queries, regexps, highlighters) {
-        var result = createResult(info), pos = 0, lcTitle = result.title.toLowerCase();
+        var result = createResult(info),
+            pos = 0,
+            lcTitle = result.title.toLowerCase();
         pos = lcTitle.indexOf(queries[0]);
         if (pos != -1) {
             result.title = hltSubstring(result.title, pos, queries[0].length);
         }
-        for (var i=1, l = regexps.length; i < l; i++) {
+        for (var i = 1, l = regexps.length; i < l; i++) {
             result.title = result.title.replace(regexps[i], highlighters[i]);
             result.namespace = result.namespace.replace(regexps[i], highlighters[i]);
         };
@@ -298,11 +309,11 @@ Searchdoc.Searcher.prototype = new function() {
             longSearchIndex = data.longSearchIndex,
             info = data.info,
             result = [],
-            i = state.from, 
+            i = state.from,
             l = searchIndex.length,
             togo = CHUNK_SIZE,
             matchFunc, hltFunc;
-            
+
         while (state.pass < 3 && state.limit > 0 && togo > 0) {
             if (state.pass == 0) {
                 matchFunc = matchPass1;
@@ -314,7 +325,7 @@ Searchdoc.Searcher.prototype = new function() {
                 matchFunc = matchPassRegexp;
                 hltFunc = highlightRegexp;
             }
-            
+
             for (; togo > 0 && i < l && state.limit > 0; i++, togo--) {
                 if (info[i].n == state.n) continue;
                 if (matchFunc(searchIndex[i], longSearchIndex[i], queries, regexps)) {
@@ -332,11 +343,13 @@ Searchdoc.Searcher.prototype = new function() {
         }
         return result;
     }
-    
+
     function triggerResults(results, isLast) {
-        jQuery.each(this.handlers, function(i, fn) { fn.call(this, results, isLast) })
+        jQuery.each(this.handlers, function(i, fn) {
+            fn.call(this, results, isLast)
+        })
     }
-}    
+}
 
 
 
@@ -366,18 +379,18 @@ Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         };
         this.$input.keyup(observer);
         this.$input.click(observer); // mac's clear field
-    
+
         this.searcher.ready(function(results, isLast) {
             _this.addResults(results, isLast);
         })
-    
+
         this.$result.click(function(e) {
             _this.$current.removeClass('current');
             _this.$current = $(e.target).closest('li').addClass('current');
             _this.select();
             _this.$input.focus();
         });
-        
+
         this.initNavigation();
         this.setNavigationActive(false);
     }
@@ -407,7 +420,7 @@ Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function() {
             this.$current = null;
             this.$result.empty();
         }
-        for (var i=0, l = results.length; i < l; i++) {
+        for (var i = 0, l = results.length; i < l; i++) {
             target.appendChild(renderItem.call(this, results[i]));
         };
         if (this.firstRun && results.length > 0) {
@@ -443,7 +456,8 @@ Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function() {
 
     function renderItem(result) {
         var li = document.createElement('li'),
-            html = '', badge = result.badge;
+            html = '',
+            badge = result.badge;
         html += '<h1>' + hlt(result.title);
         if (result.params) html += '<i>' + result.params + '</i>';
         html += '</h1>';
@@ -468,7 +482,7 @@ Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         });
     }
 
-}); 
+});
 
 // tree.js ------------------------------------------------
 
@@ -485,7 +499,7 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         var stopper = document.createElement('li');
         stopper.className = 'stopper';
         this.$list[0].appendChild(stopper);
-        for (var i=0, l = this.tree.length; i < l; i++) {
+        for (var i = 0, l = this.tree.length; i < l; i++) {
             buildAndAppendItem.call(this, this.tree[i], 0, stopper);
         };
         var _this = this;
@@ -508,7 +522,7 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         var path = $li[0].searchdoc_tree_data.path;
         if (path) this.panel.open(path);
     }
-    
+
     this.highlight = function($li) {
         if (this.$current) this.$current.removeClass('current');
         this.$current = $li.addClass('current');
@@ -518,7 +532,7 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         var closed = !$li.hasClass('closed'),
             children = $li[0].searchdoc_tree_data.children;
         $li.toggleClass('closed');
-        for (var i=0, l = children.length; i < l; i++) {
+        for (var i = 0, l = children.length; i < l; i++) {
             toggleVis.call(this, $(children[i].li), !closed);
         };
     }
@@ -532,7 +546,7 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
             this.toggle(this.$current);
         }
     }
-    
+
     this.moveLeft = function() {
         if (!this.$current) {
             this.highlight(this.$list.find('li:first'));
@@ -555,18 +569,18 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
         if (!this.$current) {
             this.highlight(this.$list.find('li:first'));
             return true;
-        }        
+        }
         var next = this.$current[0];
         if (isDown) {
             do {
                 next = next.nextSibling;
                 if (next && next.style && next.style.display != 'none') break;
-            } while(next);
+            } while (next);
         } else {
             do {
                 next = next.previousSibling;
                 if (next && next.style && next.style.display != 'none') break;
-            } while(next);
+            } while (next);
         }
         if (next && next.className.indexOf('stopper') == -1) {
             this.$current.removeClass('current');
@@ -585,17 +599,17 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
             this.$current.removeClass('current');
             this.$current = null;
         }
-        for (var i=0, l = children.length; i < l; i++) {
+        for (var i = 0, l = children.length; i < l; i++) {
             toggleVis.call(this, $(children[i].li), show && !closed);
         };
     }
 
     function buildAndAppendItem(item, level, before) {
-        var li   = renderItem(item, level),
+        var li = renderItem(item, level),
             list = this.$list[0];
         item.li = li;
         list.insertBefore(li, before);
-        for (var i=0, l = item[3].length; i < l; i++) {
+        for (var i = 0, l = item[3].length; i < l; i++) {
             buildAndAppendItem.call(this, item[3][i], level + 1, before);
         };
         return li;
@@ -607,11 +621,11 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
             h1 = document.createElement('h1'),
             p = document.createElement('p'),
             icon, i;
-        
+
         li.appendChild(cnt);
         li.style.paddingLeft = getOffset(level);
         cnt.className = 'content';
-        if (!item[1]) li.className  = 'empty ';
+        if (!item[1]) li.className = 'empty ';
         cnt.appendChild(h1);
         // cnt.appendChild(p);
         h1.appendChild(document.createTextNode(item[0]));
@@ -626,7 +640,7 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
             icon.className = 'icon';
             cnt.appendChild(icon);
         }
-        
+
         // user direct assignement instead of $()
         // it's 8x faster
         // $(li).data('path', item[1])
@@ -646,6 +660,6 @@ Searchdoc.Tree.prototype = $.extend({}, Searchdoc.Navigation, new function() {
     }
 
     function getOffset(level) {
-        return 5 + 18*level + 'px';
+        return 5 + 18 * level + 'px';
     }
 });

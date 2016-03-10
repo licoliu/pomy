@@ -3,5 +3,5 @@
 var gulp = require('gulp');
 
 gulp.task('watch', ['setWatch', 'build', 'browserSync'], function() {
-	gulp.watch('public/docs/scss/**/*.{scss,sass,css}', ['sass']);
+    gulp.watch('public/docs/scss/**/*.{scss,sass,css}', ['sass']);
 });

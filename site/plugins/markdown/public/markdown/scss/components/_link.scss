@@ -10,17 +10,14 @@
 // .link[.link__element.link__modifier]
 //
 // *************************************
-
 .link {
-  display: block;
-
-  &__preview {
-    width: 51px;
-  }
-
-  &__settings {
-    width: 51px;
-  }
+    display: block;
+    &__preview {
+        width: 51px;
+    }
+    &__settings {
+        width: 51px;
+    }
 }
 
 // -------------------------------------

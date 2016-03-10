@@ -12,18 +12,14 @@
 //   .nav.navbar-right
 //
 // *************************************
-
 .nav {
-
-  &-left {
-    float: left;
-  }
-
-  &-right {
-    float: right;
-  }
-
-  &-sidebar {
-    width: 100%;
-  }
+    &-left {
+        float: left;
+    }
+    &-right {
+        float: right;
+    }
+    &-sidebar {
+        width: 100%;
+    }
 }

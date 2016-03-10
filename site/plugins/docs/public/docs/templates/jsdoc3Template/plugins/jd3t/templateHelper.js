@@ -31,7 +31,7 @@ var linkMap = {
 };
 
 exports.registerLink = function(longname, url) {
-	//todo if longname or url is named like a methods in Object.prototype explodes
+    //todo if longname or url is named like a methods in Object.prototype explodes
     linkMap.longnameToUrl[longname] = url;
     linkMap.urlToLongname[url] = longname;
 }
@@ -42,34 +42,33 @@ exports.containers = ['class', 'module', 'external', 'namespace', 'mixin'];
 /** Turn a doclet into a URL. */
 exports.createLink = function(doclet) {
     var url = '';
-    
+
     if (exports.containers.indexOf(doclet.kind) < 0) {
         var longname = doclet.longname,
             filename = strToFilename(doclet.memberof || exports.globalName); // TODO handle name collisions
-        
+
         url = filename + exports.fileExtension + '#' + getNamespace(doclet.kind) + doclet.name;
-    }
-    else {
+    } else {
         var longname = doclet.longname,
             filename = strToFilename(longname); // TODO handle name collisions
-        
+
         url = filename + exports.fileExtension;
     }
-    
+
     return url;
 }
 
 function getNamespace(kind) {
     if (dictionary.isNamespace(kind)) {
-        return kind+':';
+        return kind + ':';
     }
     return '';
 }
 
 function strToFilename(str) {
-    if ( /[^$a-z0-9._-]/i.test(str) ) {
-//        return hash.hex_md5(str).substr(0, 10);
-		return str.replace( /[^$a-z0-9._-]/g, '_' );
+    if (/[^$a-z0-9._-]/i.test(str)) {
+        //        return hash.hex_md5(str).substr(0, 10);
+        return str.replace(/[^$a-z0-9._-]/g, '_');
     }
     return str;
 }
@@ -82,30 +81,28 @@ function toLink(longname, content) {
     if (!longname) {
         throw new Error('Missing required parameter: url');
     }
-    
+
     // Has link been specified manually?
     var url;
     if (/^(http|ftp)s?:/.test(longname)) {
         url = longname;
-        
+
         // Has link text been specified {@link http://github.com|GitHub Website}
         var split = url.indexOf('|');
         if (split !== -1) {
             content = url.substr(split + 1);
             url = url.substr(0, split);
         }
+    } else {
+        url = linkMap.longnameToUrl[longname];
     }
-    else {
-	    url = linkMap.longnameToUrl[longname];
-	}
-    
+
     content = content || longname;
-    
+
     if (!url) {
         return content;
-    }
-    else {
-        return '<a href="'+url+'">'+content+'</a>';
+    } else {
+        return '<a href="' + url + '">' + content + '</a>';
     }
 }
 
@@ -127,12 +124,12 @@ exports.toTutorial = toTutorial = function(tutorial, content) {
     var node = tutorials.getByName(tutorial);
     // no such tutorial
     if (!node) {
-        return '<em class="disabled">Tutorial: '+tutorial+'</em>';
+        return '<em class="disabled">Tutorial: ' + tutorial + '</em>';
     }
 
     content = content || node.title;
 
-    return '<a href="'+exports.tutorialToUrl(tutorial)+'">'+content+'</a>';
+    return '<a href="' + exports.tutorialToUrl(tutorial) + '">' + content + '</a>';
 }
 
 exports.longnameToUrl = linkMap.longnameToUrl;
@@ -141,8 +138,8 @@ exports.tutorialToUrl = function(tutorial) {
     var node = tutorials.getByName(tutorial);
     // no such tutorial
     if (!node) {
-        throw new Error('No such tutorial: '+tutorial);
+        throw new Error('No such tutorial: ' + tutorial);
     }
 
-    return 'tutorial-'+strToFilename(node.name)+exports.fileExtension;
+    return 'tutorial-' + strToFilename(node.name) + exports.fileExtension;
 };

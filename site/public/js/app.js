@@ -2,38 +2,38 @@
 
 (function(window, document) {
 
-  var angular;
+    var angular;
 
-  // jQuery
-  window.jQuery = require('jquery');
+    // jQuery
+    window.jQuery = require('jquery');
 
-  // AngularJS
-  angular = require('exports?angular!angular');
+    // AngularJS
+    angular = require('exports?angular!angular');
 
-  // Angular Bootstrap UI
-  require('angular-bootstrap');
+    // Angular Bootstrap UI
+    require('angular-bootstrap');
 
-  // Base
-  require('./base/base.controller');
+    // Base
+    require('./base/base.controller');
 
-  require('./components/teammember-modal.controller');
+    require('./components/teammember-modal.controller');
 
-  // Configure Dependencies
-  angular.module('POMY', [
-    'pomyBase',
-    'ui.bootstrap'
-  ]);
+    // Configure Dependencies
+    angular.module('POMY', [
+        'pomyBase',
+        'ui.bootstrap'
+    ]);
 
-  // Run!
-  angular.bootstrap(document, ['POMY']);
+    // Run!
+    angular.bootstrap(document, ['POMY']);
 
-  // Simple and works.
-  return jQuery(window).on('load', function() {
-    return jQuery('#loading').animate({
-      opacity: 0
-    }, 400, function() {
-      return jQuery('#loading').hide();
+    // Simple and works.
+    return jQuery(window).on('load', function() {
+        return jQuery('#loading').animate({
+            opacity: 0
+        }, 400, function() {
+            return jQuery('#loading').hide();
+        });
     });
-  });
 
 })(window, document);
