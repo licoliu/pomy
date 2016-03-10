@@ -4,6 +4,7 @@ var
 	gulp = require('gulp'),
 	gutil = require('gulp-util'),
 	rc = require('rc'),
+	fs = require('fs'),
 	util = require('util'),
 	config = require('config-file'),
 	jeditor = require("gulp-json-editor"),
@@ -25,7 +26,7 @@ global.getRootPath = function() {
 		return '../../';
 	}
 	return (minimist(process.argv.slice(2)).process === 'child') ? '../../' : './';
-}
+};
 
 global.getPomyPath = function() {
 
@@ -33,7 +34,16 @@ global.getPomyPath = function() {
 		return './';
 	}
 	return (minimist(process.argv.slice(2)).process === 'child') ? './' : global.settings.cwd;
-}
+};
+
+global.getCommandPath = function(cmd) {
+	cmd = cmd || "";
+	if (!fs.existsSync("./node_modules/.bin/" + cmd)) {
+		return "./node_modules/.bin/" + cmd;
+	} else {
+		return "../.bin/" + cmd;
+	}
+};
 
 global.settings = config(global.getRootPath() + "pomy.json");
 

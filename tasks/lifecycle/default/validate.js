@@ -45,7 +45,7 @@ gulp.task('prettify', ['jsbeautifyrc'], function(cb) {
 
 gulp.task('validate', ['config'], function(cb) {
   if (global.settings.debug) {
-    exec('./node_modules/.bin/gulp jshint --process child', {
+    exec(global.getCommandPath('gulp') + ' jshint --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);

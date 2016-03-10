@@ -81,7 +81,7 @@ gulp.task('copy-miscellaneous', function() {
  *	6.pomy.json
  */
 gulp.task('prepare-package', ['test'], function(cb) {
-	exec('./node_modules/.bin/gulp copy-jre copy-lib copy-classes copy-miscellaneous --process child', {
+	exec(global.getCommandPath('gulp') + ' copy-jre copy-lib copy-classes copy-miscellaneous --process child', {
 		cwd: global.settings.cwd
 	}, function(err, stdout, stderr) {
 		console.log(stdout);

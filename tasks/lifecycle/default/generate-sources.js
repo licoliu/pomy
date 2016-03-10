@@ -97,7 +97,7 @@ gulp.task('format', ['format-js', 'format-css', 'format-skin', 'format-html' /*,
 
 gulp.task('generate-sources', ['initialize'], function(cb) {
   if (global.settings.debug) {
-    exec('./node_modules/.bin/gulp format --process child', {
+    exec(global.getCommandPath('gulp') + ' format --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);

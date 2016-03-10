@@ -43,7 +43,7 @@ gulp.task('js', ["jre"], function() {
 
 gulp.task('compile', ['process-resources'], function(cb) {
   if (!global.settings.debug) {
-    exec('./node_modules/.bin/gulp js --process child', {
+    exec(global.getCommandPath('gulp') + ' js --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);
