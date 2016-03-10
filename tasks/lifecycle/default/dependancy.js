@@ -15,6 +15,7 @@ gulp.task('dependancy', ['validate'], function(cb) {
 	}
 
 	return bower({
+		cmd: 'update',
 		cwd: pomy
 	});
 });
