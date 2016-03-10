@@ -7,11 +7,15 @@ var
 	spawn = require('child_process').spawn;
 
 gulp.task('site-npm', function(cb) {
-	var npm = spawn("npm", [
-		'update',
-		"--registry",
-		"https://registry.npm.taobao.org"
-	], {
+
+	var args = ["update"];
+
+	if (settings.registry) {
+		args.push("--registry");
+		args.push(settings.registry);
+	}
+
+	var npm = spawn("npm", args, {
 		cwd: path.join(global.settings.cwd, './site/')
 	});
 
