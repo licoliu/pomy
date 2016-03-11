@@ -1,8 +1,8 @@
 ace.define("ace/theme/dillinger", ["require", "exports", "module", "ace/lib/dom"], function(acequire, exports, module) {
 
-    exports.isDark = false;
-    exports.cssClass = "ace-dillinger";
-    exports.cssText = ".ace-dillinger .ace_gutter {\
+  exports.isDark = false;
+  exports.cssClass = "ace-dillinger";
+  exports.cssText = ".ace-dillinger .ace_gutter {\
 background: #F5F7FA;\
 color: #A0AABF;\
 overflow : hidden;\
@@ -132,6 +132,6 @@ background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZ
 }\
 ";
 
-    var dom = acequire("../lib/dom");
-    dom.importCssString(exports.cssText, exports.cssClass);
+  var dom = acequire("../lib/dom");
+  dom.importCssString(exports.cssText, exports.cssClass);
 });

@@ -1,5 +1,5 @@
 @import "bootstrap-mincer";
 @import "bootstrap";
 #image-retina {
-    @include img-retina("apple-touch-icon-144-precomposed.png", "apple-touch-icon-144-precomposed.png", 72px, 72px);
+  @include img-retina("apple-touch-icon-144-precomposed.png", "apple-touch-icon-144-precomposed.png", 72px, 72px);
 }

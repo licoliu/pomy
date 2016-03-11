@@ -1,10 +1,10 @@
 // Contextual backgrounds
 // [converter] $parent hack
 @mixin bg-variant($parent, $color) {
-    #{$parent} {
-        background-color: $color;
-    }
-    a#{$parent}:hover {
-        background-color: darken($color, 10%);
-    }
+  #{$parent} {
+    background-color: $color;
+  }
+  a#{$parent}:hover {
+    background-color: darken($color, 10%);
+  }
 }

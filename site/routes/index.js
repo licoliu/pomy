@@ -1,15 +1,15 @@
 var path = require('path'),
-    request = require('request'),
-    qs = require('querystring'),
-    config = require('config-file'),
-    settings = config("./pomy.json");
+  request = require('request'),
+  qs = require('querystring'),
+  config = require('config-file'),
+  settings = config("./pomy.json");
 
 // Show the index page
 exports.index = function(req, res) {
-    return res.render('index', settings);
+  return res.render('index', settings);
 };
 
 // Show the not implemented yet page
 exports.not_implemented = function(req, res) {
-    return res.render('not-implemented');
+  return res.render('not-implemented');
 };

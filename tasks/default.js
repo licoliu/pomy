@@ -1,6 +1,6 @@
 'use strict';
 
 var
-    gulp = require('gulp');
+  gulp = require('gulp');
 
 gulp.task('default', ['package']);

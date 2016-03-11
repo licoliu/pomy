@@ -2,46 +2,46 @@
 <html lang="en" ng-strict-di>
 
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <title>
-        <%= title %>
-    </title>
+  <title>
+    <%= title %>
+  </title>
 
-    <meta name="description" content="<%= description %>">
-    <meta name="keywords" content="<%= keywords %>">
-    <meta name="author" content="<%= author %>">
-    <meta name="fragment" content="!">
+  <meta name="description" content="<%= description %>">
+  <meta name="keywords" content="<%= keywords %>">
+  <meta name="author" content="<%= author %>">
+  <meta name="fragment" content="!">
 
-    <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
-    <link rel="stylesheet" href="/fonts/exo/Exo.css" type="text/css" />
-    <link href="/markdown/fonts/sourcesanspro/sourcesanspro.css" rel="stylesheet" type="text/css">
-    <link href="/markdown/fonts/ubuntumono/ubuntumono.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  <link rel="stylesheet" href="/fonts/exo/Exo.css" type="text/css" />
+  <link href="/markdown/fonts/sourcesanspro/sourcesanspro.css" rel="stylesheet" type="text/css">
+  <link href="/markdown/fonts/ubuntumono/ubuntumono.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="/css/classes.all.css" type="text/css" />
-    <link href="/markdown/css/classes.all.css" rel="stylesheet">
-    <link href="/docs/css/classes.all.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/classes.all.css" type="text/css" />
+  <link href="/markdown/css/classes.all.css" rel="stylesheet">
+  <link href="/docs/css/classes.all.css" rel="stylesheet">
 </head>
 
 <body ng-controller="Base">
 
-    <div id="loading">
-        <span class="title">
-            <%= title%>
-        </span>
-        <span class="logo"></span>
-    </div>
-    <div class="wrapper">
-        <div class="page docs-container">
-            <%- include ./navbar %>
+  <div id="loading">
+    <span class="title">
+      <%= title%>
+    </span>
+    <span class="logo"></span>
+  </div>
+  <div class="wrapper">
+    <div class="page docs-container">
+      <%- include ./navbar %>
 
-                <iframe src="/docs/jsdoc/index.html" width="100%" height="52" frameborder="0"></iframe>
+        <iframe src="/docs/jsdoc/index.html" width="100%" height="52" frameborder="0"></iframe>
 
-                <%- include ./footer %>
-        </div>
+        <%- include ./footer %>
     </div>
-    <script src="/js/classes.all.js"></script>
+  </div>
+  <script src="/js/classes.all.js"></script>
 </body>
 
 </html>

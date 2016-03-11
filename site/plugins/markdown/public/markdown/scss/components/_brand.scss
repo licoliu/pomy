@@ -11,26 +11,26 @@
 //
 // *************************************
 .brand {
-    border: none;
-    display: block;
-    padding: 5px 0px 4px 0px;
-    font-size: 14px;
-    font-weight: 300;
-    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    outline: none;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    &:hover {
-        g {
-            fill: $c-highlight;
-        }
+  border: none;
+  display: block;
+  padding: 5px 0px 4px 0px;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  &:hover {
+    g {
+      fill: $c-highlight;
     }
+  }
 }
 
 a.brand {
-    color: #FFFFFF
+  color: #FFFFFF
 }
 
 a.brand:hover {
-    color: $c-highlight
+  color: $c-highlight
 }

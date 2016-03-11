@@ -55,13 +55,13 @@ environment.appendPath('./');
 
 
 environment.ContextClass.defineAssetPath(function(pathname, options) {
-    var asset = this.environment.findAsset(pathname, options);
+  var asset = this.environment.findAsset(pathname, options);
 
-    if (!asset) {
-        throw new Error("File " + pathname + " not found");
-    }
+  if (!asset) {
+    throw new Error("File " + pathname + " not found");
+  }
 
-    return '/assets/' + asset.digestPath;
+  return '/assets/' + asset.digestPath;
 });
 
 
@@ -75,13 +75,13 @@ var manifest = new Mincer.Manifest(environment, manifest_path);
 
 
 manifest.compile(['application.css'], function(err, assetsData) {
-    if (err) {
-        console.error("Failed compile assets: " + (err.message || err.toString()));
-        process.exit(128);
-    }
+  if (err) {
+    console.error("Failed compile assets: " + (err.message || err.toString()));
+    process.exit(128);
+  }
 
-    console.info('\n\nAssets were successfully compiled.\n' +
-        'Manifest data (a proper JSON) was written to:\n' +
-        manifest.path + '\n\n');
-    console.dir(assetsData);
+  console.info('\n\nAssets were successfully compiled.\n' +
+    'Manifest data (a proper JSON) was written to:\n' +
+    manifest.path + '\n\n');
+  console.dir(assetsData);
 });

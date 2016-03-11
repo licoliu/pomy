@@ -16,7 +16,7 @@
 //
 // *************************************
 .bucket {
-    @extend .group;
+  @extend .group;
 }
 
 // -------------------------------------
@@ -24,10 +24,10 @@
 // -------------------------------------
 // ----- Flag ----- //
 .bucket--flag {
-    display: table;
-    .bucket-content {
-        vertical-align: middle;
-    }
+  display: table;
+  .bucket-content {
+    vertical-align: middle;
+  }
 }
 
 // -------------------------------------
@@ -35,16 +35,16 @@
 // -------------------------------------
 // ----- Content ----- //
 .bucket-content {
-    display: table-cell;
-    width: 10000px;
+  display: table-cell;
+  width: 10000px;
 }
 
 // ----- Media ----- //
 .bucket-media {
-    float: left;
-    margin-right: $base-space;
-    > img {
-        display: block;
-        max-width: none;
-    }
+  float: left;
+  margin-right: $base-space;
+  > img {
+    display: block;
+    max-width: none;
+  }
 }

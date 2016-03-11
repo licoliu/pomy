@@ -1,27 +1,27 @@
 {
-    "name": "docs",
-    "description": "jsdoc.",
-    "version": "1.0.11",
-    "author": {
-        "name": "lico",
-        "email": "lico.atom@gmail.com"
-    },
-    "license": "MIT",
-    "scripts": {},
-    "keywords": [
-        "docs",
-        "jsdoc"
-    ],
-    "engines": {
-        "node": "4.x.x",
-        "nsolid": "1.x.x"
-    },
-    "dependencies": {},
-    "devDependencies": {
-        "gulp": "^3.9.0",
-        "gulp-notify": "^2.2.0",
-        "gulp-util": "^3.0.6",
-        "jsdoc": "^3.4.0",
-        "pretty-hrtime": "^1.0.0"
-    }
+  "name": "docs",
+  "description": "jsdoc.",
+  "version": "1.0.11",
+  "author": {
+    "name": "lico",
+    "email": "lico.atom@gmail.com"
+  },
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "docs",
+    "jsdoc"
+  ],
+  "engines": {
+    "node": "4.x.x",
+    "nsolid": "1.x.x"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-util": "^3.0.6",
+    "jsdoc": "^3.4.0",
+    "pretty-hrtime": "^1.0.0"
+  }
 }

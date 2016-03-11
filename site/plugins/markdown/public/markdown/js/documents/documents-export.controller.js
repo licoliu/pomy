@@ -1,48 +1,48 @@
 'use strict';
 
 module.exports =
-    angular
-    .module('diDocuments.export', [
-        'diDocuments.service',
-        'diDocuments.export.service'
-    ])
-    .controller('DocumentsExport', function($scope, documentsExportService) {
+  angular
+  .module('diDocuments.export', [
+    'diDocuments.service',
+    'diDocuments.export.service'
+  ])
+  .controller('DocumentsExport', function($scope, documentsExportService) {
 
-        var vm = this,
-            $downloader = document.getElementById('downloader');
+    var vm = this,
+      $downloader = document.getElementById('downloader');
 
-        vm.asHTML = asHTML;
-        vm.asStyledHTML = asStyledHTML;
-        vm.asMarkdown = asMarkdown;
-        vm.asPDF = asPDF;
+    vm.asHTML = asHTML;
+    vm.asStyledHTML = asStyledHTML;
+    vm.asMarkdown = asMarkdown;
+    vm.asPDF = asPDF;
 
-        function initDownload() {
-            $downloader.src = '/files/' + documentsExportService.type + '/' + documentsExportService.file;
+    function initDownload() {
+      $downloader.src = '/files/' + documentsExportService.type + '/' + documentsExportService.file;
 
-            return false;
-        }
+      return false;
+    }
 
-        function asHTML(styled) {
-            return documentsExportService.fetchHTML(styled).then(initDownload);
-        }
+    function asHTML(styled) {
+      return documentsExportService.fetchHTML(styled).then(initDownload);
+    }
 
-        function asStyledHTML() {
-            return asHTML(true);
-        }
+    function asStyledHTML() {
+      return asHTML(true);
+    }
 
-        function asMarkdown() {
-            return documentsExportService.fetchMarkdown().then(initDownload);
-        }
+    function asMarkdown() {
+      return documentsExportService.fetchMarkdown().then(initDownload);
+    }
 
-        function asPDF() {
-            return documentsExportService.fetchPDF().then(initDownload);
-        }
+    function asPDF() {
+      return documentsExportService.fetchPDF().then(initDownload);
+    }
 
-        $scope.$on('$destroy', function() {
-            vm = null;
-            $scope = null;
+    $scope.$on('$destroy', function() {
+      vm = null;
+      $scope = null;
 
-            return false;
-        });
-
+      return false;
     });
+
+  });
