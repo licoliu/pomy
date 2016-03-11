@@ -183,7 +183,9 @@ gulp.task("repack-file", [
         root + dest.lib + "/jquery-easing-original/js/jquery.easing.js",
         root + dest.lib + "/animate.css",
         root + dest.lib + "/iCheck/js/icheck.min.js"
-    ]).then(function(deletedFiles) {
+    ], {
+        force: true
+    }).then(function(deletedFiles) {
         cb();
     }, function(err) {
         cb(err);
