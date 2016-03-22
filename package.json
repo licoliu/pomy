@@ -2,7 +2,7 @@
   "group": "atom.lico",
   "artifact": "pomy",
   "name": "pomy",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "title": "pomy - a software project management and comprehension tool",
   "description": "POMY is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information.",
   "main": "",
@@ -29,8 +29,10 @@
     "pomy": "./bin/pomy.js"
   },
   "dependencies": {
+    "archy": "^1.0.0",
     "bower": "^1.7.7",
     "browser-sync": "^2.11.1",
+    "chalk": "^1.1.1",
     "config-file": "^0.3.2",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
@@ -54,9 +56,14 @@
     "gulp-zip": "^3.2.0",
     "jshint": "^2.9.1",
     "less": "^2.6.1",
+    "liftoff": "^2.2.0",
     "main-bower-files": "^2.11.1",
+    "minimist": "^1.2.0",
     "pretty-hrtime": "^1.0.2",
-    "rc": "1.1.6"
+    "rc": "1.1.6",
+    "semver": "^5.1.0",
+    "tildify": "^1.1.2",
+    "v8flags": "^2.0.11"
   },
   "devDependencies": {},
   "authors": [
