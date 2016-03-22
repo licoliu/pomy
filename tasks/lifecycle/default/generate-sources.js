@@ -5,7 +5,7 @@ var
   prettify = require('gulp-jsbeautifier'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
-  browserSync = require('browser-sync'),
+  //browserSync = require('browser-sync'),
   src = global.settings.src;
 
 gulp.task('format-html', ['jsbeautifyrc'], function() {
@@ -18,10 +18,10 @@ gulp.task('format-html', ['jsbeautifyrc'], function() {
       config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.template))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('format-css', ['jsbeautifyrc'], function() {
@@ -39,10 +39,10 @@ gulp.task('format-css', ['jsbeautifyrc'], function() {
       config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.css))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('format-skin', ['jsbeautifyrc'], function() {
@@ -57,10 +57,10 @@ gulp.task('format-skin', ['jsbeautifyrc'], function() {
       config: root + '.jsbeautifyrc'
     }))
     .pipe(gulp.dest(root + src.skin))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('format-jsrt', ['jsbeautifyrc'], function() {
@@ -71,10 +71,10 @@ gulp.task('format-jsrt', ['jsbeautifyrc'], function() {
       mode: 'VERIFY_AND_WRITE'
     }))
     .pipe(gulp.dest(root + src.jsrt))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('format-js', ['jsbeautifyrc'], function() {
@@ -85,10 +85,10 @@ gulp.task('format-js', ['jsbeautifyrc'], function() {
       mode: 'VERIFY_AND_WRITE'
     }))
     .pipe(gulp.dest(root + src.js))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('format', ['format-js', 'format-css', 'format-skin', 'format-html' /*,'format-jsrt'*/ ], function(cb) {

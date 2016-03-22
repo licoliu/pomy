@@ -10,7 +10,7 @@ var
   minifyCss = require('gulp-minify-css'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
-  browserSync = require('browser-sync'),
+  //browserSync = require('browser-sync'),
   dest = global.settings.dest;
 
 gulp.task("repack-mousewheel", function() {
@@ -225,10 +225,10 @@ gulp.task("define", ["repack-csslib", "repack-jslib"], function() {
   return gulp.src(root + dest.lib + '/**/*.js')
     .pipe(insert.wrap(before, after))
     .pipe(gulp.dest(root + dest.lib))
-    .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    .pipe(livereload());
+  //.pipe(browserSync.reload({
+  //  stream: true
+  //}));
 });
 
 gulp.task('process-classes', ['compile'], function(cb) {

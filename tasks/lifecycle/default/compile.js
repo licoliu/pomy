@@ -6,7 +6,7 @@ var
   gulpif = require('gulp-if'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
-  browserSync = require('browser-sync'),
+  //browserSync = require('browser-sync'),
   dest = global.settings.dest,
   src = global.settings.src;
 
@@ -36,9 +36,9 @@ gulp.task('js', ["jre"], function() {
     }))
     .pipe(gulp.dest(root + dest.js))
     .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    //.pipe(browserSync.reload({
+    //  stream: true
+    //}));
 });
 
 gulp.task('compile', ['process-resources'], function(cb) {

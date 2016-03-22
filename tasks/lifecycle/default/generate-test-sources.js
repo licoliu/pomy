@@ -5,7 +5,7 @@ var
   prettify = require('gulp-jsbeautifier'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
-  browserSync = require('browser-sync'),
+  //browserSync = require('browser-sync'),
   testunit = global.settings.testunit;
 
 gulp.task('testunit-jsrt', ['jsbeautifyrc'], function() {
@@ -27,9 +27,9 @@ gulp.task('testunit', ['testunit-jsrt'], function() {
     }))
     .pipe(gulp.dest(root + testunit.js))
     .pipe(livereload())
-    .pipe(browserSync.reload({
-      stream: true
-    }));
+    //.pipe(browserSync.reload({
+    //  stream: true
+    //}));
 });
 
 gulp.task('generate-test-sources', ['process-classes'], function(cb) {
