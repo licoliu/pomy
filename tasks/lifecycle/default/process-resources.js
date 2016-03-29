@@ -16,7 +16,7 @@ var
 
   minifyCss = require('gulp-minify-css'),
   less = require('gulp-less'),
-  sass = require('gulp-sass'),
+  //sass = require('gulp-sass'),
   minifyhtml = require('gulp-minify-html'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
@@ -125,7 +125,7 @@ gulp.task('sass', function() {
       root + src.scss + '/**/*.scss',
       root + src.sass + '/**/*.sass'
     ])
-    .pipe(sass().on('error', sass.logError))
+    //.pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(root + src.css));
 });
 
@@ -137,7 +137,7 @@ gulp.task('skin-sass', function() {
       root + src.scss + '/**/*.scss',
       root + src.sass + '/**/*.sass'
     ])
-    .pipe(sass().on('error', sass.logError))
+    //.pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(root + src.skin));
 });
 
