@@ -6,6 +6,7 @@ var
   rc = require('rc'),
   fs = require('fs'),
   util = require('util'),
+  path = require('path'),
   config = require('config-file'),
   jeditor = require("gulp-json-editor"),
   minimist = require('minimist'),
@@ -21,33 +22,39 @@ var
   };
 
 global.getRootPath = function() {
-  if (/\/node_modules\/pomy$/g.test(process.cwd())) {
-
+  var cwd = process.cwd();
+  if (/\/node_modules\/pomy$/g.test(cwd) ||
+    /\\\\node_modules\\\\pomy$/g.test(cwd)) {
     return '../../';
   }
   return (minimist(process.argv.slice(2)).process === 'child') ? '../../' : './';
 };
 
 global.getPomyPath = function() {
-
-  if (/\/node_modules\/pomy$/g.test(process.cwd())) {
+  var cwd = process.cwd();
+  if (/\/node_modules\/pomy$/g.test(cwd) ||
+    /\\\\node_modules\\\\pomy$/g.test(cwd)) {
     return './';
   }
-  return (minimist(process.argv.slice(2)).process === 'child') ? './' : global.settings.cwd;
+  return (minimist(process.argv.slice(2)).process === 'child') ? './' : './node_modules/pomy/';
 };
 
 global.getCommandPath = function(cmd) {
   cmd = cmd || "";
-  if (!fs.existsSync("./node_modules/.bin/" + cmd)) {
-    return "./node_modules/.bin/" + cmd;
+  if (fs.existsSync(path.join(global.settings.cwd, "./node_modules/.bin/" + cmd))) {
+    return path.resolve(global.settings.cwd, "./node_modules/.bin/" + cmd);
+  } else if (fs.existsSync(path.join(global.settings.cwd, "../.bin/" + cmd))) {
+    return path.resolve(global.settings.cwd, "../.bin/" + cmd);
   } else {
-    return "../.bin/" + cmd;
+    return cmd;
   }
 };
 
 global.settings = config(global.getRootPath() + "pomy.json");
 
-global.settings.cwd = /\/node_modules\/pomy$/g.test(process.cwd()) ? './' : './node_modules/pomy/';
+var cwd = process.cwd()
+global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
+  /\\\\node_modules\\\\pomy$/g.test(cwd) ? cwd : path.join(cwd, './node_modules/pomy/');
 
 global.settings.target = {
   root: 'target',
@@ -176,11 +183,12 @@ gulp.task('pom', function() {
 
 gulp.task('bower-config', ['pom'], function() {
   var root = global.getRootPath();
-  return gulp.src(global.settings.cwd + "bower.json")
+  var pomy = global.getPomyPath();
+  return gulp.src(pomy + "bower.json")
     .pipe(jeditor({
       dependencies: global.settings.dependencies
     }))
-    .pipe(gulp.dest(global.settings.cwd));
+    .pipe(gulp.dest(pomy));
 });
 
 gulp.task('npm-config', ['pom'], function() {

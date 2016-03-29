@@ -3,6 +3,7 @@
 var
   gulp = require('gulp'),
   gutil = require('gulp-util'),
+  path = require('path'),
   spawn = require('child_process').spawn;
 
 gulp.task('site:run', ['pom'], function(cb) {
@@ -19,7 +20,7 @@ gulp.task('site:run', ['pom'], function(cb) {
     '--target', target,
     '--debug', debug
   ], {
-    cwd: global.settings.cwd + 'site/'
+    cwd: path.join(global.settings.cwd, './site/')
   });
 
   startup.stdout.on('data', function(data) {

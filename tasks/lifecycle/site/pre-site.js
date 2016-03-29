@@ -4,19 +4,33 @@ var
   gulp = require('gulp'),
   fs = require('fs'),
   path = require('path'),
+  gutil = require('gulp-util'),
   spawn = require('child_process').spawn;
 
 gulp.task('site-npm', function(cb) {
 
-  var args = ["update"];
+  var cwd = path.join(global.settings.cwd, './site/');
 
-  if (settings.registry) {
-    args.push("--registry");
-    args.push(settings.registry);
+  var args = [];
+  var command = null;
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push('/c');
+    args.push("npm");
+  } else {
+    command = "npm";
   }
 
-  var npm = spawn("npm", args, {
-    cwd: path.join(global.settings.cwd, './site/')
+  args.push("update");
+
+  if (gutil.env.registry || settings.registry) {
+    args.push("--registry");
+    args.push(gutil.env.registry || settings.registry);
+  }
+
+  var npm = spawn(command, args, {
+    cwd: cwd
   });
 
   npm.stdout.on('data', function(data) {
@@ -28,16 +42,30 @@ gulp.task('site-npm', function(cb) {
   });
 
   npm.on('exit', function(code) {
-    console.log('Finish pre-site process');
-    cb();
+    console.log('Finish site npm process');
   });
 });
 
 gulp.task('pre-site', ['site-npm'], function(cb) {
-  var build = spawn('./node_modules/.bin/gulp', [
-    'build', '--prod'
-  ], {
-    cwd: path.join(global.settings.cwd, './site/')
+
+  var cwd = path.join(global.settings.cwd, './site/');
+
+  var args = [];
+  var command = null;
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push('/c');
+    args.push(path.resolve(cwd, './node_modules/.bin/gulp'));
+  } else {
+    command = path.resolve(cwd, './node_modules/.bin/gulp');
+  }
+
+  args.push('build');
+  args.push('--prod');
+
+  var build = spawn(command, args, {
+    cwd: cwd
   });
 
   build.stdout.on('data', function(data) {
@@ -50,6 +78,6 @@ gulp.task('pre-site', ['site-npm'], function(cb) {
 
   build.on('exit', function(code) {
     console.log('Finish site build process');
-    cb();
   });
+
 });

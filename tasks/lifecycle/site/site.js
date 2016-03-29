@@ -1,10 +1,7 @@
 'use strict';
 
 var
-  gulp = require('gulp'),
-  fs = require('fs'),
-  path = require('path'),
-  spawn = require('child_process').spawn;
+  gulp = require('gulp');
 
 gulp.task('site', ['pre-site'], function() {
 
