@@ -2,14 +2,30 @@
 
 var
   gulp = require('gulp'),
+  path = require('path'),
   // sequence = require('run-sequence'),
   spawn = require('child_process').spawn;
 
 gulp.task('markdown', function(cb) {
-  var markdown = spawn('../../node_modules/.bin/gulp', [
-    'build', '--prod'
-  ], {
-    cwd: './plugins/markdown/'
+
+  var cwd = path.join(process.cwd(), './plugins/markdown/');
+
+  var args = [];
+  var command = null;
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push('/c');
+    args.push(path.resolve(path.dirname(__filename), '../../node_modules/.bin/gulp'));
+  } else {
+    command = "../../node_modules/.bin/gulp";
+  }
+
+  args.push("build");
+  args.push('--prod');
+
+  var markdown = spawn(command, args, {
+    cwd: cwd
   });
 
   markdown.stdout.on('data', function(data) {
@@ -28,10 +44,24 @@ gulp.task('markdown', function(cb) {
 
 gulp.task('docs', function(cb) {
 
-  var docs = spawn('../../node_modules/.bin/gulp', [
-    'build', '--prod'
-  ], {
-    cwd: './plugins/docs/'
+  var cwd = path.join(process.cwd(), './plugins/docs/');
+
+  var args = [];
+  var command = null;
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push('/c');
+    args.push(path.resolve(path.dirname(__filename), '../../node_modules/.bin/gulp'));
+  } else {
+    command = "../../node_modules/.bin/gulp";
+  }
+
+  args.push("build");
+  args.push('--prod');
+
+  var docs = spawn(command, args, {
+    cwd: cwd
   });
 
   docs.stdout.on('data', function(data) {

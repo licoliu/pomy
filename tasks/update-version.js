@@ -5,6 +5,16 @@ var
   gulpif = require('gulp-if'),
   jeditor = require("gulp-json-editor");
 
+gulp.task('update:version-self', [], function() {
+  var version = gutil.env.v || gutil.env.version;
+  var pomy = global.getPomyPath();
+  return gulp.src(pomy + "pomy.json")
+    .pipe(gulpif(!!version, jeditor({
+      version: version
+    })))
+    .pipe(gulp.dest(pomy));
+});
+
 gulp.task('update:version-node', [], function() {
   var version = gutil.env.v || gutil.env.version;
   var pomy = global.getPomyPath();
@@ -46,6 +56,7 @@ gulp.task('update:version-docs', [], function(cb) {
 });
 
 gulp.task('update:version', [
+  "update:version-self",
   "update:version-node",
   "update:version-bower",
   "update:version-site",

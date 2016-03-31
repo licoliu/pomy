@@ -52,7 +52,7 @@ global.getCommandPath = function(cmd) {
 
 global.settings = config(global.getRootPath() + "pomy.json");
 
-var cwd = process.cwd()
+var cwd = process.cwd();
 global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
   /\\\\node_modules\\\\pomy$/g.test(cwd) ? cwd : path.join(cwd, './node_modules/pomy/');
 

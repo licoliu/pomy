@@ -33,6 +33,7 @@ gulp.task('site:run', ['pom'], function(cb) {
 
   startup.on('exit', function(code) {
     console.log('site startup process exited with code ' + code);
+    cb();
   });
 
 });

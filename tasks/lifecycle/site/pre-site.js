@@ -43,6 +43,7 @@ gulp.task('site-npm', function(cb) {
 
   npm.on('exit', function(code) {
     console.log('Finish site npm process');
+    cb();
   });
 });
 
@@ -78,6 +79,7 @@ gulp.task('pre-site', ['site-npm'], function(cb) {
 
   build.on('exit', function(code) {
     console.log('Finish site build process');
+    cb();
   });
 
 });

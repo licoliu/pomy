@@ -27,9 +27,22 @@ var
   onedrive = require('./plugins/markdown/plugins/onedrive/server.js'),
 
   config = require('config-file'),
-  settings = config("../../pomy.json"),
 
   app = express();
+
+var settings = null;
+
+if (fs.existsSync(path.join(path.dirname(__filename), "../../../pomy.json"))) {
+  settings = config(path.relative(
+    process.cwd(),
+    path.join(path.dirname(__filename), "../../../pomy.json")
+  ));
+} else {
+  settings = config(path.relative(
+    process.cwd(),
+    path.join(path.dirname(__filename), "../pomy.json")
+  ));
+}
 
 var argvs = minimist(process.argv.slice(2));
 
