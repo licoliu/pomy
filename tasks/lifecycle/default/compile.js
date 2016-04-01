@@ -14,7 +14,9 @@ gulp.task('jsrt', function() {
   var root = global.getRootPath();
   return gulp.src(root + src.jsrt + "/**/*.js")
     .pipe(uglify({
-      mangle: true
+      mangle: {
+        except: ['require', 'exports', 'module']
+      }
     }))
     .pipe(gulp.dest(root + dest.jsrt));
 });
@@ -23,7 +25,9 @@ gulp.task('jre', ["jsrt"], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.jre + "/jsvm.js")
     .pipe(uglify({
-      mangle: true
+      mangle: {
+        except: ['require', 'exports', 'module']
+      }
     }))
     .pipe(gulp.dest(root + dest.jre));
 });
@@ -32,7 +36,9 @@ gulp.task('js', ["jre"], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.js + "/**/*.js")
     .pipe(uglify({
-      mangle: true
+      mangle: {
+        except: ['require', 'exports', 'module']
+      }
     }))
     .pipe(gulp.dest(root + dest.js))
     .pipe(livereload())

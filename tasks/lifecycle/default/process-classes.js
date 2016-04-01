@@ -196,7 +196,9 @@ gulp.task("repack-jslib", ["repack-file"], function() {
   var root = global.getRootPath();
   return gulp.src(root + dest.lib + '/**/*.js')
     .pipe(gulpif(!global.settings.debug, uglify({
-      mangle: true
+      mangle: {
+        except: ['require', 'exports', 'module']
+      }
     })))
     .pipe(gulp.dest(root + dest.lib));
 });
