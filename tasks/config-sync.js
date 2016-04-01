@@ -140,7 +140,7 @@ gulp.task('pom', function() {
       break;
   }
 
-  var version = gutil.env.v || gutil.env.version;
+  var version = gutil.env.update || gutil.env.targetversion || gutil.env.tv || gutil.env.v || gutil.env.version;
   if (version) {
     global.settings.version = version;
   }
