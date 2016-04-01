@@ -12,12 +12,16 @@ var
   minimist = require('minimist'),
   getConfigSettings = function() {
     var settings = util._extend({}, global.settings);
+
+    settings.target = settings.env.target;
+
     delete settings.src;
     delete settings.dest;
     delete settings.testunit;
     delete settings.target;
     delete settings.env;
     delete settings.cwd;
+  
     return settings;
   };
 
