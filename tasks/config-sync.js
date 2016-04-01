@@ -21,7 +21,7 @@ var
     delete settings.target;
     delete settings.env;
     delete settings.cwd;
-  
+
     return settings;
   };
 

@@ -22,7 +22,7 @@ gulp.task('site-npm', function(cb) {
     command = "npm";
   }
 
-  args.push("update");
+  args.push("install");
 
   if (gutil.env.registry || settings.registry) {
     args.push("--registry");
