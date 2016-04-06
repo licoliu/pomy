@@ -28,6 +28,9 @@
        pomy + "**/*.scss",
        pomy + "**/*.sass",
 
+       "!" + pomy + "site/plugins/markdown/public/markdown/scss/vendor/bootstrap-sass-3.2.0/assets/stylesheets/bootstrap/_input-groups.scss",
+       "!" + pomy + "site/plugins/markdown/public/markdown/scss/vendor/bootstrap-sass-3.2.0/assets/stylesheets/bootstrap/mixins/_reset-filter.scss",
+
        "!" + pomy + "**/classes.all.css",
        "!" + pomy + "**/node_modules/**/*",
        "!" + pomy + "**/bower_components/**/*"
