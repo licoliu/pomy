@@ -2,7 +2,7 @@
   "group": "atom.lico",
   "artifact": "pomy",
   "name": "pomy",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "title": "pomy - a software project management and comprehension tool",
   "description": "POMY is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project's build, reporting and documentation from a central piece of information.",
   "main": "",

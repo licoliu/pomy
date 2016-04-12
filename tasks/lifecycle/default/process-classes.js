@@ -140,7 +140,6 @@ gulp.task("repack-angular-ui-tree", function() {
     .pipe(gulp.dest(root + dest.lib + "/angular-ui-tree/css/"));
 });
 
-
 gulp.task("repack-angular-ui-css", function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
@@ -158,6 +157,25 @@ gulp.task("repack-angular-ui", ["repack-angular-ui-css"], function() {
     .pipe(gulp.dest(root + dest.lib + "/angular-ui/js/"));
 });
 
+gulp.task("repack-ng-table-css", function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      root + dest.lib + "/ng-table/css/ng-table.min.css"
+    ])
+    .pipe(rename("ng-table.css"))
+    .pipe(gulp.dest(root + dest.lib + "/ng-table/css/"));
+});
+gulp.task("repack-ng-table", ["repack-ng-table-css"], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      root + dest.lib + "/ng-table/js/ng-table.min.js"
+    ])
+    .pipe(rename("ng-table.js"))
+    .pipe(gulp.dest(root + dest.lib + "/ng-table/js/"));
+});
+
 gulp.task("repack-file", [
   "repack-mousewheel",
   "repack-malihu",
@@ -168,7 +186,8 @@ gulp.task("repack-file", [
   "repack-iCheck",
   "repack-angular-ui-tree",
   "repack-angular-ui",
-  "repack-easing"
+  "repack-easing",
+  "repack-ng-table"
 ], function(cb) {
   var root = global.getRootPath();
   del([
@@ -182,7 +201,9 @@ gulp.task("repack-file", [
     root + dest.lib + "/highstock-release/js/highcharts-more.js",
     root + dest.lib + "/jquery-easing-original/js/jquery.easing.js",
     root + dest.lib + "/animate.css",
-    root + dest.lib + "/iCheck/js/icheck.min.js"
+    root + dest.lib + "/iCheck/js/icheck.min.js",
+    root + dest.lib + "/ng-table/css/ng-table.min.css",
+    root + dest.lib + "/ng-table/js/ng-table.min.js"
   ], {
     force: true
   }).then(function(deletedFiles) {
@@ -216,8 +237,8 @@ gulp.task("define", ["repack-csslib", "repack-jslib"], function() {
   var root = global.getRootPath();
   switch (global.settings.define) {
     case 'cmd':
-      before = "define(function(require, exports, module) {";
-      after = "});"; //;return exports;
+      before = "define(function(require, exports, module) {\n";
+      after = "\n});"; //;return exports;
       break;
     case 'amd':
       break;
