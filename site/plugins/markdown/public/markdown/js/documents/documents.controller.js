@@ -21,16 +21,29 @@ module.exports =
     $scope.createDocument = createDocument;
     $scope.removeDocument = removeDocument;
     $scope.selectDocument = selectDocument;
+    $scope.toggleDocument = toggleDocument;
+    $scope.clickDocument = clickDocument;
+    $scope.renameDocument = renameDocument;
+    $scope.enterRenameDocument = enterRenameDocument;
+
+    $rootScope.treeOptions = {
+      nodeChildren: "children",
+      isSelectable: function(node) {
+        return !node.children && node.id !== $rootScope.currentDocument.id;
+      },
+      isLeaf: function(node) {
+        return !node.children;
+      }
+    };
 
     $rootScope.documents = documentsService.getItems();
+    $rootScope.expandedNodes = [];
 
     $rootScope.editor.on('change', debounce(doAutoSave, 2000));
     $rootScope.$on('autosave', doAutoSave);
 
     function save(manuel) {
-      var item;
-
-      item = documentsService.getCurrentDocument();
+      var item = documentsService.getCurrentDocument();
       item.body = $rootScope.editor.getSession().getValue();
 
       documentsService.setCurrentDocument(item);
@@ -39,41 +52,116 @@ module.exports =
     }
 
     function initDocument() {
-      var item;
 
-      item = documentsService.getItemById($rootScope.currentDocument.id);
-      documentsService.setCurrentDocument(item);
+      var item = documentsService.getCurrentDocument();
 
-      return $rootScope.$emit('document.refresh');
+      if (item && item.id) {
+        item = documentsService.getItem(item);
+      } else {
+        item = documentsService.getItemByIndex(0);
+        if (item && item.id) {
+          item = documentsService.getItem(item);
+        }
+      }
+
+      if (item && item.$promise) {
+        item.$promise.then(function() {
+          documentsService.setCurrentDocument(item);
+          var pi = documentsService.getParentById(item.id);
+          if (pi) {
+            pi.expanded = true;
+            $rootScope.expandedNodes.push(pi);
+          }
+          $rootScope.$emit('document.refresh');
+        });
+      }
+    }
+
+    function travel(documents, callback) {
+      var doc = null;
+      for (var i = 0, len = documents.length; i < len; i++) {
+        doc = documents[i];
+        if (doc.children) {
+          travel(doc.children, callback)
+        } else {
+          callback(doc);
+        }
+      }
     }
 
     function selectDocument(item) {
-      item = documentsService.getItem(item);
-      documentsService.setCurrentDocument(item);
+      travel($rootScope.documents, function(doc) {
+        doc.mode = (doc.id == item.id) ? 1 : 0
+      });
 
-      return $rootScope.$emit('document.refresh');
+      $rootScope.currentDocument = item;
+      item = documentsService.getItem(item);
+      if (item) {
+        item.$promise.then(function() {
+          documentsService.setCurrentDocument(item);
+          $rootScope.$emit('document.refresh');
+        });
+      }
+    }
+
+    function clickDocument(item) {
+      if (!item.mode) {
+        item.mode = 0;
+      }
+
+      if (item.mode >= 2) {
+        item.mode = 1;
+      }
+
+      item.mode++;
+    }
+
+    function enterRenameDocument(node, $event) {
+      if ($event.keyCode === 13) {
+        renameDocument(node);
+      }
+    }
+
+    function renameDocument(node) {
+      documentsService.renameItem(node);
+      node.mode = 0;
+    };
+
+    function toggleDocument(node, expanded) {
+      node.expanded = expanded;
     }
 
     function removeDocument(item) {
-      var next;
+      documentsService.removeItem(item).then(function() {
+        var next = documentsService.getItemByIndex(0);
 
-      // The order is important here.
-      documentsService.removeItem(item);
-      next = documentsService.getItemByIndex(0);
-      documentsService.setCurrentDocument(next);
+        next = documentsService.getItem(next);
 
-      return $rootScope.$emit('document.refresh');
+        if (next) {
+          next.$promise.then(function() {
+            documentsService.setCurrentDocument(next);
+            return $rootScope.$emit('document.refresh');
+          });
+        } else {
+          documentsService.setCurrentDocument({});
+          return $rootScope.$emit('document.refresh');
+        }
+      });
     }
 
-    function createDocument() {
+    function createDocument(node) {
       var item;
 
-      item = documentsService.createItem();
+      item = documentsService.createItem({
+        title: node.title
+          // ,body: $rootScope.editor.getSession().getValue()
+      });
 
-      documentsService.addItem(item);
-      documentsService.setCurrentDocument(item);
-
-      return $rootScope.$emit('document.refresh');
+      documentsService.addItem(item).then(function(item) {
+        node.children.push(item);
+        documentsService.setCurrentDocument(item);
+        return $rootScope.$emit('document.refresh');
+      });
     }
 
     function doAutoSave() {
@@ -91,6 +179,9 @@ module.exports =
       return false;
     });
 
-    initDocument();
+    $rootScope.documents.$promise.then(function() {
+      $rootScope.currentDocument = documentsService.getCurrentDocument();
+      initDocument();
+    });
 
   });

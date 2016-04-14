@@ -10,10 +10,11 @@
 // Important for Libsass!
 @import 'vendor/sass-list-maps/sass-list-maps';
 // Third-party style imports, if needed
-// @import 'cloudflare/KaTeX/0.2.0/katex.min.css';
+// @import 'cloudflare/KaTeX/0.2.0/katex.min';
 @import 'vendor/bourbon/functions/modular-scale';
 @import 'vendor/bootstrap-sass-3.2.0/assets/stylesheets/bootstrap';
 @import 'vendor/highlight.js/solarized-dark';
+@import 'vendor/angular-tree-control/tree-control-attribute';
 // -------------------------------------
 //   Foundation
 // -------------------------------------

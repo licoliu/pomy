@@ -13,6 +13,9 @@
   // Angular Bootstrap UI
   require('angular-bootstrap');
 
+  require('angular-tree-control');
+  require('angular-resource/angular-resource');
+
   // Base
   require('./base/base.controller');
   require('./components/document-title.directive');
@@ -31,7 +34,7 @@
 
   // Documents
   require('./factorys/sheet.factory');
-  require('./services/documents.service');
+  require('./services/documents.remote.service');
   require('./services/documents.export.service');
   require('./documents/documents-export.controller');
   require('./documents/documents.controller');
@@ -76,7 +79,9 @@
     'plugins.googledrive',
     'plugins.onedrive',
     'ui.bootstrap',
-    'diDebounce.service'
+    'diDebounce.service',
+    'treeControl',
+    'ngResource'
   ]);
 
   // Run!

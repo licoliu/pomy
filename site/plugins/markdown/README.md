@@ -1,6 +1,6 @@
-# Dillinger
+# MARKDOWN
 
-Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
+This is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
 
   - Type some Markdown on the left
   - See HTML in the right
@@ -18,45 +18,41 @@ Markdown is a lightweight markup language based on the formatting conventions th
 
 This text you see here is *actually* written in Markdown! To get a feel for Markdown's syntax, type some text into the left window and watch the results in the right.
 
-### Version
-3.2.7
 
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
+MARKDOWN uses a number of open source projects to work properly:
 
+* [POMY] - Pomy is a software project management and comprehension tool. Based on the concept of a project object model (POM), Pomy can manage a project's build, reporting and documentation from a central piece of information[@lico]
+* [Dillinger] - And of course MARKDOWN itself is open source with a [public repository][Dillinger]
+ on GitHub.
 * [AngularJS] - HTML enhanced for web apps!
 * [Ace Editor] - awesome web-based text editor
 * [Marked] - a super fast port of Markdown to JavaScript
 * [Twitter Bootstrap] - great UI boilerplate for modern web apps
 * [node.js] - evented I/O for the backend
 * [Express] - fast node.js network app framework [@tjholowaychuk]
-* [Gulp] - the streaming build system
 * [keymaster.js] - awesome keyboard handler lib by [@thomasfuchs]
 * [jQuery] - duh
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
+
 
 ### Installation
 
-You need Gulp installed globally:
+You need Pomy installed globally, Open your favorite Terminal and run these commands.
 
 ```sh
-$ npm i -g gulp
+$ npm i -g pomy
 ```
 
 ```sh
-$ git clone [git-repo-url] dillinger
-$ cd dillinger
-$ npm i -d
-$ gulp build --prod
-$ NODE_ENV=production node app
+$ pomy site
+$ pomy site:run
 ```
 
 ### Plugins
 
-Dillinger is currently extended with the following plugins
+MARKDOWN is currently extended with the following plugins
 
 * Dropbox
 * Github
@@ -74,40 +70,14 @@ Readmes, how to use them in your own application can be found here:
 
 Want to contribute? Great!
 
-Dillinger uses Gulp + Webpack for fast developing.
+MARKDOWN uses Gulp + Webpack for fast developing.
 Make a change in your file and instantanously see your updates!
 
-Open your favorite Terminal and run these commands.
-
-First Tab:
-```sh
-$ node app
-```
-
-Second Tab:
-```sh
-$ gulp watch
-```
-
-(optional) Third:
-```sh
-$ karma start
-```
-
-### Docker, N|Solid and NGINX
-
-More details coming soon.
-
-#### docker-compose.yml
-
-Change the path for the nginx conf mounting path to your full path, not mine!
 
 ### Todos
 
  - Write Tests
- - Rethink Github Save
  - Add Code Comments
- - Add Night Mode
 
 License
 ----
@@ -120,7 +90,7 @@ MIT
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
 
-   [dill]: <https://github.com/joemccann/dillinger>
+   [Dillinger]: <https://github.com/joemccann/dillinger>
    [git-repo-url]: <https://github.com/joemccann/dillinger.git>
    [john gruber]: <http://daringfireball.net>
    [@thomasfuchs]: <http://twitter.com/thomasfuchs>
@@ -134,7 +104,8 @@ MIT
    [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
    [express]: <http://expressjs.com>
    [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
+   [POMY]: <https://www.npmjs.com/package/pomy>
+   [@lico]:<https://github.com/licoliu>
 
    [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
    [PlGh]:  <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>

@@ -18,7 +18,7 @@ var
     delete settings.src;
     delete settings.dest;
     delete settings.testunit;
-    delete settings.target;
+    // delete settings.target;
     delete settings.env;
     delete settings.cwd;
 
@@ -108,7 +108,7 @@ global.settings.dest = {
 
 gulp.task('pom', function() {
   global.settings.env = gutil.env;
-  global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || '').toLowerCase();
+  global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || 'local').toLowerCase();
   switch (global.settings.env.target) {
     case "production":
     case "prod":

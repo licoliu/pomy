@@ -8,8 +8,9 @@ module.exports =
     return function(sheetData) {
 
       angular.extend(this, {
-        id: new Date().getTime(),
-        title: 'Untitled Document.md',
+        // id: new Date().getTime(),
+        name: 'Untitled Document.md',
+        title: '',
         body: require('raw!../../../../README.md')
       });
 

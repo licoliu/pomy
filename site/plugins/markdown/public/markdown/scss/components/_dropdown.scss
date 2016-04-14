@@ -26,14 +26,22 @@
   padding: 0;
   li {
     line-height: 1;
-    margin: 32px 0;
-    padding: 0 0 0 32px;
+    margin: 16px 0;
+    padding: 0 0 0 16px;
   }
   a {
     @include clearfix;
     color: $c-dropdown-link;
     display: block;
     text-transform: none;
+    &.active {
+      color: #35D7BB;
+    }
+    input {
+      color: #555;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
   }
   .icon {
     float: right;
@@ -52,15 +60,28 @@
   }
   &.documents {
     li {
-      background-image: url('../img/icons/file.svg');
-      background-position: 240px center;
-      background-repeat: no-repeat;
-      background-size: 14px 16px;
-      padding: 3px 32px;
+      // background-image: url('../img/icons/file.svg');
+      // background-position: 240px center;
+      // background-repeat: no-repeat;
+      // background-size: 14px 16px;
+      padding: 3px 16px 3px 8px;
       &.octocat {
         background-image: url('../img/icons/octocat.svg');
         background-position: 234px center;
         background-size: 24px 24px;
+      }
+      a {
+        display: inline;
+        word-break: break-all;
+      }
+      .opr {
+        position: absolute;
+        top: 4px;
+        right: 0px;
+      }
+      .opr.lower {
+        transform: scale(0.72);
+        color: #A0AABF;
       }
     }
     li {

@@ -51,8 +51,11 @@
         </li>
       </ul>
     </nav>
+    <!--
     <a class="btn btn--new" ng-click="createDocument()">New Document</a>
-    <a class="btn btn--save" ng-click="saveDocument(true)">Save Session</a>
+    <a class="btn btn--save" ng-click="saveDocument(true)">Save Document</a>
     <a class="btn btn--delete" ng-click="removeDocument(currentDocument)" ng-if="documents.length > 1">Delete Document</a>
+    -->
+    <a class="btn btn--new" ng-click="saveDocument(true)" ng-if="currentDocument && currentDocument.id">Save Document</a>
   </div>
 </div>

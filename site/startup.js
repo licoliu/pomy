@@ -5,6 +5,7 @@ var
   http = require('http'),
   path = require('path'),
   fs = require('fs'),
+  mkdir = require('../util/mkdir'),
   methodOverride = require('method-override'),
   logger = require('morgan'),
   favicon = require('serve-favicon'),
@@ -17,28 +18,21 @@ var
   errorHandler = require('errorhandler'),
   minimist = require('minimist'),
 
-  routes = require('./routes'),
-  markdownRoutes = require('./plugins/markdown/routes'),
-  docsRoutes = require('./plugins/docs/routes'),
-  core = require('./plugins/markdown/plugins/core/server.js'),
-  dropbox = require('./plugins/markdown/plugins/dropbox/server.js'),
-  github = require('./plugins/markdown/plugins/github/server.js'),
-  googledrive = require('./plugins/markdown/plugins/googledrive/server.js'),
-  onedrive = require('./plugins/markdown/plugins/onedrive/server.js'),
-
   config = require('config-file'),
 
   app = express();
 
-var settings = null;
+global.settings = {
+  site: {}
+};
 
 if (fs.existsSync(path.join(path.dirname(__filename), "../../../pomy.json"))) {
-  settings = config(path.relative(
+  global.settings = config(path.relative(
     process.cwd(),
     path.join(path.dirname(__filename), "../../../pomy.json")
   ));
 } else {
-  settings = config(path.relative(
+  global.settings = config(path.relative(
     process.cwd(),
     path.join(path.dirname(__filename), "../pomy.json")
   ));
@@ -46,10 +40,10 @@ if (fs.existsSync(path.join(path.dirname(__filename), "../../../pomy.json"))) {
 
 var argvs = minimist(process.argv.slice(2));
 
-var domain = argvs.domain || settings.site.domain || 'localhost';
-var port = argvs.port || settings.site.port || 8421;
-var target = argvs.target || settings.target;
-var debug = argvs.debug || settings.debug;
+var domain = argvs.domain || global.settings.site.domain || 'localhost';
+var port = argvs.port || global.settings.site.port || 8421;
+var target = argvs.target || global.settings.target || 'local';
+var debug = argvs.debug || global.settings.debug || true;
 
 var configs = require('../package.json');
 var version = configs.version;
@@ -119,10 +113,39 @@ if (debug) {
   app.use(errorHandler())
 }
 
+global.settings.site.domain = domain;
+global.settings.site.port = port;
+global.settings.target = target;
+global.settings.debug = debug;
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/api");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/test");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/ui");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/site");
+
+var
+  routes = require('./routes'),
+  markdownRoutes = require('./plugins/markdown/routes'),
+  docsRoutes = require('./plugins/docs/routes'),
+  core = require('./plugins/markdown/plugins/core/server.js'),
+  dropbox = require('./plugins/markdown/plugins/dropbox/server.js'),
+  github = require('./plugins/markdown/plugins/github/server.js'),
+  googledrive = require('./plugins/markdown/plugins/googledrive/server.js'),
+  onedrive = require('./plugins/markdown/plugins/onedrive/server.js');
+
 app.get('/', routes.index)
-app.get('/markdown', markdownRoutes.index)
-app.get('/api', docsRoutes.index)
 app.get('/not-implemented', routes.not_implemented)
+
+app.get('/markdown', markdownRoutes.index)
+app.get('/markdown/documents', markdownRoutes.getDocuments)
+app.get('/markdown/documents/:id', markdownRoutes.getDocument)
+app.post('/markdown/documents/:id', markdownRoutes.updateDocument)
+app.put('/markdown/documents', markdownRoutes.saveDocument)
+app.post('/markdown/documents/:id/del', markdownRoutes.delDocument)
+app.delete('/markdown/documents/:id', markdownRoutes.delDocument)
+app.put('/markdown/documents/:id/rename', markdownRoutes.renameDocument)
+
+app.get('/api', docsRoutes.index)
 
 app.use(core)
 app.use(dropbox)

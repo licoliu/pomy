@@ -1,3 +1,28 @@
+<!--
 <li ng-repeat="document in documents track by document.id" ng-class="{'active': currentDocument.id === document.id, 'octocat': document.isGithubFile}">
   <a ng-click="selectDocument(document)">{{document.title}}</a>
+</li>
+-->
+
+<li treecontrol class="tree-dark" tree-model="documents" on-selection="selectDocument(node)" options="treeOptions" selected-node="currentDocument" expanded-nodes="expandedNodes" on-node-toggle="toggleDocument(node, expanded)">
+
+  <a href="javascript: void(0)" ng-class="{'active': currentDocument.id === node.id}">
+    <!--
+	  <i class="glyphicon glyphicon-folder-close" ng-if="!!node.children && !node.expanded"></i> 
+	  <i class="glyphicon glyphicon-folder-open" ng-if="!!node.children && node.expanded"></i>
+	  -->
+    <span ng-if="node.children">
+      {{node.name}}
+    </span>
+
+    <span ng-if="!node.children" ng-click="clickDocument(node)">
+      <i class="glyphicon glyphicon-file"></i> &nbsp;
+      <span ng-if="node.mode !== 2">{{node.name}}</span>
+      <input ng-if="node.mode === 2" type="text" ng-model="node.name" ng-keyup="enterRenameDocument(node, $event)" ng-blur="renameDocument(node)" />
+    </span>
+  </a>
+
+  <i class="glyphicon glyphicon-plus-sign pull-right opr" ng-if="!!node.children" ng-click="$event.stopPropagation(); createDocument(node);"></i>
+
+  <i class="glyphicon glyphicon-remove pull-right opr lower" ng-if="!node.children" ng-click="$event.stopPropagation(); removeDocument(node);"></i>
 </li>
