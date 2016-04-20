@@ -4,9 +4,8 @@ module.exports =
   angular
   .module('pomyBase', [
     'pomyBase.controllers.about'
-
   ])
-  .controller('Base', function($scope, $timeout, $rootScope, $modal) {
+  .controller('Base', function($scope, $timeout, $rootScope, $modal, documentsService) {
     $scope.showAbout = function(e) {
       e.preventDefault();
       $modal.open({
@@ -20,5 +19,10 @@ module.exports =
 
     $scope.getApi = function(path) {
       window.frames[0].frames[1].location.href = "/docs/jsdoc/" + path;
+    };
+    $scope.limitTo = 7;
+    $scope.sprints = documentsService.getSprints();
+    $scope.more = function() {
+      $scope.limitTo = 2 * $scope.limitTo;
     };
   });

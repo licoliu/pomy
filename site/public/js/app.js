@@ -12,7 +12,9 @@
 
   // Angular Bootstrap UI
   require('angular-bootstrap');
+  require('angular-resource/angular-resource');
 
+  require('./services/documents.service');
   // Base
   require('./base/base.controller');
 
@@ -21,7 +23,9 @@
   // Configure Dependencies
   angular.module('POMY', [
     'pomyBase',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'diDocuments.service',
+    'ngResource'
   ]);
 
   // Run!

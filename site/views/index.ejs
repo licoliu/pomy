@@ -73,13 +73,14 @@
                   </div>
                   <div class="column col-lg-7 col-sm-7 col-md-7 col-xs-12">
                     <h3>Activity</h3>
-                    <p class="text-fluid">We have also been posting summaries of new features and changes to <a href="<%=homepage%>">our gitlab</a>:</p>
+                    <p class="text-fluid">We have also been posting summaries of new features and changes to <a href="<%=homepage%>">our gitlab</a>.</p>
+
+                    <h3>Sprints</h3>
+                    <p class="text-fluid">In
+                      <%= name%> development, we make sprints to define specific work which has to be completed and made ready for review in a week. Each sprint begins with a planning meeting. Here is our meeting minutes:</p>
                     <ul class="type13">
-                      <li><a href="javascript:void(0)" class="more-icon">Sprint 010</a></li>
-                      <li><a href="javascript:void(0)" class="more-icon">Sprint 009</a></li>
-                      <li><a href="javascript:void(0)" class="more-icon">Sprint 008</a></li>
-                      <li><a href="javascript:void(0)" class="more-icon">Sprint 007</a></li>
-                      <li><a href="javascript:void(0)">...</a></li>
+                      <li ng-repeat="sprint in sprints | limitTo: limitTo"><a href="/markdown/#?id={{sprint.id}}" class="more-icon">{{sprint.name}}</a></li>
+                      <li ng-if="sprints.length > limitTo"><a href="javascript:void(0)" ng-click="more()">more ...</a></li>
                     </ul>
                   </div>
                   <div class="column col-lg-5 col-sm-5 col-md-5 col-xs-12">
@@ -88,7 +89,11 @@
 
                     <p>We also offers <a href="/um">User's Manual</a> and <a href="mailto:liujc@ctrip.com">Further Support</a> for companies wishing to use
                       <%= name%>
-                        <%= version%>.</p>
+                        <%= version%>.
+                    </p>
+
+                    <h3>Pomy</h3>
+                    <p>Check out our <a href="https://github.com/licoliu/pomy">pomy sources &lt;git@github.com:licoliu/pomy.git&gt;</a> to see all details.</p>
                   </div>
                 </div>
               </section>

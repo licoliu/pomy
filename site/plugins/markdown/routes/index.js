@@ -42,8 +42,10 @@ exports.index = function(req, res) {
 };
 
 exports.getDocuments = function(req, res) {
-  return res.json(folderDetect.detectAllSync(folder, filters.md, function(dir) {
-    dir.title = path.relative(folder, dir.title);
+  var type = req.query.type;
+  var position = type ? path.join(folder, type) : folder;
+  return res.json(folderDetect.detectAllSync(position, filters.md, function(dir) {
+    dir.title = path.relative(position, dir.title);
   }).children);
 }
 
