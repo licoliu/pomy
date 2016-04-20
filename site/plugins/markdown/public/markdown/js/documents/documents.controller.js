@@ -123,8 +123,14 @@ module.exports =
     }
 
     function renameDocument(node) {
-      documentsService.renameItem(node);
-      node.mode = 0;
+      var name = node.name,
+        title = node.title;
+
+      documentsService.renameItem(node).$promise.then(function() {
+        node.mode = 0;
+        documentsService.setCurrentDocumentName(name);
+        documentsService.setCurrentDocumentTitle(title.replace(/\/[^]*.md$/g, '/' + name));
+      });
     };
 
     function toggleDocument(node, expanded) {

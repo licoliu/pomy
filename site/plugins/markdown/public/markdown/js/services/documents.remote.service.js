@@ -26,6 +26,8 @@ module.exports =
       renameItem: renameItem,
       setCurrentDocument: setCurrentDocument,
       getCurrentDocument: getCurrentDocument,
+      setCurrentDocumentName: setCurrentDocumentName,
+      getCurrentDocumentName: getCurrentDocumentName,
       setCurrentDocumentTitle: setCurrentDocumentTitle,
       getCurrentDocumentTitle: getCurrentDocumentTitle,
       setCurrentDocumentBody: setCurrentDocumentBody,
@@ -226,6 +228,23 @@ module.exports =
      */
     function getCurrentDocument() {
       return service.currentDocument;
+    }
+
+    /**
+     *    Update the current document title.
+     *
+     *    @param  {String}  title  The document title.
+     */
+    function setCurrentDocumentName(name) {
+      service.currentDocument.name = name;
+      return name;
+    }
+
+    /**
+     *    Get the current document title.
+     */
+    function getCurrentDocumentName() {
+      return service.currentDocument.name;
     }
 
     /**
