@@ -2,15 +2,24 @@
 
 var
   gulp = require('gulp'),
-  zip = require('gulp-zip'),
-  name = global.settings.name,
-  version = global.settings.version,
-  settings = global.settings,
-  target = settings.target;
+  zip = require('gulp-zip');
 
 gulp.task('post-site', ['site'], function(cb) {
+  var settings = global.settings,
+    name = settings.name,
+    version = settings.version,
+    target = settings.target
+
   var root = global.getRootPath();
-  return gulp.src(root + target.root + "/site/**/*")
+
+  return gulp.src([
+      root + target.root + "/site/**/*",
+      root + target.root + "/package.json",
+      root + target.root + "/pomy.json",
+      root + target.root + "/util/**/*",
+    ], {
+      base: root + target.root
+    })
     .pipe(zip(name + ".site@" + version + '.zip'))
-    .pipe(gulp.dest(target.root));
+    .pipe(gulp.dest(root + target.root));
 });
