@@ -117,11 +117,13 @@ global.settings.site.domain = domain;
 global.settings.site.port = port;
 global.settings.target = target;
 global.settings.debug = debug;
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
+
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/api");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/backlog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/site");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/test");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/ui");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/site");
 
 var
   routes = require('./routes'),
