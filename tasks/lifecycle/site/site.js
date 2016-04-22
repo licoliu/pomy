@@ -10,6 +10,9 @@ gulp.task('site', ['pre-site'], function() {
 
   var srcs = [
     pomy + 'package.json',
+    pomy + 'pomy.json',
+
+    pomy + 'util/**/*',
 
     pomy + 'site/public/**/*',
     pomy + 'site/routes/**/*',
@@ -26,6 +29,13 @@ gulp.task('site', ['pre-site'], function() {
     '!' + pomy + 'site/**/karma.cofig.js',
     '!' + pomy + 'site/**/webpack.cofig.js'
   ];
+
+  var dependencies = require('../../../site/package.json').devDependencies;
+  if (dependencies) {
+    for (var i in dependencies) {
+      srcs.push('!' + pomy + 'site/node_modules/' + i + '/**/*');
+    }
+  }
 
   // var dependencies = require('../../../package.json').dependencies;
   // if (dependencies) {
