@@ -1,7 +1,7 @@
 {
   "name": "pomy",
   "description": "pomy.",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "author": {
     "name": "lico",
     "email": "lico.atom@gmail.com"
@@ -59,6 +59,7 @@
     "method-override": "^2.3.5",
     "minimist": "^1.2.0",
     "morgan": "^1.6.1",
+    "phantomjs": "1.9.12",
     "rc": "0.3.0",
     "request": "^2.64.0",
     "serve-favicon": "^2.3.0",
@@ -102,7 +103,6 @@
     "memory-fs": "^0.2.0",
     "ng-annotate-webpack-plugin": "^0.1.2",
     "node-sass": "3.4.2",
-    "phantomjs": "1.9.12",
     "pretty-hrtime": "^0.2.2",
     "raw-loader": "^0.5.1",
     "reaver": "^1.2.0",
