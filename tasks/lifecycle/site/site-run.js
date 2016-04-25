@@ -125,18 +125,13 @@ gulp.task('site:start', ['pom'], function(cb) {
       cb();
     });
   } else {
-
-    var command = "";
-
     var ssh = user + "@" + domain;
-    var dest = "/var/" + domain + "/";
+    var dest = "/home/" + user + "/var/" + domain + "/";
     var zip = name + ".site@" + version + '.zip';
 
+    var command = "";
     if (process.platform === "win32") {
       command = "cmd /c ";
-      dest = "/c:/users/" + user + dest;
-    } else {
-      dest = "/home/" + user + dest;
     }
 
     var folder = dest + name + ".site/" + version + "/";
