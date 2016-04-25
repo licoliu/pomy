@@ -4,7 +4,7 @@ var express = require('express'),
   path = require('path'),
   request = require('request'),
   qs = require('querystring'),
-  phantomjs = require('phantomjs'),
+  phantomjs = require('phantomjs-prebuilt'),
   child = require('child_process'),
   md = require('./markdown-it.js').md;
 
