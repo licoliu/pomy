@@ -9,8 +9,8 @@ gulp.task('site', ['pre-site'], function() {
   var pomy = global.getPomyPath();
 
   var srcs = [
-    root + 'package.json',
-    root + 'pomy.json',
+    // pomy + 'package.json',
+    // pomy + 'pomy.json',
 
     pomy + 'util/**/*',
 
