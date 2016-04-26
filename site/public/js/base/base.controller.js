@@ -20,9 +20,17 @@ module.exports =
     $scope.getApi = function(path) {
       window.frames[0].frames[1].location.href = "/docs/jsdoc/" + path;
     };
-    $scope.limitTo = 7;
-    $scope.sprints = documentsService.getSprints();
-    $scope.more = function() {
-      $scope.limitTo = 2 * $scope.limitTo;
+
+    $scope.limitTo1 = 7;
+    $scope.more1 = function() {
+      $scope.limitTo1 = 2 * $scope.limitTo1;
     };
+
+    $scope.limitTo2 = 7;
+    $scope.more2 = function() {
+      $scope.limitTo2 = 2 * $scope.limitTo2;
+    };
+
+    $scope.sprints = documentsService.getSprints();
+    $scope.backlogs = documentsService.getBacklogs();
   });

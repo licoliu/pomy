@@ -11,8 +11,15 @@ module.exports =
   .module('diDocuments.service', [])
   .service('documentsService', function($rootScope, $resource, $http, $q, $location) {
     return {
+      getBacklogs: function() {
+        return this.getDocuments("backlog");
+      },
 
       getSprints: function() {
+        return this.getDocuments("sprint");
+      },
+
+      getDocuments: function(type) {
         var defer = $q.defer();
 
         var values = [];
@@ -21,7 +28,7 @@ module.exports =
 
         $http({
           method: 'GET',
-          url: '/markdown/documents?type=site'
+          url: '/markdown/documents?type=' + type
         }).success(function(data) {
           values.$resolved = true;
           angular.extend(values, data);
