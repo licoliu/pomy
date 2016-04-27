@@ -124,6 +124,7 @@ mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/site");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/test");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/ui");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/deploy");
 
 var
   routes = require('./routes'),
@@ -137,6 +138,8 @@ var
 
 app.get('/', routes.index)
 app.get('/not-implemented', routes.not_implemented)
+
+app.post('/deploy', routes.deploy)
 
 app.get('/markdown', markdownRoutes.index)
 app.get('/markdown/documents', markdownRoutes.getDocuments)
