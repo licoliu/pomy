@@ -40,5 +40,10 @@ module.exports =
     $scope.backlogs = documentsService.getBacklogs();
     $scope.deployments = documentsService.getDeployments();
 
-
+    $scope.readme = documentsService.getReadme();
+    $scope.readme.$promise.then(function() {
+      if (!$scope.readme.error) {
+        jQuery("p[name='readme']").html($scope.readme.data);
+      }
+    });
   });

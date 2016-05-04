@@ -17,7 +17,7 @@ module.exports =
     vm.asPDF = asPDF;
 
     function initDownload() {
-      $downloader.src = '/files/' + documentsExportService.type + '/' + documentsExportService.file;
+      $downloader.src = '/markdown/files/' + documentsExportService.type + '/' + documentsExportService.file;
 
       return false;
     }

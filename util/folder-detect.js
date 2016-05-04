@@ -47,11 +47,11 @@ module.exports = {
           name: file,
           title: pathname
         };
-        if (callback) {
-          callback(dir, false);
-        }
         if (!filter || filter(file)) {
           dirs.children.push(dir);
+          if (callback) {
+            callback(dir, false);
+          }
         }
       }
     });

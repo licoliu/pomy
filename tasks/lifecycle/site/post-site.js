@@ -13,7 +13,8 @@ gulp.task('site-config', function(cb) {
 
   var srcs = [
     root + 'package.json',
-    root + 'pomy.json'
+    root + 'pomy.json',
+    root + 'README.md'
   ];
 
   return gulp.src(srcs, {
@@ -34,7 +35,8 @@ gulp.task('post-site', ['site', 'site-config'], function(cb) {
       root + target.root + "/site/**/*",
       root + target.root + "/package.json",
       root + target.root + "/pomy.json",
-      root + target.root + "/util/**/*",
+      root + target.root + "/README.md",
+      root + target.root + "/util/**/*"
     ], {
       base: root + target.root
     })

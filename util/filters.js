@@ -23,5 +23,8 @@ module.exports = {
   },
   "xml": function(name) {
     return /(\.(xml)$)/i.test(path.extname(name));
+  },
+  "pdf": function(name) {
+    return /(\.(pdf)$)/i.test(path.extname(name));
   }
 };

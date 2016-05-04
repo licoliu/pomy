@@ -26,17 +26,22 @@ global.settings = {
   site: {}
 };
 
-if (fs.existsSync(path.join(path.dirname(__filename), "../../../pomy.json"))) {
-  global.settings = config(path.relative(
-    process.cwd(),
-    path.join(path.dirname(__filename), "../../../pomy.json")
-  ));
+var cwd = process.cwd();
+var rootPath = path.join(path.dirname(__filename), "../../../");
+var pomyConfig = path.join(rootPath, "pomy.json");
+
+if (fs.existsSync(pomyConfig)) {
+  global.settings = config(path.relative(cwd, pomyConfig));
 } else {
-  global.settings = config(path.relative(
-    process.cwd(),
-    path.join(path.dirname(__filename), "../pomy.json")
-  ));
+  rootPath = path.join(path.dirname(__filename), "../");
+  pomyConfig = path.join(rootPath, "pomy.json");
+  global.settings = config(path.relative(cwd, pomyConfig));
 }
+
+global.settings.paths = {
+  cwd: cwd,
+  root: rootPath
+};
 
 var argvs = minimist(process.argv.slice(2));
 
