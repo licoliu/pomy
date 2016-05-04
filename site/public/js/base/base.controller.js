@@ -31,6 +31,14 @@ module.exports =
       $scope.limitTo2 = 2 * $scope.limitTo2;
     };
 
+    $scope.limitTo3 = 7;
+    $scope.more3 = function() {
+      $scope.limitTo3 = 2 * $scope.limitTo3;
+    };
+
     $scope.sprints = documentsService.getSprints();
     $scope.backlogs = documentsService.getBacklogs();
+    $scope.deployments = documentsService.getDeployments();
+
+
   });
