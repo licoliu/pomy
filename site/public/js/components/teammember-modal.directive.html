@@ -6,7 +6,7 @@
   <h3>Let me introduce our team members:</h3>
 </div>
 <div class="modal-body about">
-  <p>We take charge of developing in <a href="{{teamMembers.organization.url}}">{{teamMembers.organization.name}}</a> organization.</p>
+  <p>We take charge of developing in <a target="_blank" href="{{teamMembers.organization.url}}">{{teamMembers.organization.name}}</a> organization.</p>
 
   <h3>developers: </h3>
   <div>
@@ -15,7 +15,7 @@
       <li ng-if="member.email">
         <a href="mailto:{{member.email}}"><i class="glyphicon glyphicon-envelope"></i>{{member.email}}</a></li>
       <li ng-if="member.url">
-        <a href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
+        <a target="_blank" href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
       </li>
     </ul>
     <p ng-if="teamMembers.developers.length <= 0">
@@ -31,7 +31,7 @@
         <a href="mailto:{{member.email}}"><i class="glyphicon glyphicon-envelope"></i>{{member.email}}</a>
       </li>
       <li ng-if="member.url">
-        <a href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
+        <a target="_blank" href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
       </li>
     </ul>
     <p ng-if="teamMembers.contributors.length <= 0">
