@@ -278,9 +278,7 @@ tt {
   padding-right: 3px
 }
 
-.pom-site-welcome h3.links {
-  margin-top: 40px;
-}
+.pom-site-welcome h3.links {}
 
 .text-fluid {
   word-break: break-word;
@@ -365,6 +363,22 @@ tt {
 
 .footer .menu {
   margin-top: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.about {
+  li {
+    font-size: 1.2em;
+    line-height: 1.6em;
+    a {
+      font-size: 0.8em;
+      line-height: 1.5em;
+      i {
+        font-size: 0.6em;
+        padding-right: 8px;
+      }
+    }
+  }
 }
 
 .welcome-content h1 {
@@ -582,8 +596,8 @@ tt {
 }
 
 .pom-site-welcome section {
-  padding: 16px 16px;
-  background: white url(../images/welcome-bg.gif) left bottom no-repeat;
+  padding: 16px 0px;
+  /*background: white url(../images/welcome-bg.gif) left bottom no-repeat;*/
   min-height: 480px;
   position: relative
 }
@@ -611,11 +625,11 @@ tt {
 }
 
 .pom-site-welcome .news {
-  margin: auto auto
+  margin: 30px auto
 }
 
 .pom-site-welcome .news h1 {
-  padding-bottom: 15px
+  padding-bottom: 0px
 }
 
 .pom-site-welcome .news .l {

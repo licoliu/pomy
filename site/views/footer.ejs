@@ -8,7 +8,7 @@
       <div class="col-md-2 footAboutUs">
         <h6>关于我们</h6>
         <div class="menu">
-          <a ng-click="showAbout($event)" target="_blank">TEAM MEMBER</a>
+          <a ng-click="showAbout($event)" target="_blank">TEAM MEMBERS</a>
         </div>
       </div>
       <div class="col-md-5 footHelp">
@@ -16,21 +16,21 @@
         <div class="menu">
           Please send us your ideas, bug reports, suggestions! And feedback is very important fot us and would be greatly appreciated.
           <br/> Support Email:
-          <a href="mailto:liujc@ctrip.com">liujc@ctrip.com</a>
+          <a href="mailto:<%= manual.email%>"><%= manual.email%></a>
         </div>
       </div>
       <div class="col-md-2 footLinks">
         <h6>友情链接</h6>
         <div class="menu">
-          <a target="_blank" href="http://git.dev.sh.ctripcorp.com">git lab</a>
+          <a target="_blank" href="https://github.com/licoliu/pomy">pomy(git)</a>
           <br />
-          <a target="_blank" href="http://conf.ctripcorp.com/dashboard.action">confluence</a>
+          <a target="_blank" href="https://www.npmjs.com/package/pomy">pomy(npm)</a>
         </div>
       </div>
     </div>
   </div>
   <div class="copyright">
-    © 2005－2016 CIS SysDev, ctrip.com, all rights reserved
+    Copyright (c) 2009~2016 lico and other contributors, all rights reserved
   </div>
 </div>
 <% if(env === 'production') { %>

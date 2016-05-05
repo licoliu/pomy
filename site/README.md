@@ -29,22 +29,44 @@ Your project need to be configured using JSON in a `pomy.json` file.
   "debug": true,
   "skin": "default",
   "define": "cmd",
-  "authors": [
-    "lico <lico.atom@gmail.com>"
-  ],
   "keywords": "JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
   "repository": {
     "type": "git",
-    "url": "git@git.dev.sh.ctripcorp.com:liujc/pomy-test.git"
+    "url": "git@github.com/licoliu/pomy-test.git"
   },
   "bugs": {
-    "url": "http://git.dev.sh.ctripcorp.com/liujc/pomy-test/issues"
+    "url": "http://github.com/liujc/pomy-test/issues"
   },
-  "homepage": "http://git.dev.sh.ctripcorp.com/liujc/pomy-test",
+  "homepage": "http://github.com/liujc/pomy-test",
   "dependencies": {},
   "devDependencies": {
     "pomy": "^1.0.1"
-  }
+  },
+  "site": {
+    "domain": "127.0.0.1",
+    "port": 8421,
+    "user": "root",
+    "nohup": true
+  },
+  "manual": {
+    "site": "",
+    "email": "lico.atom@gmail.com"
+  },
+  "registry": "https://registry.npm.taobao.org",
+  "googleWebmasterMeta": "",
+  "author": "lico",
+  "developers": [{
+    "id": "lico",
+    "name": "lico liu",
+    "email": "lico.atom@gmail.com",
+    "url": "https://github.com/licoliu"
+  }],
+  "contributors": [],
+  "organization": {
+    "name": "atomunion",
+    "url": "https://github.com/atomunion"
+  },
+  "target": "local"
 }
 ```
 
@@ -90,7 +112,7 @@ There are many different plugins avaiable and they all implement different goals
 
 
 ## Support
-* [Mailinglist](mailto:lico.atom@ctrip.com) - lico.atom@gmail.com
+* [Mailinglist](mailto:lico.atom@gmail.com) - lico.atom@gmail.com
 
 ## Contributing
 We welcome [contributions](https://github.com/licoliu/pomy/graphs/contributors) of all kinds from anyone. 

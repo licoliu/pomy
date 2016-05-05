@@ -3,9 +3,7 @@ var path = require('path'),
   qs = require('querystring'),
   fs = require('fs'),
   folderDetect = require('../../util/folder-detect'),
-  filters = require('../../util/filters'),
-  config = require('config-file'),
-  settings = config("./pomy.json");
+  filters = require('../../util/filters');
 
 var folder = path.join(
   process.env.HOME,
@@ -14,7 +12,7 @@ var folder = path.join(
 
 // Show the index page
 exports.index = function(req, res) {
-  return res.render('index', settings);
+  return res.render('index', global.settings);
 };
 
 // Show the not implemented yet page
@@ -79,4 +77,19 @@ exports.getDeployments = function(req, res) {
   }).children;
 
   return res.json(deployments);
+};
+
+exports.getAuthors = function(req, res) {
+
+  var author = global.settings.author || "",
+    developers = global.settings.developers || [],
+    contributors = global.settings.contributors || [],
+    organization = global.settings.organization || {};
+
+  return res.json({
+    developers: developers,
+    contributors: contributors,
+    organization: organization,
+    author: author
+  });
 };

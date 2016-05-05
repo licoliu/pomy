@@ -146,6 +146,7 @@ app.get('/not-implemented', routes.not_implemented)
 
 app.post('/deploy', routes.deploy)
 app.get('/deployments', routes.getDeployments)
+app.get('/authors', routes.getAuthors)
 
 app.get('/markdown', markdownRoutes.index)
 app.get('/markdown/documents', markdownRoutes.getDocuments)

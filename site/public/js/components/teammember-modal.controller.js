@@ -2,9 +2,9 @@
 
 module.exports =
   angular
-  .module('pomyBase.controllers.about', [])
+  .module('pomyBase.controllers.about')
 
-.controller('TeamMemberModalInstance', function($scope, $modalInstance) {
+.controller('TeamMemberModalInstance', function($scope, $modalInstance, TeamMemberService) {
 
   $scope.ok = function() {
     return $modalInstance.close();
@@ -13,5 +13,7 @@ module.exports =
   $scope.cancel = function() {
     return $modalInstance.dismiss('cancel');
   };
+
+  $scope.teamMembers = TeamMemberService.getTeamMembers();
 
 });

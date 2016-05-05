@@ -18,6 +18,7 @@
   // Base
   require('./base/base.controller');
 
+  require('./components/teammember-modal.service');
   require('./components/teammember-modal.controller');
 
   // Configure Dependencies

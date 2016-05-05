@@ -1,8 +1,6 @@
 var path = require('path'),
   request = require('request'),
-  qs = require('querystring'),
-  config = require('config-file'),
-  settings = config("./pomy.json");
+  qs = require('querystring');
 
 // Show the index page
 exports.index = function(req, res) {

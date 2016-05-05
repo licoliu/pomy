@@ -1,7 +1,7 @@
 {
   "group": "com.atomunion",
   "artifact": "pomy",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "name": "pomy",
   "title": "pomy",
   "description": "pomy",
@@ -10,9 +10,6 @@
   "debug": false,
   "skin": "default",
   "define": "cmd",
-  "authors": [
-    "lico <lico.atom@gmail.com>"
-  ],
   "keywords": "POMY, Surface, JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
   "repository": {
     "type": "git",
@@ -26,10 +23,27 @@
   "devDependencies": {},
   "site": {
     "domain": "127.0.0.1",
-    "port": 8421
+    "port": 8421,
+    "user": "root",
+    "nohup": true
+  },
+  "manual": {
+    "site": "",
+    "email": "lico.atom@gmail.com"
   },
   "registry": "https://registry.npm.taobao.org",
   "googleWebmasterMeta": "",
-  "author": "",
+  "author": "lico",
+  "developers": [{
+    "id": "lico",
+    "name": "lico liu",
+    "email": "lico.atom@gmail.com",
+    "url": "https://github.com/licoliu"
+  }],
+  "contributors": [],
+  "organization": {
+    "name": "atomunion",
+    "url": "https://github.com/atomunion"
+  },
   "target": "local"
 }

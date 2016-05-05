@@ -29,13 +29,10 @@ Your project need to be configured using JSON in a `pomy.json` file.
   "debug": true,
   "skin": "default",
   "define": "cmd",
-  "authors": [
-    "lico <lico.atom@gmail.com>"
-  ],
   "keywords": "JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
   "repository": {
     "type": "git",
-    "url": "git@github.com:liujc/pomy-test.git"
+    "url": "git@github.com/licoliu/pomy-test.git"
   },
   "bugs": {
     "url": "http://github.com/liujc/pomy-test/issues"
@@ -44,7 +41,32 @@ Your project need to be configured using JSON in a `pomy.json` file.
   "dependencies": {},
   "devDependencies": {
     "pomy": "^1.0.1"
-  }
+  },
+  "site": {
+    "domain": "127.0.0.1",
+    "port": 8421,
+    "user": "root",
+    "nohup": true
+  },
+  "manual": {
+    "site": "",
+    "email": "lico.atom@gmail.com"
+  },
+  "registry": "https://registry.npm.taobao.org",
+  "googleWebmasterMeta": "",
+  "author": "lico",
+  "developers": [{
+    "id": "lico",
+    "name": "lico liu",
+    "email": "lico.atom@gmail.com",
+    "url": "https://github.com/licoliu"
+  }],
+  "contributors": [],
+  "organization": {
+    "name": "atomunion",
+    "url": "https://github.com/atomunion"
+  },
+  "target": "local"
 }
 ```
 

@@ -25,8 +25,11 @@
       <li class="menu-item menu-item--export-as">
         <a class="dropdown-toggle" href="/cy">Community</a>
       </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/ut">Test Reports</a>
+      </li>
       <li class="menu-item menu-item--export-as has-dropdown" dropdown>
-        <a class="dropdown-toggle" href="/pi" dropdown-toggle>Project Information <span class="caret"></span></a>
+        <a class="dropdown-toggle" href="javascript:void(0)" dropdown-toggle>Project Information <span class="caret"></span></a>
         <ul class="dropdown dropdown-menu" role="menu">
           <li>
             <a class="export-html" ng-href="<%=homepage%>">
@@ -34,13 +37,18 @@
             </a>
           </li>
           <li>
-            <a class="export-html" ng-href="mailto:liujc@ctrip.com">
+            <a class="export-html" ng-href="mailto:lico.atom@gmail.com">
               <span>Further Support</span>
             </a>
           </li>
           <li>
             <a class="export-html" ng-click="showAbout($event)">
               <span>About Us</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" ng-href="/pi">
+              <span>Project Information</span>
             </a>
           </li>
         </ul>

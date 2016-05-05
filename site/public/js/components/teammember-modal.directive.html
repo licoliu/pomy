@@ -5,9 +5,38 @@
   </button>
   <h3>Let me introduce our team members:</h3>
 </div>
-<div class="modal-body">
-  <p>We take charge of front-end developing in ctrip cis dept.</p>
-  <p>刘继超（lico） <a href="mailto:liujc@Ctrip.com">liujc@ctrip.com</a></p>
-  <p>邵文广（swg） <a href="mailto:wgshao@Ctrip.com">wgshao@ctrip.com</a></p>
-  <p>韩晨（han_c） <a href="mailto:han_c@Ctrip.com">han_c@ctrip.com</a></p>
+<div class="modal-body about">
+  <p>We take charge of developing in <a href="{{teamMembers.organization.url}}">{{teamMembers.organization.name}}</a> organization.</p>
+
+  <h3>developers: </h3>
+  <div>
+    <ul ng-repeat="member in teamMembers.developers">
+      <li>{{member.name}} &lt;{{member.id}}&gt;</li>
+      <li ng-if="member.email">
+        <a href="mailto:{{member.email}}"><i class="glyphicon glyphicon-envelope"></i>{{member.email}}</a></li>
+      <li ng-if="member.url">
+        <a href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
+      </li>
+    </ul>
+    <p ng-if="teamMembers.developers.length <= 0">
+      There are not any developers so far.
+    </p>
+  </div>
+
+  <h3>contributors: </h3>
+  <div>
+    <ul ng-repeat="member in teamMembers.contributors">
+      <li>{{member.name}} &lt;{{member.id}}&gt;</li>
+      <li ng-if="member.email">
+        <a href="mailto:{{member.email}}"><i class="glyphicon glyphicon-envelope"></i>{{member.email}}</a>
+      </li>
+      <li ng-if="member.url">
+        <a href="{{member.url}}"><i class="glyphicon glyphicon-gift"></i>{{member.url}}</a>
+      </li>
+    </ul>
+    <p ng-if="teamMembers.contributors.length <= 0">
+      There are not any contributors so far.
+    </p>
+  </div>
+
 </div>
