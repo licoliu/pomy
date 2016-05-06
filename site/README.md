@@ -49,7 +49,7 @@ Your project need to be configured using JSON in a `pomy.json` file.
     "nohup": true
   },
   "manual": {
-    "site": "",
+    "url": "http://github.com/liujc/pomy-test",
     "email": "lico.atom@gmail.com"
   },
   "registry": "https://registry.npm.taobao.org",

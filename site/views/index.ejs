@@ -62,16 +62,6 @@
                     <%- include icons/tree %>
                   </div>
                   <div class="column col-lg-7 col-sm-7 col-md-7 col-xs-12">
-                    <h3 class="links">More Links</h3>
-                    <ul class="type13">
-                      <li><p><a href="/markdown" class="more-icon">MARKDOWN</a></p></li>
-                      <li><p><a href="/api" class="more-icon">API Documents</a></p></li>
-                      <li><p><a href="/ui" class="more-icon">UI Design</a></p></li>
-                      <li><p><a href="/cy" class="more-icon">Community</a></p></li>
-                      <li><p><a href="/ut" class="more-icon">Test Reports</a></p></li>
-                      <li><p><a href="/pi" class="more-icon">Project Information</a></p></li>
-                    </ul>
-
                     <h3>Activity</h3>
                     <p class="text-fluid">We have also been posting summaries of new features and changes to <a href="/markdown/">our backlogs</a>.</p>
                     <ul class="type13">
@@ -88,11 +78,40 @@
                       <li ng-if="sprints.length > limitTo2"><a href="javascript:void(0)" ng-click="more2()">more ...</a></li>
                       <li ng-if="sprints.length <= 0"><a href="javascript:void(0)">There are not any sprint files here so far.</a></li>
                     </ul>
+
+                    <h3 class="links">More Links</h3>
+                    <ul class="type13">
+                      <li>
+                        <p><a href="/markdown" class="more-icon">MARKDOWN</a></p>
+                      </li>
+                      <li>
+                        <p><a href="/api" class="more-icon">API Documents</a></p>
+                      </li>
+                      <li>
+                        <p><a href="/ui" class="more-icon">UI Design</a></p>
+                      </li>
+                      <li>
+                        <p><a href="/cy" class="more-icon">Community</a></p>
+                      </li>
+                      <li>
+                        <p><a href="/ut" class="more-icon">Test Reports</a></p>
+                      </li>
+                      <li>
+                        <p><a href="/pi" class="more-icon">Project Information</a></p>
+                      </li>
+                    </ul>
                   </div>
                   <div class="column col-lg-5 col-sm-5 col-md-5 col-xs-12">
+                    <h3>Contributing</h3>
+                    <p>We welcome contributions of all kinds from anyone.</p>
+                    <ul class="type13">
+                      <li><a target="_blank" href="<%= bugs.url%>" class="more-icon">issues</a></li>
+                      <li><a href="mailto:<%= manual.email%>" class="more-icon">communication</a></li>
+                    </ul>
+
                     <h3>Summary</h3>
-                    <p>First, check out our <a target="_blank" href="<%=homepage%>">sources &lt;<%=repository.url%>&gt;</a> to see all details.</p>
-                    <p>We also offers <a href="/um">User's Manual</a> and <a href="mailto:<%= manual.email%>">Further Support</a> for companies wishing to use
+                    <p>First, check out our <a target="_blank" href="<%= homepage%>">sources &lt;<%= repository.url%>&gt;</a> to see all details.</p>
+                    <p>We also offers <a target="_blank" href="<%= manual.url%>">User's Manual</a> and <a href="mailto:<%= manual.email%>">Further Support</a> for companies wishing to use
                       <%= name%>
                         <%= version%>.
                     </p>

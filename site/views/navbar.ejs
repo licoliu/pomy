@@ -32,13 +32,23 @@
         <a class="dropdown-toggle" href="javascript:void(0)" dropdown-toggle>Project Information <span class="caret"></span></a>
         <ul class="dropdown dropdown-menu" role="menu">
           <li>
-            <a class="export-html" target="_blank" ng-href="<%=homepage%>">
+            <a class="export-html" target="_blank" ng-href="<%= homepage%>">
               <span>Source Code Repository</span>
             </a>
           </li>
           <li>
-            <a class="export-html" ng-href="mailto:lico.atom@gmail.com">
+            <a class="export-html" target="_blank" ng-href="<%= manual.url%>">
+              <span>User's Manual</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" ng-href="mailto:<%= manual.email%>">
               <span>Further Support</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" target="_blank" ng-href="<%= bugs.url%>">
+              <span>Issues</span>
             </a>
           </li>
           <li>
