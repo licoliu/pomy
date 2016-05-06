@@ -70,8 +70,6 @@ gulp.task("repack-ionrangeslider", ["repack-ionrangeslider-css"], function() {
 gulp.task("repack-angular-strap-tpl", function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
-
-
   return gulp.src([
       pomy + "bower_components/angular-strap/dist/angular-strap.tpl.js"
     ])
@@ -176,6 +174,36 @@ gulp.task("repack-ng-table", ["repack-ng-table-css"], function() {
     .pipe(gulp.dest(root + dest.lib + "/ng-table/js/"));
 });
 
+gulp.task("repack-google-code-prettify-styles", function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      pomy + "bower_components/google-code-prettify/styles/desert.css",
+      pomy + "bower_components/google-code-prettify/styles/doxy.css",
+      pomy + "bower_components/google-code-prettify/styles/sons-of-obsidian.css",
+      pomy + "bower_components/google-code-prettify/styles/sunburst.css"
+    ])
+    .pipe(gulp.dest(root + dest.lib + "/google-code-prettify/css/"));
+});
+gulp.task("repack-google-code-prettify-css", ["repack-google-code-prettify-styles"], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      root + dest.lib + "/google-code-prettify/css/prettify.min.css"
+    ])
+    .pipe(rename("prettify.css"))
+    .pipe(gulp.dest(root + dest.lib + "/google-code-prettify/css/"));
+});
+gulp.task("repack-google-code-prettify", ["repack-google-code-prettify-css"], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      root + dest.lib + "/google-code-prettify/js/prettify.min.js"
+    ])
+    .pipe(rename("prettify.js"))
+    .pipe(gulp.dest(root + dest.lib + "/google-code-prettify/js/"));
+});
+
 gulp.task("repack-file", [
   "repack-mousewheel",
   "repack-malihu",
@@ -187,7 +215,8 @@ gulp.task("repack-file", [
   "repack-angular-ui-tree",
   "repack-angular-ui",
   "repack-easing",
-  "repack-ng-table"
+  "repack-ng-table",
+  "repack-google-code-prettify"
 ], function(cb) {
   var root = global.getRootPath();
   del([
@@ -203,7 +232,9 @@ gulp.task("repack-file", [
     root + dest.lib + "/animate.css",
     root + dest.lib + "/iCheck/js/icheck.min.js",
     root + dest.lib + "/ng-table/css/ng-table.min.css",
-    root + dest.lib + "/ng-table/js/ng-table.min.js"
+    root + dest.lib + "/ng-table/js/ng-table.min.js",
+    root + dest.lib + "/google-code-prettify/css/prettify.min.css",
+    root + dest.lib + "/google-code-prettify/js/prettify.min.js"
   ], {
     force: true
   }).then(function(deletedFiles) {
