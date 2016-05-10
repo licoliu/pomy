@@ -2,6 +2,7 @@ var path = require('path'),
   request = require('request'),
   qs = require('querystring'),
   fs = require('fs'),
+  moment = require('moment'),
   folderDetect = require('../../util/folder-detect'),
   filters = require('../../util/filters');
 
@@ -24,7 +25,7 @@ exports.deploy = function(req, res) {
   var name = req.body.name;
   var version = req.body.version;
   var target = req.body.target;
-  var date = req.body.date;
+  var date = moment().format("ddd, MMM Do YYYY, h:mm:ss a"); //req.body.date;
 
   var pathname = path.join(folder, "deploy", target + ".md");
 
@@ -71,7 +72,7 @@ exports.getDeployments = function(req, res) {
     }
 
     deployments.push({
-      target: target.name,
+      target: target.name.replace(/(.md)$/g, ""),
       records: records
     });
   }).children;

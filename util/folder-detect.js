@@ -37,6 +37,7 @@ module.exports = {
         dir.id = stat.ino; //stat.ctime.getTime();
         dir.name = file;
         dir.title = pathname;
+        dir.mtime = stat.mtime;
         if (callback) {
           callback(dir, true);
         }
@@ -45,7 +46,8 @@ module.exports = {
         dir = {
           id: stat.ino, //stat.ctime.getTime(),
           name: file,
-          title: pathname
+          title: pathname,
+          mtime: stat.mtime
         };
         if (!filter || filter(file)) {
           dirs.children.push(dir);

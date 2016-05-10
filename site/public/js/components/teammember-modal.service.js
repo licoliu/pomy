@@ -3,7 +3,7 @@
 module.exports =
   angular
   .module('pomyBase.controllers.about', [])
-  .service('TeamMemberService', function($rootScope, $resource, $http, $q, $location) {
+  .service('TeamMemberService', function($rootScope, $http, $q, $location) {
     return {
 
       getTeamMembers: function(type) {

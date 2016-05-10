@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-strict-di>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>
+    <%= title %>
+  </title>
+
+  <meta name="description" content="<%= description %>">
+  <meta name="keywords" content="<%= keywords %>">
+  <meta name="author" content="<%= author %>">
+  <meta name="fragment" content="!">
+
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  <link rel="stylesheet" href="/fonts/exo/Exo.css" type="text/css" />
+  <link href="/markdown/fonts/sourcesanspro/sourcesanspro.css" rel="stylesheet" type="text/css">
+  <link href="/markdown/fonts/ubuntumono/ubuntumono.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="/css/classes.all.css" type="text/css" />
+  <link href="/markdown/css/classes.all.css" rel="stylesheet">
+  <link href="/changelog/css/classes.all.css" rel="stylesheet">
+</head>
+
+<body ng-controller="Base">
+
+  <div id="loading">
+    <span class="title">
+      <%= title%>
+    </span>
+    <span class="logo"></span>
+  </div>
+  <div class="wrapper">
+    <div class="page">
+      <%- include navbar %>
+
+        <div class="welcome-content container">
+          <div class="pom-site-welcome row" style="width: 100%;">
+            <div class="content col-lg-12 col-sm-12 col-md-12 col-xs-12">
+              <header>
+                <h2>Welcome to
+                  <strong>
+                    <%= name%>'s changelog
+                  </strong>!</h2>
+              </header>
+              <section>
+                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                  <p class="intro">All notable changes to
+                    <%= name%> will be documented in this file.</p>
+                  <p class="intro">This is the biggest upgrade we've ever made to
+                    <%= name%> and we think you're going to love it.</p>
+                  <ul class="readmes">
+                    <li name="{{changelog.name}}" class="readme" expand="{{changelog.isExpand}}" first="{{$first}}" last="{{$last}}" ng-repeat="changelog in changelogs | limitTo:limitTo">
+                      <h2>
+                        <strong>{{changelog.name}}</strong>
+                      </h2>
+                      <h3>{{changelog.mtime}}</h3>
+                      <p></p>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+    </div>
+    <%- include footer %>
+</body>
+
+</html>

@@ -78,4 +78,39 @@ gulp.task('docs', function(cb) {
   });
 });
 
-gulp.task('sites', ['docs', 'markdown']);
+gulp.task('changelog', function(cb) {
+
+  var cwd = path.join(process.cwd(), './plugins/changelog/');
+
+  var args = [];
+  var command = null;
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push('/c');
+    args.push(path.resolve(path.dirname(__filename), '../../node_modules/.bin/gulp'));
+  } else {
+    command = "../../node_modules/.bin/gulp";
+  }
+
+  args.push("build");
+  args.push('--prod');
+
+  var changelog = spawn(command, args, {
+    cwd: cwd
+  });
+
+  changelog.stdout.on('data', function(data) {
+    console.log(data.toString());
+  });
+
+  changelog.stderr.on('data', function(data) {
+    console.error(data.toString());
+  });
+
+  changelog.on('exit', function(code) {
+    console.log('Finish changelog site build process');
+    cb();
+  });
+});
+gulp.task('sites', ['docs', 'markdown', 'changelog']);

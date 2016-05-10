@@ -1,0 +1,68 @@
+<div class="navbar">
+
+  <a class="logo" href="/">
+    <%- include ../../../../views/icons/logo %>
+  </a>
+
+  <h1 class="navbar-brand">
+    <a class="brand logo-text" href="/">POMY</a>
+  </h1>
+
+  <nav class="nav nav-right">
+    <ul class="menu menu-utilities">
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/">HOME</a>
+      </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/markdown">MARKDOWN</a>
+      </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/api">API Documents</a>
+      </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/ui">UI Design</a>
+      </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/cy">Community</a>
+      </li>
+      <li class="menu-item menu-item--export-as">
+        <a class="dropdown-toggle" href="/ut">Test Reports</a>
+      </li>
+      <li class="menu-item menu-item--export-as has-dropdown" dropdown>
+        <a class="dropdown-toggle" href="javascript:void(0)" dropdown-toggle>Project Information <span class="caret"></span></a>
+        <ul class="dropdown dropdown-menu" role="menu">
+          <li>
+            <a class="export-html" target="_blank" ng-href="<%= homepage%>">
+              <span>Source Code Repository</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" target="_blank" ng-href="<%= manual.url%>">
+              <span>User's Manual</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" ng-href="mailto:<%= manual.email%>">
+              <span>Further Support</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" target="_blank" ng-href="<%= bugs.url%>">
+              <span>Issues</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" ng-click="showAbout($event)">
+              <span>About Us</span>
+            </a>
+          </li>
+          <li>
+            <a class="export-html" ng-href="/pi">
+              <span>Project Information</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>

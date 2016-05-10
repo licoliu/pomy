@@ -64,7 +64,8 @@ app.set('port', port)
 
 app.set('views', [path.join(__dirname, './views'),
   path.join(__dirname, './plugins/markdown/views'),
-  path.join(__dirname, './plugins/docs/views')
+  path.join(__dirname, './plugins/docs/views'),
+  path.join(__dirname, './plugins/changelog/views')
 ])
 app.set('view engine', 'ejs')
 
@@ -95,6 +96,7 @@ app.use(cookieSession({
 app.use(serveStatic(path.join(__dirname, './public')))
 app.use(serveStatic(path.join(__dirname, './plugins/markdown/public')))
 app.use(serveStatic(path.join(__dirname, './plugins/docs/public')))
+app.use(serveStatic(path.join(__dirname, './plugins/changelog/public')))
 
 // Setup local variables to be available in the views.
 app.locals.title = title;
@@ -130,11 +132,14 @@ mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/test");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/ui");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/deploy");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/changelog");
 
 var
   routes = require('./routes'),
   markdownRoutes = require('./plugins/markdown/routes'),
   docsRoutes = require('./plugins/docs/routes'),
+  changelogRoutes = require('./plugins/changelog/routes'),
+
   core = require('./plugins/markdown/plugins/core/server.js'),
   dropbox = require('./plugins/markdown/plugins/dropbox/server.js'),
   github = require('./plugins/markdown/plugins/github/server.js'),
@@ -147,6 +152,9 @@ app.get('/not-implemented', routes.not_implemented)
 app.post('/deploy', routes.deploy)
 app.get('/deployments', routes.getDeployments)
 app.get('/authors', routes.getAuthors)
+
+app.get('/cl', changelogRoutes.index)
+app.get('/changelogs', changelogRoutes.getChangelogs)
 
 app.get('/markdown', markdownRoutes.index)
 app.get('/markdown/documents', markdownRoutes.getDocuments)

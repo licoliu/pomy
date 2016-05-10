@@ -1,0 +1,12 @@
+ul.readmes {
+  li.readme {
+    margin-top: 20px;
+    &::after {
+      content: "";
+      width: 100%;
+      height: 1px;
+      border-top: 1px dashed #E0E0E0;
+      display: inline-block;
+    }
+  }
+}
