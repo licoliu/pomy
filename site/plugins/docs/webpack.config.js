@@ -13,7 +13,9 @@ module.exports = {
     filename: 'classes.all.js'
   },
   module: {
-    noParse: [],
+    noParse: [
+      /angular/
+    ],
     loaders: [{
       test: /\.css$/,
       loader: 'style-loader!css-loader',
@@ -26,12 +28,16 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules', 'plugins'],
     extensions: ['', '.webpack.js', '.web.js', '.js'],
-    alias: {}
+    alias: {
+      'angular': 'angular/angular'
+    }
   },
   resolveLoader: {
     root: nodeModulesPath
   },
   plugins: [
-
+    new webpack.ProvidePlugin({
+      'angular': 'exports?angular!angular'
+    })
   ]
 };

@@ -17,10 +17,6 @@ module.exports =
       return false;
     };
 
-    $scope.getApi = function(path) {
-      window.frames[0].frames[1].location.href = "/docs/jsdoc/" + path;
-    };
-
     $scope.limitTo1 = 7;
     $scope.more1 = function() {
       $scope.limitTo1 = 2 * $scope.limitTo1;
