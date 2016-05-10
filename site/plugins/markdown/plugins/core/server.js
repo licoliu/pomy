@@ -15,7 +15,7 @@ var Kore = function() {
 
   var folder = path.join(
     process.env.HOME,
-    "var/" + global.settings.site.domain + "/documents/" + global.settings.target
+    "var/" + global.settings.site.domain + "/documents/" + global.settings.name + "/" + global.settings.target
   );
 
   function _getFullHtml(name, str, style) {

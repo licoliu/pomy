@@ -45,6 +45,7 @@ global.settings.paths = {
 
 var argvs = minimist(process.argv.slice(2));
 
+var name = global.settings.name;
 var domain = argvs.domain || global.settings.site.domain || 'localhost';
 var port = argvs.port || global.settings.site.port || 8421;
 var target = argvs.target || global.settings.target || 'local';
@@ -53,7 +54,7 @@ var debug = argvs.debug || global.settings.debug || true;
 var configs = require('../package.json');
 var version = configs.version;
 
-var author = configs.authors.toString();
+var author = configs.author;
 var keywords = configs.keywords;
 var googleWebmasterMeta = configs.googleWebmasterMeta;
 var title = configs.title;
@@ -125,14 +126,14 @@ global.settings.site.port = port;
 global.settings.target = target;
 global.settings.debug = debug;
 
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/api");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/backlog");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/site");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/sprint");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/test");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/ui");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/deploy");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + target + "/changelog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/api");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/backlog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/site");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/sprint");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/test");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/ui");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/deploy");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/changelog");
 
 var
   routes = require('./routes'),
