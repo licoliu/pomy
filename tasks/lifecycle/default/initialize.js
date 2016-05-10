@@ -7,7 +7,6 @@ gulp.task('initialize', ['dependancy'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-
   return gulp.src([
       pomy + "bower_components/jre/**/*",
       "!" + pomy + "bower_components/jre/jsvm.min.js",

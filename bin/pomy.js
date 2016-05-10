@@ -131,6 +131,20 @@ function handleArguments(env) {
     if (tasksFlag) {
       return logTasks(env, pomyInst);
     }
+
+    if (tasks.length > 1) {
+      switch (tasks[0]) {
+        case 'install':
+        case 'uninstall':
+          toRun = ['bower-' + tasks[0]];
+          break;
+        case 'update':
+          toRun = tasks.slice(0, 1);
+          break;
+        default:
+          break;
+      }
+    }
     pomyInst.start.apply(pomyInst, toRun);
   });
 }
