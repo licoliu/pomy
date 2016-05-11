@@ -30,7 +30,7 @@ module.exports =
           values.$resolved = true;
 
           data.sort(function(a, b) {
-            return a.name < b.name;
+            return a.name < b.name ? 1 : -1;
           });
 
           angular.extend(values, data);
