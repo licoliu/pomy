@@ -1,9 +1,12 @@
 'use strict';
 
 var
+  path = require('path'),
   gulp = require('gulp'),
   uglify = require('gulp-uglify'),
+  concat = require('gulp-concat'),
   gulpif = require('gulp-if'),
+  rename = require('gulp-rename'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
   //browserSync = require('browser-sync'),
@@ -12,24 +15,47 @@ var
 
 gulp.task('jsrt', function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.jsrt + "/**/*.js")
-    .pipe(uglify({
-      mangle: {
-        except: ['require', 'exports', 'module']
-      }
-    }))
-    .pipe(gulp.dest(root + dest.jsrt));
+
+  var jre = global.settings.jre;
+  if (jre) {
+    for (var i = 0, len = jre.files.length; i < len; i++) {
+      jre.files[i] = path.join(root, jre.files[i]);
+    }
+    return gulp.src(jre.files)
+      .pipe(concat(jre.name + ".js"))
+      .pipe(gulp.dest(root));
+  } else {
+    return gulp.src(root + src.jsrt + "/**/*.js")
+      .pipe(uglify({
+        mangle: {
+          except: ['require', 'exports', 'module']
+        }
+      }))
+      .pipe(gulp.dest(root + dest.jsrt));
+  }
 });
 
 gulp.task('jre', ["jsrt"], function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.jre + "/jsvm.js")
-    .pipe(uglify({
-      mangle: {
-        except: ['require', 'exports', 'module']
-      }
-    }))
-    .pipe(gulp.dest(root + dest.jre));
+  var jre = global.settings.jre;
+  if (jre) {
+    return gulp.src(root + jre.name + ".js")
+      .pipe(uglify({
+        mangle: {
+          except: ['require', 'exports', 'module']
+        }
+      }))
+      .pipe(rename((jre.uglify || (jre.name + ".min")) + ".js"))
+      .pipe(gulp.dest(root));
+  } else {
+    return gulp.src(root + src.jre + "/jsvm.js")
+      .pipe(uglify({
+        mangle: {
+          except: ['require', 'exports', 'module']
+        }
+      }))
+      .pipe(gulp.dest(root + dest.jre));
+  }
 });
 
 gulp.task('js', ["jre"], function() {

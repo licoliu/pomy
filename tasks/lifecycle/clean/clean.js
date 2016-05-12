@@ -11,7 +11,7 @@ gulp.task('clean', ['pre-clean'], function(cb) {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-  var error = del([
+  var files = [
     root + dest.fonts + '/*',
     root + dest.images + '/*',
     root + dest.template + '/*',
@@ -33,9 +33,16 @@ gulp.task('clean', ['pre-clean'], function(cb) {
 
     //delete site's js and css
     //delete markdown's js and css
-    pomy + 'site/plugins/docs/public/docs/jsdoc/*',
+    pomy + 'site/plugins/docs/public/docs/jsdoc/*'
+  ];
 
-  ], {
+  var jre = global.settings.jre;
+  if (jre) {
+    files.push(root + jre.name + ".js");
+    files.push(root + jre.uglify + ".js");
+  }
+
+  var error = del(files, {
     force: true
   }).then(function(deletedFiles) {
     console.log("##################################################");

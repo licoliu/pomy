@@ -188,6 +188,15 @@ gulp.task('pom', function() {
 gulp.task('bower-config', ['pom'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
+
+  if (global.settings.jre) {
+    delete global.settings.dependencies.jre;
+    delete global.settings.devDependencies.jre;
+  } else if (!global.settings.dependencies.jre &&
+    !global.settings.devDependencies.jre) {
+    global.settings.devDependencies.jre = "~1.0.1";
+  }
+
   return gulp.src(pomy + "bower.json")
     .pipe(jeditor({
       dependencies: global.settings.dependencies
