@@ -9,7 +9,7 @@ module.exports = {
   cache: true,
   entry: './public/markdown/js/app.js',
   output: {
-    path: path.join(__dirname, 'public/markdown/js'),
+    path: path.join(__dirname, 'public/markdown/classes'),
     filename: 'classes.all.js'
   },
   module: {

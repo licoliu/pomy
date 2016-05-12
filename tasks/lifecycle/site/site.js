@@ -3,7 +3,26 @@
 var
   gulp = require('gulp');
 
-gulp.task('site', ['pre-site'], function() {
+gulp.task('site-config', function(cb) {
+
+  var root = global.getRootPath();
+
+  var settings = global.settings,
+    target = settings.target;
+
+  var srcs = [
+    root + 'package.json',
+    root + 'pomy.json',
+    root + 'README.md'
+  ];
+
+  return gulp.src(srcs, {
+      base: root
+    })
+    .pipe(gulp.dest(root + target.root));
+});
+
+gulp.task('site', ['site-config', 'pre-site'], function() {
 
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
@@ -12,18 +31,22 @@ gulp.task('site', ['pre-site'], function() {
     // pomy + 'package.json',
     // pomy + 'pomy.json',
 
+    pomy + 'site/startup.js',
+    pomy + 'site/node_modules/**/*',
     pomy + 'util/**/*',
 
-    pomy + 'site/public/**/*',
-    pomy + 'site/routes/**/*',
-    pomy + 'site/views/**/*',
-    pomy + 'site/startup.js',
+    pomy + 'site/**/routes/**/*',
+    pomy + 'site/**/views/**/*',
     pomy + 'site/package.json',
-    pomy + 'site/plugins/**/*',
     pomy + 'site/README.md',
-    pomy + 'site/node_modules/**/*',
+
+    pomy + 'site/**/public/**/*',
+    pomy + 'site/**/plugins/**/*',
 
     '!' + pomy + 'site/plugins/**/node_modules/**/*',
+    '!' + pomy + 'site/**/public/js/**/*',
+    '!' + pomy + 'site/**/public/*/js/**/*',
+    '!' + pomy + 'site/**/public/**/scss/**/*',
     '!' + pomy + 'site/**/gulp/**/*',
     '!' + pomy + 'site/**/gulpfile.js',
     '!' + pomy + 'site/**/karma.cofig.js',

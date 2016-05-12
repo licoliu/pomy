@@ -9,9 +9,8 @@ module.exports = {
   cache: true,
   entry: './public/js/app.js',
   output: {
-    path: path.join(__dirname, 'public/js'),
+    path: path.join(__dirname, 'public/classes'),
     filename: 'classes.all.js'
-
   },
   module: {
     noParse: [

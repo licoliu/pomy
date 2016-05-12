@@ -10,12 +10,12 @@ module.exports = function(config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'public/docs/js/classes.all.js',
+      'public/docs/classes/classes.all.js',
       'public/docs/js/**/*.spec.js'
     ],
     exclude: [],
     preprocessors: {
-      'public/docs/js/classes.all.js': ['webpack'],
+      'public/docs/classes/classes.all.js': ['webpack'],
       'public/docs/js/**/*.spec.js': ['webpack']
     },
     webpack: fullWebpackConfig,

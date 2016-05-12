@@ -9,7 +9,7 @@ module.exports = {
   cache: true,
   entry: './public/changelog/js/app.js',
   output: {
-    path: path.join(__dirname, 'public/changelog/js'),
+    path: path.join(__dirname, 'public/changelog/classes'),
     filename: 'classes.all.js'
   },
   module: {

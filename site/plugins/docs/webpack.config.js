@@ -9,7 +9,7 @@ module.exports = {
   cache: true,
   entry: './public/docs/js/app.js',
   output: {
-    path: path.join(__dirname, 'public/docs/js'),
+    path: path.join(__dirname, 'public/docs/classes'),
     filename: 'classes.all.js'
   },
   module: {
