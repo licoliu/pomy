@@ -146,7 +146,9 @@ gulp.task('site:start', ['pom'], function(cb) {
       " --debug " + debug +
       "\"";
 
-    exec(opr, {}, function(err, stdout, stderr) {
+    exec(opr, {
+      maxBuffer: 16000 * 1024
+    }, function(err, stdout, stderr) {
       console.log(stdout);
       if (err) {
         return cb(err);
