@@ -26,7 +26,7 @@ gulp.task('dependancy', ['validate'], function(cb) {
   if (process.platform === "win32") {
     command = "cmd";
     args.push("/c");
-    args.push("node");
+    // args.push("node");
   } else {
     command = "node";
   }
@@ -57,7 +57,7 @@ gulp.task('update', function(cb) {
   if (process.platform === "win32") {
     command = "cmd";
     args.push("/c");
-    args.push("node");
+    // args.push("node");
   } else {
     command = "node";
   }
@@ -82,13 +82,17 @@ gulp.task('update', function(cb) {
   });
 });
 
-gulp.task('bower-install', function(cb) {
+gulp.task('bower:update', ['update'], function(cb) {
+  cb();
+});
+
+gulp.task('bower:install', function(cb) {
   var command = null,
     args = [];
   if (process.platform === "win32") {
     command = "cmd";
     args.push("/c");
-    args.push("node");
+    // args.push("node");
   } else {
     command = "node";
   }
@@ -113,13 +117,13 @@ gulp.task('bower-install', function(cb) {
   });
 });
 
-gulp.task('bower-uninstall', function(cb) {
+gulp.task('bower:uninstall', function(cb) {
   var command = null,
     args = [];
   if (process.platform === "win32") {
     command = "cmd";
     args.push("/c");
-    args.push("node");
+    // args.push("node");
   } else {
     command = "node";
   }
