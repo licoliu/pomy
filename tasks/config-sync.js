@@ -180,7 +180,8 @@ gulp.task('pom', function() {
   global.settings.description = gutil.env.description || global.settings.description || '';
 
   var root = global.getRootPath();
-  return gulp.src(root + "pomy.json")
+
+  return gulp.src([root + "pomy.json", root + "bower.json"])
     .pipe(jeditor(getConfigSettings()))
     .pipe(gulp.dest(root));
 });
