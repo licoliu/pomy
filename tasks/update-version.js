@@ -25,7 +25,7 @@ gulp.task('update:version-node', [], function() {
     .pipe(gulp.dest(pomy));
 });
 
-gulp.task('update:version-bower', [], function(cb) {
+gulp.task('update:version-bower', [], function() {
   var version = gutil.env.v || gutil.env.version;
   var pomy = global.getPomyPath();
   return gulp.src(pomy + "bower.json")
@@ -35,7 +35,7 @@ gulp.task('update:version-bower', [], function(cb) {
     .pipe(gulp.dest(pomy));
 });
 
-gulp.task('update:version-site', [], function(cb) {
+gulp.task('update:version-site', [], function() {
   var version = gutil.env.v || gutil.env.version;
   var pomy = global.getPomyPath();
   return gulp.src(pomy + "site/package.json")
@@ -45,7 +45,7 @@ gulp.task('update:version-site', [], function(cb) {
     .pipe(gulp.dest(pomy + "site/"));
 });
 
-gulp.task('update:version-docs', [], function(cb) {
+gulp.task('update:version-docs', [], function() {
   var version = gutil.env.v || gutil.env.version;
   var pomy = global.getPomyPath();
   return gulp.src(pomy + "site/plugins/docs/package.json")

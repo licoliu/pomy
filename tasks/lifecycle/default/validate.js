@@ -2,7 +2,7 @@
 
 var
   gulp = require('gulp'),
-  // prettify = require('gulp-jsbeautifier'),
+  prettify = require('gulp-jsbeautifier'),
   jsHint = require('gulp-jshint'),
   exec = require('child_process').exec,
   fs = require('fs'),
@@ -21,26 +21,22 @@ gulp.task('jshint', function() {
     .pipe(jsHint.reporter('default'));
 });
 
-gulp.task('jsbeautifyrc', function(cb) {
+gulp.task('jsbeautifyrc', function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-
-  if (!fs.existsSync(root + '.jsbeautifyrc')) {
-    return gulp.src(pomy + ".jsbeautifyrc")
-      .pipe(gulp.dest(root));
-  } else {
-    cb();
-  }
+  return gulp.src(pomy + ".jsbeautifyrc")
+    .pipe(gulp.dest(fs.existsSync(root + '.jsbeautifyrc') ? pomy : root));
 });
 
-gulp.task('prettify', ['jsbeautifyrc'], function(cb) {
+gulp.task('prettify', ['jsbeautifyrc'], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.js + "/**/*.js")
     .pipe(prettify({
       config: root + '.jsbeautifyrc',
       mode: 'VERIFY_ONLY'
-    }));
+    }))
+    .pipe(gulp.dest(root + src.js));
 });
 
 gulp.task('validate', ['config'], function(cb) {

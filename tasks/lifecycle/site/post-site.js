@@ -4,7 +4,7 @@ var
   gulp = require('gulp'),
   zip = require('gulp-zip');
 
-gulp.task('post-site', ['site'], function(cb) {
+gulp.task('post-site', ['site'], function() {
   var settings = global.settings,
     name = settings.name,
     version = settings.version,

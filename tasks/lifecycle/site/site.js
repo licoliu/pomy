@@ -3,7 +3,7 @@
 var
   gulp = require('gulp');
 
-gulp.task('site-config', function(cb) {
+gulp.task('site-config', function() {
 
   var root = global.getRootPath();
 

@@ -91,7 +91,7 @@ gulp.task("repack-specs", [
 
 gulp.task("repack-folders-rename", ["repack-specs"], function() {
   var root = global.getRootPath();
-  gulp.src([root + dest.lib + '/*.*/**/*'])
+  return gulp.src([root + dest.lib + '/*.*/**/*'])
     .pipe(rename(function(path) {
       // path.dirname path.basename path.extname
       path.dirname = path.dirname.replace(/[.]/g, "-");
@@ -114,7 +114,7 @@ gulp.task("repack-folders", ["repack-folders-rename"], function(cb) {
 
 gulp.task("repack-files-rename", ["repack-folders"], function() {
   var root = global.getRootPath();
-  gulp.src([root + dest.lib + '/**/*.js', root + dest.lib + '/**/*.css'])
+  return gulp.src([root + dest.lib + '/**/*.js', root + dest.lib + '/**/*.css'])
     .pipe(rename(function(path) {
       // path.dirname path.basename path.extname
       path.basename = path.basename
@@ -160,7 +160,11 @@ gulp.task("define", ["minify-jslib"], function() {
     default:
       break;
   }
-  return gulp.src(root + dest.lib + '/**/*.js')
+  return gulp.src([
+      root + dest.lib + '/**/*.js',
+      "!" + root + dest.lib + "/**/*.*.js",
+      "!" + root + dest.lib + "/**/*.*.css"
+    ])
     .pipe(insert.wrap(before, after))
     .pipe(gulp.dest(root + dest.lib))
     .pipe(livereload());
