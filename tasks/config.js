@@ -186,7 +186,7 @@ gulp.task('pom', function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('bower-config', ['pom'], function() {
+gulp.task('config:bower', ['pom'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
@@ -205,7 +205,7 @@ gulp.task('bower-config', ['pom'], function() {
     .pipe(gulp.dest(pomy));
 });
 
-gulp.task('npm-config', ['pom'], function() {
+gulp.task('config:npm', ['pom'], function() {
   var root = global.getRootPath();
 
   var settings = getConfigSettings();
@@ -216,7 +216,7 @@ gulp.task('npm-config', ['pom'], function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('config', ['bower-config', 'npm-config'], function(cb) {
+gulp.task('config', ['config:bower', 'config:npm'], function(cb) {
   var settings = getConfigSettings();
   rc(settings.name, settings);
   cb();

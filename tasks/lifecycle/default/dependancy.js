@@ -4,7 +4,6 @@ var
   gulp = require('gulp'),
   fs = require('fs'),
   // bower = require('gulp-bower'),
-  minimist = require('minimist'),
   spawn = require('child_process').spawn;
 
 gulp.task('dependancy', ['validate'], function(cb) {

@@ -24,9 +24,9 @@ gulp.task('site-npm', function(cb) {
 
   args.push("install");
 
-  if (gutil.env.registry || settings.registry) {
+  if (gutil.env.registry || global.settings.registry) {
     args.push("--registry");
-    args.push(gutil.env.registry || settings.registry);
+    args.push(gutil.env.registry || global.settings.registry);
   }
 
   var npm = spawn(command, args, {

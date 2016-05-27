@@ -5,7 +5,6 @@ var
   prettify = require('gulp-jsbeautifier'),
   jsHint = require('gulp-jshint'),
   exec = require('child_process').exec,
-  fs = require('fs'),
   testunit = global.settings.testunit,
   src = global.settings.src;
 
@@ -19,14 +18,6 @@ gulp.task('jshint', function() {
     ])
     .pipe(jsHint())
     .pipe(jsHint.reporter('default'));
-});
-
-gulp.task('jsbeautifyrc', function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-
-  return gulp.src(pomy + ".jsbeautifyrc")
-    .pipe(gulp.dest(fs.existsSync(root + '.jsbeautifyrc') ? pomy : root));
 });
 
 gulp.task('prettify', ['jsbeautifyrc'], function() {

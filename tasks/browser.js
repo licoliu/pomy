@@ -5,7 +5,7 @@ var
   gulp = require('gulp'),
   gutil = require('gulp-util');
 
-gulp.task('browser-sync', function(cb) {
+gulp.task('browser:sync', function(cb) {
   /*
   var env = gutil.env || global.settings.site || {};
   browserSync({

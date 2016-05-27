@@ -57,7 +57,7 @@ gulp.task('images', function() {
   //}));
 });
 
-gulp.task('skin-images', function() {
+gulp.task('skin:images', function() {
   var root = global.getRootPath();
   return gulp.src(root + src.skin + "/*/images/**/*")
     /*.pipe(imagemin({
@@ -107,7 +107,7 @@ gulp.task('less', function() {
     .pipe(gulp.dest(root + src.css));
 });
 
-gulp.task('skin-less', function() {
+gulp.task('skin:less', function() {
   var root = global.getRootPath();
   return gulp.src([
       root + src.skin + '/*/css/**/*.less',
@@ -129,7 +129,7 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(root + src.css));
 });
 
-gulp.task('skin-sass', function() {
+gulp.task('skin:sass', function() {
   var root = global.getRootPath();
   return gulp.src([
       root + src.css + '/**/*.scss',
@@ -152,7 +152,7 @@ gulp.task('css', ['less', 'sass'], function() {
   //}));
 });
 
-gulp.task('skin-css', ['skin-less', 'skin-sass'], function() {
+gulp.task('skin:css', ['skin:less', 'skin:sass'], function() {
   var root = global.getRootPath();
   return gulp.src(root + src.skin + "/*/css/**/*.css")
     .pipe(gulpif(!global.settings.debug, minifyCss()))
@@ -163,14 +163,14 @@ gulp.task('skin-css', ['skin-less', 'skin-sass'], function() {
   //}));
 });
 
-gulp.task('resources', ['fonts', 'images', 'skin-images', 'template', 'css', 'skin-css'], function(cb) {
+gulp.task('resources', ['fonts', 'images', 'skin:images', 'template', 'css', 'skin:css'], function(cb) {
   cb();
 });
 
 gulp.task('process-resources', ['generate-resources'], function(cb) {
 
   if (global.settings.debug) {
-    exec(global.getCommandPath('gulp') + ' less skin-less --process child', {
+    exec(global.getCommandPath('gulp') + ' less skin:less --process child', {
       cwd: global.settings.cwd
     }, function(err, stdout, stderr) {
       console.log(stdout);
