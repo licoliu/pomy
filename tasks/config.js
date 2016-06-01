@@ -14,6 +14,14 @@ var
     var settings = util._extend({}, global.settings);
 
     settings.target = settings.env.target;
+    var version = settings.version;
+    if (version) {
+      var vs = version.split(".");
+      if (vs.length > 3) {
+        vs.splice(3, vs.length - 3);
+      }
+      settings.version = vs.join(".");
+    }
 
     delete settings.src;
     delete settings.dest;

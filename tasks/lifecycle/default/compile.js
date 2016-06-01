@@ -5,7 +5,6 @@ var
   gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
-  gulpif = require('gulp-if'),
   rename = require('gulp-rename'),
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
