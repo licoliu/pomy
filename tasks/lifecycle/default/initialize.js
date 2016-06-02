@@ -8,11 +8,15 @@ gulp.task('initialize', ['dependancy'], function() {
   var pomy = global.getPomyPath();
 
   return gulp.src([
-      pomy + "bower_components/jre/**/*",
-      "!" + pomy + "bower_components/jre/src/test/**/*",
-      "!" + pomy + "bower_components/jre/jsvm.min.js",
-      "!" + pomy + "bower_components/jre/*.json",
-      "!" + pomy + "bower_components/jre/gulpfile.js"
+      pomy + "bower_components/jre/jre/**/*",
+      "!" + pomy + "bower_components/jre/jre/jsvm.min.js"
+
+      // "!" + pomy + "bower_components/jre/src",
+      // "!" + pomy + "bower_components/jre/src/**/*",
+      // "!" + pomy + "bower_components/jre/startup.js",
+      // "!" + pomy + "bower_components/jre/index.html",
+      // "!" + pomy + "bower_components/jre/*.json",
+      // "!" + pomy + "bower_components/jre/gulpfile.js"
     ])
     .pipe(gulp.dest(root + global.settings.dest.jre + "/"));
 });

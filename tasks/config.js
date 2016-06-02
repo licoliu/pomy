@@ -203,7 +203,7 @@ gulp.task('config:bower', ['pom'], function() {
     delete global.settings.devDependencies.jre;
   } else if (!global.settings.dependencies.jre &&
     !global.settings.devDependencies.jre) {
-    global.settings.devDependencies.jre = "~1.0.1";
+    global.settings.dependencies.jre = "^1.0.1";
   }
 
   return gulp.src(pomy + "bower.json")
