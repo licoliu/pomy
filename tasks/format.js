@@ -3,6 +3,7 @@
  var
    fs = require('fs'),
    gulp = require('gulp'),
+   gulpif = require('gulp-if'),
    prettify = require('gulp-jsbeautifier'),
    livereload = require('gulp-livereload'),
    //browserSync = require('browser-sync'),
@@ -75,10 +76,10 @@
  gulp.task('format:jsrt', ['jsbeautifyrc'], function() {
    var root = global.getRootPath();
    return gulp.src(root + src.jsrt + "/**/*.js")
-     .pipe(prettify({
+     .pipe(gulpif(global.settings.jre, prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
-     }))
+     })))
      .pipe(gulp.dest(root + src.jsrt))
      .pipe(livereload());
    //.pipe(browserSync.reload({
@@ -100,7 +101,7 @@
    //}));
  });
 
- gulp.task('format', ['format:js', 'format:css', 'format:skin', 'format:html' /*,'format:jsrt'*/ ], function(cb) {
+ gulp.task('format', ['format:js', 'format:css', 'format:skin', 'format:html', 'format:jsrt'], function(cb) {
    cb();
  });
 
