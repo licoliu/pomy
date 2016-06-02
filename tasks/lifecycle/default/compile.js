@@ -84,7 +84,19 @@ gulp.task('compile', ['process-resources'], function(cb) {
       cb();
     });
   } else {
-    cb();
+    if (global.settings.jre) {
+      exec(global.getCommandPath('gulp') + ' jsrt --process child', {
+        cwd: global.settings.cwd
+      }, function(err, stdout, stderr) {
+        console.log(stdout);
+        if (err) {
+          return cb(err);
+        }
+        cb();
+      });
+    } else {
+      cb();
+    }
   }
   console.log("###################################################");
   console.log("############## gulp compile finished. #############");
