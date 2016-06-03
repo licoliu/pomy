@@ -17,19 +17,14 @@ module.exports =
       return false;
     };
 
-    $scope.limitTo1 = 7;
-    $scope.more1 = function() {
-      $scope.limitTo1 = 2 * $scope.limitTo1;
+    $scope.limitTo = 7;
+    $scope.limitTos = {};
+    $scope.getLimitTo = function(key) {
+      return $scope.limitTos[key] = $scope.limitTos[key] || $scope.limitTo;
     };
 
-    $scope.limitTo2 = 7;
-    $scope.more2 = function() {
-      $scope.limitTo2 = 2 * $scope.limitTo2;
-    };
-
-    $scope.limitTo3 = 7;
-    $scope.more3 = function() {
-      $scope.limitTo3 = 2 * $scope.limitTo3;
+    $scope.more = function(key) {
+      $scope.limitTos[key] += $scope.limitTo;
     };
 
     $scope.sprints = documentsService.getSprints();

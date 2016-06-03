@@ -63,8 +63,8 @@
                     <h3>Activity</h3>
                     <p class="text-fluid">We have also been posting summaries of new features and changes to <a href="/markdown/">our backlogs</a>.</p>
                     <ul class="type13">
-                      <li ng-repeat="backlog in backlogs | limitTo: limitTo1"><a href="/markdown/#?id={{backlog.id}}" class="more-icon">{{backlog.name}}</a></li>
-                      <li ng-if="backlogs.length > limitTo1"><a href="javascript:void(0)" ng-click="more1()">more ...</a></li>
+                      <li ng-repeat="backlog in backlogs | limitTo: getLimitTo('backlogs')"><a href="/markdown/#?id={{backlog.id}}" class="more-icon">{{backlog.name}}</a></li>
+                      <li ng-if="backlogs.length > getLimitTo('backlogs')"><a href="javascript:void(0)" ng-click="more('backlogs')">more ...</a></li>
                       <li ng-if="backlogs.length <= 0"><a href="javascript:void(0)">There are not any backlog files here so far.</a></li>
                     </ul>
 
@@ -72,8 +72,8 @@
                     <p class="text-fluid">In
                       <%= name%> development, we make sprints to define specific work which has to be completed and made ready for review in a week. Each sprint begins with a planning meeting. Here is our meeting minutes:</p>
                     <ul class="type13">
-                      <li ng-repeat="sprint in sprints | limitTo: limitTo2"><a href="/markdown/#?id={{sprint.id}}" class="more-icon">{{sprint.name}}</a></li>
-                      <li ng-if="sprints.length > limitTo2"><a href="javascript:void(0)" ng-click="more2()">more ...</a></li>
+                      <li ng-repeat="sprint in sprints | limitTo: getLimitTo('sprints')"><a href="/markdown/#?id={{sprint.id}}" class="more-icon">{{sprint.name}}</a></li>
+                      <li ng-if="sprints.length > getLimitTo('sprints')"><a href="javascript:void(0)" ng-click="more('sprints')">more ...</a></li>
                       <li ng-if="sprints.length <= 0"><a href="javascript:void(0)">There are not any sprint files here so far.</a></li>
                     </ul>
 
@@ -132,11 +132,11 @@
 
                 <div ng-repeat="deployment in deployments">
                   <h3>{{deployment.target}}</h3>
-                  <div class="item" ng-repeat="record in deployment.records | limitTo: record.limitTo">
+                  <div class="item" ng-repeat="record in deployment.records | limitTo: getLimitTo(deployment.target)">
                     <span class="date">{{record.date}}</span>
                     &nbsp;&nbsp;{{record.name}}&nbsp;&nbsp;<a href="/cl/#?version={{record.version}}">{{record.version}}</a>
                   </div>
-                  <div class="item" ng-if="deployment.records.length > record.limitTo"><a href="javascript:void(0)" ng-click="more3()">more ...</a></div>
+                  <div class="item" ng-if="deployment.records.length > getLimitTo(deployment.target)"><a href="javascript:void(0)" ng-click="more(deployment.target)">more ...</a></div>
                 </div>
                 <div class="item" ng-if="deployments.length <= 0"><a href="javascript:void(0)">There are not any deployment records here so far.</a></div>
               </div>
