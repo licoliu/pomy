@@ -127,25 +127,34 @@
               </section>
             </div>
             <div class="news col-lg-12 col-sm-12 col-md-12 col-xs-12">
-              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
-                <h1>Updates</h1>
+              <h1>Updates</h1>
 
-                <div ng-repeat="deployment in deployments">
-                  <h3>{{deployment.target}}</h3>
-                  <div class="item" ng-repeat="record in deployment.records | limitTo: getLimitTo(deployment.target)">
-                    <span class="date">{{record.date}}</span>
-                    &nbsp;&nbsp;{{record.name}}&nbsp;&nbsp;<a href="/cl/#?version={{record.version}}">{{record.version}}</a>
-                  </div>
-                  <div class="item" ng-if="deployment.records.length > getLimitTo(deployment.target)"><a href="javascript:void(0)" ng-click="more(deployment.target)">more ...</a></div>
+              <div ng-repeat="deployment in deployments">
+                <h3>{{deployment.target}}</h3>
+                <div class="item" ng-repeat="record in deployment.records | limitTo: getLimitTo(deployment.target)">
+                  <span class="date">{{record.date}}</span>
+
+                  <span class="name">
+                    <a ng-if="$index === 0 && deployment.site" ng-href="{{deployment.site}}" target="_blank">
+                        {{record.name}}
+                        <span class="badge">{{deployment.target}}</span>
+                        <i class="glyphicon glyphicon-hand-left"></i>
+                      </a>
+                    <span ng-if="$index !== 0 || !deployment.site">
+                      {{record.name}}
+                    </span>
+                  </span>
+
+                  <a class="version" href="/cl/#?version={{record.version}}">{{record.version}}</a>
                 </div>
-                <div class="item" ng-if="deployments.length <= 0"><a href="javascript:void(0)">There are not any deployment records here so far.</a></div>
+                <div class="item" ng-if="deployment.records.length > getLimitTo(deployment.target)"><a href="javascript:void(0)" ng-click="more(deployment.target)">more ...</a></div>
               </div>
-              <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
-              </div>
+              <div class="item" ng-if="deployments.length <= 0"><a href="javascript:void(0)">There are not any deployment records here so far.</a></div>
             </div>
           </div>
         </div>
     </div>
+  </div>
   </div>
   <%- include footer %>
 </body>

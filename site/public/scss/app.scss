@@ -428,7 +428,7 @@ tt {
   display: inline-block;
   -webkit-font-smoothing: antialiased;
   color: #434343;
-  font: 14px/1.4em "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif
+  font: 14px/1.4em "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
 }
 
 .pom-site-welcome .logo {
@@ -450,7 +450,6 @@ tt {
 }
 
 .pom-site-welcome a {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #126499
 }
 
@@ -651,7 +650,28 @@ tt {
   width: auto;
   display: block;
   float: left;
+  min-width: 240px;
   font-family: "Menlo", "Courier New", "Courier", monospace
+}
+
+.pom-site-welcome .news .name {
+  min-width: 192px;
+  padding-left: 32px;
+  vertical-align: baseline;
+  display: inline-block;
+}
+
+.pom-site-welcome .news .name .badge {
+  font-size: 0.5em;
+  color: #fff;
+  background: #126499;
+  border: 1px solid #126499;
+  border-radius: 4px;
+  padding: 0px 2px;
+}
+
+.pom-site-welcome .news .version {
+  vertical-align: top;
 }
 
 .container {

@@ -71,9 +71,13 @@ exports.getDeployments = function(req, res) {
       }
     }
 
+    var target = target.name.replace(/(.md)$/g, ""),
+      owner = global.settings.owner;
+
     deployments.push({
-      target: target.name.replace(/(.md)$/g, ""),
-      records: records
+      target: target,
+      records: records,
+      site: owner ? owner[target] : null
     });
   }).children;
 
