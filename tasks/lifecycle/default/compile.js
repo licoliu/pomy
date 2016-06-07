@@ -22,7 +22,7 @@ gulp.task('jsrt', function() {
     }
     return gulp.src(jre.files)
       .pipe(concat(jre.name + ".js"))
-      .pipe(gulp.dest(root));
+      .pipe(gulp.dest(root + dest.jre));
   } else {
     return gulp.src(root + src.jsrt + "/**/*.js")
       .pipe(uglify({
@@ -38,14 +38,14 @@ gulp.task('jre', ["jsrt"], function() {
   var root = global.getRootPath();
   var jre = global.settings.jre;
   if (jre) {
-    return gulp.src(root + jre.name + ".js")
+    return gulp.src(root + src.jre + "/" + jre.name + ".js")
       .pipe(uglify({
         mangle: {
           except: ['require', 'exports', 'module']
         }
       }))
       .pipe(rename((jre.uglify || (jre.name + ".min")) + ".js"))
-      .pipe(gulp.dest(root));
+      .pipe(gulp.dest(root + dest.jre));
   } else {
     return gulp.src(root + src.jre + "/jsvm.js")
       .pipe(uglify({
