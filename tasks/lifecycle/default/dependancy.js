@@ -16,7 +16,7 @@ gulp.task('dependancy', ['validate'], function(cb) {
   }
 
   // return bower({
-  //   cmd: 'install',
+  //   cmd: 'update',
   //   cwd: pomy
   // });
 
@@ -31,7 +31,7 @@ gulp.task('dependancy', ['validate'], function(cb) {
   }
 
   args.push(global.getCommandPath('bower'));
-  args.push('install')
+  args.push('update');
 
   var bower = spawn(command, args, {
     cwd: global.settings.cwd
@@ -62,7 +62,7 @@ gulp.task('update', function(cb) {
   }
 
   args.push(global.getCommandPath('bower'));
-  args.push('update')
+  args.push('update');
 
   var bower = spawn(command, args.concat(process.argv.slice(3)), {
     cwd: global.settings.cwd
@@ -128,7 +128,7 @@ gulp.task('bower:uninstall', function(cb) {
   }
 
   args.push(global.getCommandPath('bower'));
-  args.push('uninstall')
+  args.push('uninstall');
 
   var bower = spawn(command, args.concat(process.argv.slice(3)), {
     cwd: global.settings.cwd
