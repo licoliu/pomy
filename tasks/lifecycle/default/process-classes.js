@@ -21,6 +21,29 @@ gulp.task("repack-bootstrap-woff2", function() {
     ])
     .pipe(gulp.dest(root + dest.lib + "/bootstrap/fonts/"));
 });
+gulp.task("repack-bootstrap", ["repack-bootstrap-woff2"], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      pomy + "bower_components/bootstrap/dist/css/**/*",
+      pomy + "bower_components/bootstrap/dist/fonts/**/*"
+    ], {
+      base: pomy + "bower_components/bootstrap/dist/"
+    })
+    .pipe(gulp.dest(root + dest.lib + "/bootstrap/"));
+});
+
+gulp.task("repack-fontawesome", function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      pomy + "bower_components/fontawesome/css/**/*",
+      pomy + "bower_components/fontawesome/fonts/**/*"
+    ], {
+      base: pomy + "bower_components/fontawesome/"
+    })
+    .pipe(gulp.dest(root + dest.lib + "/fontawesome/"));
+});
 
 gulp.task("repack-iCheck-png", function() {
   var root = global.getRootPath();
@@ -71,7 +94,8 @@ gulp.task("repack-google-code-prettify", function() {
 });
 
 gulp.task("repack-specs", [
-  "repack-bootstrap-woff2",
+  "repack-bootstrap",
+  "repack-fontawesome",
   "repack-iCheck-css",
   "repack-angular-ui",
   "repack-google-code-prettify"
