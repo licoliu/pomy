@@ -134,6 +134,7 @@ mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + 
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/ui");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/deploy");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/changelog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/other");
 
 var
   routes = require('./routes'),
