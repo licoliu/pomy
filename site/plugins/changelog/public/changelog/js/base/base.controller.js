@@ -80,12 +80,18 @@ module.exports =
       $timeout(function() {
         $scope.autoExpand(function() {
           var params = $location.search();
-          var readme = jQuery("ul.readmes li.readme[name='" + params.version + "']");
-          if (readme.length > 0) {
-            jQuery("html,body").animate({
-              scrollTop: readme.first().offset().top - jQuery(".navbar").height()
-            }, 1000);
+          var versions = (params.version || "").split(".");
+          while (versions.length > 0) {
+            var readme = jQuery("ul.readmes li.readme[name='" + versions.join(".") + "']");
+            if (readme.length > 0) {
+              jQuery("html,body").animate({
+                scrollTop: readme.first().offset().top - jQuery(".navbar").height()
+              }, 1000);
+              break;
+            }
+            versions.pop();
           }
+
         });
       }, 50, true, null);
     });
