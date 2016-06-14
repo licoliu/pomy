@@ -17,6 +17,7 @@ gulp.task('clean', ['pre-clean'], function(cb) {
     root + dest.template + '/*',
     root + dest.css + '/*',
     root + dest.skin + '/*',
+    root + dest.skins + '/*',
 
     root + dest.jsrt + '/*',
     root + dest.rt,
@@ -28,6 +29,7 @@ gulp.task('clean', ['pre-clean'], function(cb) {
 
     // root + src.css + '/**/*.css',
     // root + src.skin + '/**/*.css',
+    // root + src.skins + '/**/*.css',
 
     root + target.root + "/*",
 

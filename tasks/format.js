@@ -61,16 +61,23 @@
        root + src.skin + "/**/*.css",
        root + src.skin + "/**/*.less",
        root + src.skin + "/**/*.sass",
-       root + src.skin + "/**/*.scss"
+       root + src.skin + "/**/*.scss",
+       root + src.skins + "/**/*.css",
+       root + src.skins + "/**/*.less",
+       root + src.skins + "/**/*.sass",
+       root + src.skins + "/**/*.scss"
      ])
      .pipe(prettify({
        config: root + '.jsbeautifyrc'
      }))
-     .pipe(gulp.dest(root + src.skin))
+     .pipe(gulp.dest(root + src.skins))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
    //}));
+ });
+ gulp.task('format:skins', ["format:skin"], function(cb) {
+   cb();
  });
 
  gulp.task('format:jsrt', ['jsbeautifyrc'], function() {
@@ -101,7 +108,7 @@
    //}));
  });
 
- gulp.task('format', ['format:js', 'format:css', 'format:skin', 'format:html', 'format:jsrt'], function(cb) {
+ gulp.task('format', ['format:js', 'format:css', 'format:skins', 'format:html', 'format:jsrt'], function(cb) {
    cb();
  });
 
