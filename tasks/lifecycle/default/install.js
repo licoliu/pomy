@@ -21,9 +21,11 @@ gulp.task('install', ['verify'], function() {
     }
   }
 
+  global.settings.version = vs.join(".");
+
   return gulp.src([root + "pomy.json"])
     .pipe(jeditor({
-      version: vs.join(".")
+      version: global.settings.version
     }))
     .pipe(gulp.dest(root));
 });
