@@ -13,104 +13,17 @@ var
   //browserSync = require('browser-sync'),
   dest = global.settings.dest;
 
-gulp.task("repack-bootstrap-woff2", function() {
+gulp.task("repack-iCheck", function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
   return gulp.src([
-      pomy + "bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff2"
+      pomy + "bower_components/iCheck/skins/**/*"
     ])
-    .pipe(gulp.dest(root + dest.lib + "/bootstrap/fonts/"));
-});
-gulp.task("repack-bootstrap", ["repack-bootstrap-woff2"], function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/bootstrap/dist/css/**/*",
-      pomy + "bower_components/bootstrap/dist/fonts/**/*"
-    ], {
-      base: pomy + "bower_components/bootstrap/dist/"
-    })
-    .pipe(gulp.dest(root + dest.lib + "/bootstrap/"));
+    .pipe(gulp.dest(root + dest.lib + "/iCheck/skins/"));
 });
 
-gulp.task("repack-fontawesome", function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/fontawesome/css/**/*",
-      pomy + "bower_components/fontawesome/fonts/**/*"
-    ], {
-      base: pomy + "bower_components/fontawesome/"
-    })
-    .pipe(gulp.dest(root + dest.lib + "/fontawesome/"));
-});
-
-gulp.task("repack-iCheck-png", function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/iCheck/skins/square/**/*.png"
-    ])
-    .pipe(gulp.dest(root + dest.lib + "/iCheck/skins/square/"));
-});
-
-gulp.task("repack-iCheck-css", ["repack-iCheck-png"], function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/iCheck/skins/square/_all.css"
-    ])
-    .pipe(gulp.dest(root + dest.lib + "/iCheck/skins/square/"));
-});
-
-gulp.task("repack-angular-ui-css", function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/angular-ui/build/angular-ui.css"
-    ])
-    .pipe(gulp.dest(root + dest.lib + "/angular-ui/css/"));
-});
-
-gulp.task("repack-angular-ui", ["repack-angular-ui-css"], function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/angular-ui/build/angular-ui.js"
-    ])
-    .pipe(gulp.dest(root + dest.lib + "/angular-ui/js/"));
-});
-
-gulp.task("repack-google-code-prettify", function() {
-  var root = global.getRootPath();
-  var pomy = global.getPomyPath();
-  return gulp.src([
-      pomy + "bower_components/google-code-prettify/styles/desert.css",
-      pomy + "bower_components/google-code-prettify/styles/doxy.css",
-      pomy + "bower_components/google-code-prettify/styles/sons-of-obsidian.css",
-      pomy + "bower_components/google-code-prettify/styles/sunburst.css"
-    ])
-    .pipe(gulp.dest(root + dest.lib + "/google-code-prettify/css/"));
-});
-
-gulp.task("repack-specs", [
-  "repack-bootstrap",
-  "repack-fontawesome",
-  "repack-iCheck-css",
-  "repack-angular-ui",
-  "repack-google-code-prettify"
-], function(cb) {
-  var root = global.getRootPath();
-  del([
-    root + dest.lib + "/highstock-release/js/exporting.js",
-    root + dest.lib + "/highstock-release/js/highcharts-more.js"
-  ], {
-    force: true
-  }).then(function(deletedFiles) {
-    cb();
-  }, function(err) {
-    cb(err);
-  });
+gulp.task("repack-specs", ["repack-iCheck"], function(cb) {
+  cb();
 });
 
 gulp.task("repack-folders-rename", ["repack-specs"], function() {

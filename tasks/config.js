@@ -206,8 +206,18 @@ gulp.task('config:bower', ['pom'], function() {
     global.settings.dependencies.jre = "^1.0.1";
   }
 
+  var dependencies = [];
+  for (var name in global.settings.dependencies) {
+    dependencies.push(name);
+  }
+  var overrides = util._extend({
+    "normalizeMulti": [{
+      "dependencies": dependencies
+    }]
+  }, global.settings.overrides);
   return gulp.src(pomy + "bower.json")
     .pipe(jeditor({
+      overrides: overrides,
       dependencies: global.settings.dependencies
     }))
     .pipe(gulp.dest(pomy));
