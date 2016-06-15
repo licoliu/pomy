@@ -136,9 +136,13 @@ function handleArguments(env) {
       switch (tasks[0]) {
         case 'install':
         case 'uninstall':
-          toRun = ['bower-' + tasks[0]];
+          toRun = ['bower:' + tasks[0]];
           break;
+        case 'bower:install':
+        case 'bower:uninstall':
+          toRun = [tasks[0]];
         case 'update':
+        case 'bower:update':
           toRun = tasks.slice(0, 1);
           break;
         default:
