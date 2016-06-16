@@ -14,14 +14,13 @@ var
     var settings = util._extend({}, global.settings);
 
     settings.target = settings.env.target;
-    var version = settings.version;
-    if (version) {
-      var vs = version.split(".");
-      if (vs.length > 3) {
-        vs.splice(3, vs.length - 3);
-      }
-      settings.version = vs.join(".");
+
+    var version = "" + settings.version;
+    var vs = version.split(".");
+    if (vs.length > 3) {
+      vs.splice(3, vs.length - 3);
     }
+    settings.version = vs.join(".");
 
     delete settings.src;
     delete settings.dest;
@@ -236,8 +235,21 @@ gulp.task('config:npm', ['pom'], function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('config', ['config:bower', 'config:npm'], function(cb) {
+gulp.task('config', ['config:bower', 'config:npm'], function() {
   var settings = getConfigSettings();
+  var root = global.getRootPath();
+
   rc(settings.name, settings);
-  cb();
+
+  var version = settings.version;
+  if (global.settings.snapshort) {
+    version = version + "." + new Date().getTime().toString(16);
+    global.settings.version = version;
+  }
+
+  return gulp.src([root + "pomy.json"])
+    .pipe(jeditor({
+      version: version
+    }))
+    .pipe(gulp.dest(root));
 });

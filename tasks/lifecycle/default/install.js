@@ -4,28 +4,7 @@ var
   gulp = require('gulp'),
   jeditor = require("gulp-json-editor");
 
-gulp.task('install', ['verify'], function() {
+gulp.task('install', ['verify'], function(cb) {
   //TODO添加到本地bower cache
-  var root = global.getRootPath();
-
-  var version = global.settings.version;
-  if (version) {
-    var vs = version.split(".");
-
-    if (vs.length > 3) {
-      vs.splice(3, vs.length - 3);
-    }
-
-    if (global.settings.snapshort) {
-      vs.push(new Date().getTime()).toString(16);
-    }
-  }
-
-  global.settings.version = vs.join(".");
-
-  return gulp.src([root + "pomy.json"])
-    .pipe(jeditor({
-      version: global.settings.version
-    }))
-    .pipe(gulp.dest(root));
+  cb();
 });
