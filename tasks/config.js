@@ -242,10 +242,12 @@ gulp.task('config', ['config:bower', 'config:npm'], function() {
   rc(settings.name, settings);
 
   var version = settings.version;
-  if (global.settings.snapshort) {
+
+  if (settings.snapshort) {
     version = version + "." + new Date().getTime().toString(16);
-    global.settings.version = version;
   }
+
+  global.settings.version = version;
 
   return gulp.src([root + "pomy.json"])
     .pipe(jeditor({

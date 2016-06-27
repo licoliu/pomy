@@ -122,3 +122,7 @@ gulp.task('update:self', function(cb) {
 gulp.task('update:pomy', ['update:self'], function(cb) {
   cb();
 });
+
+gulp.task('upgrade', ['update:self'], function(cb) {
+  cb();
+});
