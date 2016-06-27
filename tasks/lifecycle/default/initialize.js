@@ -9,14 +9,16 @@ gulp.task('initialize', ['dependancy'], function() {
 
   return gulp.src([
       pomy + "bower_components/jre/jre/**/*",
-      "!" + pomy + "bower_components/jre/jre/jsvm.min.js"
+      pomy + "bower_components/jre/startup.js",
+      pomy + "bower_components/jre/index-test.html",
 
+      "!" + pomy + "bower_components/jre/jre/jsvm.min.js"
       // "!" + pomy + "bower_components/jre/src",
       // "!" + pomy + "bower_components/jre/src/**/*",
-      // "!" + pomy + "bower_components/jre/startup.js",
-      // "!" + pomy + "bower_components/jre/index.html",
       // "!" + pomy + "bower_components/jre/*.json",
       // "!" + pomy + "bower_components/jre/gulpfile.js"
-    ])
-    .pipe(gulp.dest(root + global.settings.dest.jre + "/"));
+    ], {
+      base: pomy + "bower_components/jre/"
+    })
+    .pipe(gulp.dest(root));
 });
