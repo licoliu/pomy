@@ -20,7 +20,40 @@ module.exports =
           values.$resolved = true;
 
           data.sort(function(a, b) {
-            return a.name < b.name ? 1 : -1;
+            if (typeof b === 'undefined' || b === null || typeof b.name === 'undefined' || b.name === null) {
+              return -1;
+            }
+
+            if (typeof a === 'undefined' || a === null || typeof a.name === 'undefined' || a.name === null) {
+              return 1;
+            }
+
+            var ans = a.name.split("."),
+              bns = b.name.split("."),
+              an = null,
+              bn = null,
+              aLen = ans.length,
+              bLen = bns.length;
+            for (var i = 0; i < aLen && i < bLen; i++) {
+              if (ans[i] != bns[i]) {
+                an = ans[i];
+                bn = bns[i];
+
+                if (!isNaN(an)) {
+                  an = parseInt(an);
+                }
+
+                if (!isNaN(bn)) {
+                  bn = parseInt(bn);
+                }
+                break;
+              }
+            }
+            if (an == null || bn == null) {
+              return aLen < bLen ? 1 : -1;
+            }
+
+            return an < bn ? 1 : -1;
           });
 
           angular.extend(values, data);
