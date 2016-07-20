@@ -61,7 +61,7 @@ global.getCommandPath = function(cmd) {
   }
 };
 
-global.settings = config(global.getRootPath() + "pomy.json");
+global.settings = config(global.getRootPath() + "pomy.json") || {};
 
 var cwd = process.cwd();
 global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
@@ -84,6 +84,7 @@ global.settings.testunit = {
 
 global.settings.src = {
   root: 'src',
+  main: 'src/main',
   fonts: 'src/main/fonts',
   images: 'src/main/images',
   css: 'src/main/css',

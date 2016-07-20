@@ -1,0 +1,59 @@
+{
+  "group": "",
+  "artifact": "",
+  "version": "0.0.1",
+  "name": "",
+  "title": "",
+  "description": "",
+  "private": false,
+  "license": "MIT",
+  "debug": true,
+  "skin": "default",
+  "define": "cmd",
+  "keywords": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc": "^3.4.0",
+    "pomy": "^1.0.1"
+  },
+  "site": {
+    "domain": "localhost",
+    "port": 8421,
+    "user": "",
+    "nohup": true
+  },
+  "owner": {
+    "local": "",
+    "fat": "",
+    "uat": "",
+    "prod": ""
+  },
+  "manual": {
+    "url": "",
+    "email": ""
+  },
+  "registry": "https://registry.npm.taobao.org",
+  "googleWebmasterMeta": "",
+  "author": "lico",
+  "developers": [{
+    "id": "",
+    "name": "",
+    "email": "",
+    "url": ""
+  }],
+  "contributors": [],
+  "organization": {
+    "name": "",
+    "url": ""
+  },
+  "target": "local",
+  "snapshort": true
+}

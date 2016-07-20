@@ -86,6 +86,11 @@ function handleArguments(env) {
     process.exit(0);
   }
 
+  var archetype = false;
+  if (tasks.length === 1 && tasks[0].indexOf('archetype:') === 0) {
+    archetype = true;
+  }
+
   if (!env.modulePath) {
     gutil.log(
       chalk.red('Local pomy not found in'),
@@ -95,7 +100,7 @@ function handleArguments(env) {
     process.exit(1);
   }
 
-  if (!env.configPath) {
+  if (!archetype && !env.configPath) {
     gutil.log(chalk.red('No pomy.json found'));
     process.exit(1);
   }
@@ -119,7 +124,9 @@ function handleArguments(env) {
 
   // This is what actually loads up the pomy.json
   // require(env.configPath);
-  gutil.log('Using pomy.json', chalk.magenta(tildify(env.configPath)));
+  if (!archetype) {
+    gutil.log('Using pomy.json', chalk.magenta(tildify(env.configPath)));
+  }
 
   var pomyInst = require(env.modulePath);
   logEvents(pomyInst);
