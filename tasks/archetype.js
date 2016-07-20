@@ -51,7 +51,7 @@ gulp.task('archetype:create', function() {
   var configPath = null;
 
   if (!fs.existsSync(path.join(root, "pomy.json"))) {
-    configPath = pomy + "pomy.example";
+    configPath = pomy + "project.json";
   } else {
     configPath = root + "pomy.json";
   }
