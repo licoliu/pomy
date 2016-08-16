@@ -127,13 +127,14 @@ global.settings.target = target;
 global.settings.debug = debug;
 
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/api");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/backlog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/docs");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/backlogs");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/site");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/sprint");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/test");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/sprints");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/test reports");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/ui");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/deploy");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/changelog");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/deployments");
+mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/changelogs");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/other");
 
 var

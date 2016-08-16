@@ -18,7 +18,7 @@ exports.index = function(req, res) {
 
 exports.getChangelogs = function(req, res) {
 
-  var position = path.join(folder, "changelog");
+  var position = path.join(folder, "changelogs");
 
   var changelogs = folderDetect.detectAllSync(position, filters.md, function(target) {
     target.mtime = moment(target.mtime).format("ddd, MMM Do YYYY, h:mm:ss a");

@@ -9,11 +9,11 @@ module.exports =
   .service('documentsService', function($rootScope, $resource, $http, $q, $location) {
     return {
       getBacklogs: function() {
-        return this.getDocuments("backlog");
+        return this.getDocuments("backlogs");
       },
 
       getSprints: function() {
-        return this.getDocuments("sprint");
+        return this.getDocuments("sprints");
       },
 
       getDocuments: function(type) {

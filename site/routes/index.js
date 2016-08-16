@@ -27,7 +27,7 @@ exports.deploy = function(req, res) {
   var target = req.body.target;
   var date = moment().format("ddd, MMM Do YYYY, h:mm:ss a"); //req.body.date;
 
-  var pathname = path.join(folder, "deploy", target + ".md");
+  var pathname = path.join(folder, "deployments", target + ".md");
 
   var data = fs.existsSync(pathname) ? "" : "date|name|version\n-|:-:|-:\n";
 
@@ -43,7 +43,7 @@ exports.deploy = function(req, res) {
 };
 
 exports.getDeployments = function(req, res) {
-  var position = path.join(folder, "deploy");
+  var position = path.join(folder, "deployments");
 
   var deployments = [];
 
