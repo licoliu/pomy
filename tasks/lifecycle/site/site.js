@@ -8,7 +8,7 @@ gulp.task('site-config', function() {
   var root = global.getRootPath();
 
   var settings = global.settings,
-    target = settings.target;
+    target = settings._target;
 
   var srcs = [
     root + 'package.json',
@@ -26,6 +26,9 @@ gulp.task('site', ['site-config', 'pre-site'], function() {
 
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
+
+  var settings = global.settings,
+    target = settings._target;
 
   var srcs = [
     // pomy + 'package.json',
@@ -74,5 +77,5 @@ gulp.task('site', ['site-config', 'pre-site'], function() {
   return gulp.src(srcs, {
       base: pomy
     })
-    .pipe(gulp.dest(root + global.settings.target.root));
+    .pipe(gulp.dest(root + target.root));
 });

@@ -13,8 +13,6 @@ var
   getConfigSettings = function() {
     var settings = util._extend({}, global.settings);
 
-    settings.target = settings.env.target;
-
     var version = "" + settings.version;
     var vs = version.split(".");
     if (vs.length > 3) {
@@ -22,10 +20,10 @@ var
     }
     settings.version = vs.join(".");
 
-    delete settings.src;
-    delete settings.dest;
-    delete settings.testunit;
-    // delete settings.target;
+    delete settings._src;
+    delete settings._dest;
+    delete settings._testunit;
+    delete settings._target;
     delete settings.env;
     delete settings.cwd;
 
@@ -67,7 +65,7 @@ var cwd = process.cwd();
 global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
   /\\\\node_modules\\\\pomy$/g.test(cwd) ? cwd : path.join(cwd, './node_modules/pomy/');
 
-global.settings.target = {
+global.settings._target = {
   root: 'target',
   classes: 'target/classes',
   site: {
@@ -77,12 +75,12 @@ global.settings.target = {
   }
 };
 
-global.settings.testunit = {
+global.settings._testunit = {
   jsrt: 'jre/src/test',
   js: 'src/test'
 };
 
-global.settings.src = {
+global.settings._src = {
   root: 'src',
   main: 'src/main',
   fonts: 'src/main/fonts',
@@ -101,7 +99,7 @@ global.settings.src = {
   core: 'jre/jsvm.js'
 };
 
-global.settings.dest = {
+global.settings._dest = {
   root: 'classes',
   fonts: 'classes/fonts',
   images: 'classes/images',
@@ -119,6 +117,7 @@ global.settings.dest = {
 gulp.task('pom', function() {
   global.settings.env = gutil.env;
   global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || 'local').toLowerCase();
+  global.settings.target = global.settings.env.target;
   switch (global.settings.env.target) {
     case "production":
     case "prod":

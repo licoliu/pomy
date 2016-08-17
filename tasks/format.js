@@ -7,8 +7,8 @@
    prettify = require('gulp-jsbeautifier'),
    livereload = require('gulp-livereload'),
    //browserSync = require('browser-sync'),
-   src = global.settings.src,
-   testunit = global.settings.testunit;
+   src = global.settings._src,
+   testunit = global.settings._testunit;
 
  gulp.task('jsbeautifyrc', function() {
    var root = global.getRootPath();

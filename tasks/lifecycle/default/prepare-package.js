@@ -2,11 +2,12 @@
 
 var
   gulp = require('gulp'),
-  exec = require('child_process').exec,
-  src = global.settings.src,
-  dest = global.settings.dest,
-  testunit = global.settings.testunit,
-  target = global.settings.target;
+  // exec = require('child_process').exec,
+  spawn = require('child_process').spawn,
+  src = global.settings._src,
+  dest = global.settings._dest,
+  testunit = global.settings._testunit,
+  target = global.settings._target;
 
 gulp.task('copy-jre', function() {
   var root = global.getRootPath();

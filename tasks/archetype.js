@@ -11,22 +11,22 @@ var jeditor = require("gulp-json-editor");
 gulp.task('archetype:create', function() {
   var settings = global.settings;
 
-  var dirs = [settings.target.root,
+  var dirs = [settings._target.root,
 
-    settings.src.root,
-    settings.src.main,
-    settings.testunit.js,
+    settings._src.root,
+    settings._src.main,
+    settings._testunit.js,
 
-    settings.src.fonts,
-    settings.src.images,
-    settings.src.css,
-    settings.src.less,
-    settings.src.scss,
-    settings.src.sass,
-    // settings.src.skin,
-    settings.src.skins,
-    settings.src.js,
-    settings.src.template
+    settings._src.fonts,
+    settings._src.images,
+    settings._src.css,
+    settings._src.less,
+    settings._src.scss,
+    settings._src.sass,
+    // settings._src.skin,
+    settings._src.skins,
+    settings._src.js,
+    settings._src.template
   ];
 
   var root = global.getRootPath();

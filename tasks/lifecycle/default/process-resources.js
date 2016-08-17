@@ -18,11 +18,12 @@ var
   less = require('gulp-less'),
   //sass = require('gulp-sass'),
   minifyhtml = require('gulp-minify-html'),
-  exec = require('child_process').exec,
+  // exec = require('child_process').exec,
+  spawn = require('child_process').spawn,
   livereload = require('gulp-livereload'),
   //browserSync = require('browser-sync'),
-  dest = global.settings.dest,
-  src = global.settings.src;
+  dest = global.settings._dest,
+  src = global.settings._src;
 
 gulp.task('fonts', function() {
   var root = global.getRootPath();

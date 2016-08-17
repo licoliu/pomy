@@ -4,7 +4,7 @@ var
   gulp = require('gulp'),
   bowerFiles = require('main-bower-files'),
   bowerNormalizer = require('gulp-bower-normalize'),
-  dest = global.settings.dest;
+  dest = global.settings._dest;
 
 gulp.task('process-sources', ['generate-sources'], function() {
   var root = global.getRootPath();

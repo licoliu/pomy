@@ -8,10 +8,11 @@ var
   del = require('del'),
   insert = require('gulp-insert'),
   minifyCss = require('gulp-minify-css'),
-  exec = require('child_process').exec,
+  // exec = require('child_process').exec,
+  spawn = require('child_process').spawn,
   livereload = require('gulp-livereload'),
   //browserSync = require('browser-sync'),
-  dest = global.settings.dest;
+  dest = global.settings._dest;
 
 gulp.task("repack-iCheck", function() {
   var root = global.getRootPath();

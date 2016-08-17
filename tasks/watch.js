@@ -1,8 +1,8 @@
 'use strict';
 
 var gulp = require('gulp'),
-  testunit = global.settings.testunit,
-  src = global.settings.src;
+  testunit = global.settings._testunit,
+  src = global.settings._src;
 
 gulp.task('watch', ['browser-sync'], function() {
   gulp.watch(src.template, ['format:html', 'template']);

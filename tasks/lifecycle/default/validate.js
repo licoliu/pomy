@@ -4,9 +4,10 @@ var
   gulp = require('gulp'),
   prettify = require('gulp-jsbeautifier'),
   jsHint = require('gulp-jshint'),
-  exec = require('child_process').exec,
-  testunit = global.settings.testunit,
-  src = global.settings.src;
+  // exec = require('child_process').exec,
+  spawn = require('child_process').spawn,
+  testunit = global.settings._testunit,
+  src = global.settings._src;
 
 gulp.task('jshint', function() {
   var root = global.getRootPath();

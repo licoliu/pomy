@@ -3,9 +3,9 @@
 var
   gulp = require('gulp'),
   del = require('del'),
-  dest = global.settings.dest,
-  // src = global.settings.src,
-  target = global.settings.target;
+  dest = global.settings._dest,
+  // src = global.settings._src,
+  target = global.settings._target;
 
 gulp.task('clean', ['pre-clean'], function(cb) {
   var root = global.getRootPath();

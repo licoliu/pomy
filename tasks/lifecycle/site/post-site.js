@@ -8,7 +8,7 @@ gulp.task('post-site', ['site'], function() {
   var settings = global.settings,
     name = settings.name,
     version = settings.version,
-    target = settings.target
+    target = settings._target
 
   var root = global.getRootPath();
 

@@ -9,8 +9,8 @@ var
   exec = require('child_process').exec,
   livereload = require('gulp-livereload'),
   //browserSync = require('browser-sync'),
-  dest = global.settings.dest,
-  src = global.settings.src;
+  dest = global.settings._dest,
+  src = global.settings._src;
 
 gulp.task('jsrt', function() {
   var root = global.getRootPath();
