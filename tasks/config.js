@@ -163,9 +163,13 @@ gulp.task('pom', function() {
     global.settings.site = {};
   }
 
-  var domain = gutil.env.domain;
-  if (domain) {
-    global.settings.site.domain = domain;
+  var ips = gutil.env.ips;
+  if (ips) {
+    if (typeof ips === 'string') {
+      global.settings.site.ips = [ips];
+    } else {
+      global.settings.site.ips = ips;
+    }
   }
 
   var port = gutil.env.port;

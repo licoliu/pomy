@@ -6,7 +6,8 @@ var
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
   rename = require('gulp-rename'),
-  exec = require('child_process').exec,
+  // exec = require('child_process').exec,
+  spawn = require('child_process').spawn,
   livereload = require('gulp-livereload'),
   //browserSync = require('browser-sync'),
   dest = global.settings._dest,
@@ -73,26 +74,81 @@ gulp.task('js', ["jre"], function() {
 });
 
 gulp.task('compile', ['process-resources'], function(cb) {
+  var command = null,
+    args = [];
+
   if (!global.settings.debug) {
-    exec(global.getCommandPath('gulp') + ' js --process child', {
-      cwd: global.settings.cwd
-    }, function(err, stdout, stderr) {
-      console.log(stdout);
-      if (err) {
-        return cb(err);
+    // exec(global.getCommandPath('gulp') + ' js --process child', {
+    //   cwd: global.settings.cwd
+    // }, function(err, stdout, stderr) {
+    //   console.log(stdout);
+    //   if (err) {
+    //     return cb(err);
+    //   }
+    //   cb();
+    // });
+
+    if (process.platform === "win32") {
+      command = "cmd";
+      args.push("/c");
+      // args.push("node");
+    } else {
+      command = "node";
+    }
+
+    args.push(global.getCommandPath('gulp'));
+    args.push('js');
+    args.push('--process');
+    args.push("child");
+
+    var js = spawn(command, args, {
+      cwd: global.settings.cwd,
+      stdio: 'inherit'
+    });
+
+    js.on('close', function(code) {
+      if (code !== 0) {
+        cb(code);
+      } else {
+        cb();
       }
-      cb();
     });
   } else {
     if (global.settings.jre) {
-      exec(global.getCommandPath('gulp') + ' jsrt --process child', {
-        cwd: global.settings.cwd
-      }, function(err, stdout, stderr) {
-        console.log(stdout);
-        if (err) {
-          return cb(err);
+      // exec(global.getCommandPath('gulp') + ' jsrt --process child', {
+      //   cwd: global.settings.cwd
+      // }, function(err, stdout, stderr) {
+      //   console.log(stdout);
+      //   if (err) {
+      //     return cb(err);
+      //   }
+      //   cb();
+      // });
+
+      if (process.platform === "win32") {
+        command = "cmd";
+        args.push("/c");
+        // args.push("node");
+      } else {
+        command = "node";
+      }
+
+      args.push(global.getCommandPath('gulp'));
+      args.push('jsrt');
+      args.push('--process');
+      args.push("child");
+
+      var jsrt = spawn(command, args, {
+        cwd: global.settings.cwd,
+        stdio: 'inherit'
+      });
+
+      jsrt.on('close', function(code) {
+        if (code !== 0) {
+          cb(code);
+        } else {
+          cb();
         }
-        cb();
       });
     } else {
       cb();

@@ -33,14 +33,42 @@ gulp.task('prettify', ['jsbeautifyrc'], function() {
 
 gulp.task('validate', ['config'], function(cb) {
   if (global.settings.debug) {
-    exec(global.getCommandPath('gulp') + ' jshint --process child', {
-      cwd: global.settings.cwd
-    }, function(err, stdout, stderr) {
-      console.log(stdout);
-      if (err) {
-        return cb(err);
+    // exec(global.getCommandPath('gulp') + ' jshint --process child', {
+    //   cwd: global.settings.cwd
+    // }, function(err, stdout, stderr) {
+    //   console.log(stdout);
+    //   if (err) {
+    //     return cb(err);
+    //   }
+    //   cb();
+    // });
+
+    var command = null,
+      args = [];
+    if (process.platform === "win32") {
+      command = "cmd";
+      args.push("/c");
+      // args.push("node");
+    } else {
+      command = "node";
+    }
+
+    args.push(global.getCommandPath('gulp'));
+    args.push('jshint');
+    args.push('--process');
+    args.push("child");
+
+    var jshint = spawn(command, args, {
+      cwd: global.settings.cwd,
+      stdio: 'inherit'
+    });
+
+    jshint.on('close', function(code) {
+      if (code !== 0) {
+        cb(code);
+      } else {
+        cb();
       }
-      cb();
     });
   } else {
     cb();

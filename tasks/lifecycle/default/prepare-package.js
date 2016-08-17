@@ -82,13 +82,44 @@ gulp.task('copy-miscellaneous', function() {
  *	6.pomy.json
  */
 gulp.task('prepare-package', ['test'], function(cb) {
-  exec(global.getCommandPath('gulp') + ' copy-jre copy-lib copy-classes copy-miscellaneous --process child', {
-    cwd: global.settings.cwd
-  }, function(err, stdout, stderr) {
-    console.log(stdout);
-    if (err) {
-      return cb(err);
+  // exec(global.getCommandPath('gulp') + ' copy-jre copy-lib copy-classes copy-miscellaneous --process child', {
+  //   cwd: global.settings.cwd
+  // }, function(err, stdout, stderr) {
+  //   console.log(stdout);
+  //   if (err) {
+  //     return cb(err);
+  //   }
+  //   cb();
+  // });
+
+  var command = null,
+    args = [];
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    // args.push("node");
+  } else {
+    command = "node";
+  }
+
+  args.push(global.getCommandPath('gulp'));
+  args.push('copy-jre');
+  args.push('copy-lib');
+  args.push('copy-classes');
+  args.push('copy-miscellaneous');
+  args.push('--process');
+  args.push("child");
+
+  var copy = spawn(command, args, {
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
+  });
+
+  copy.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
     }
-    cb();
   });
 });

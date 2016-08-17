@@ -7,154 +7,205 @@ var
   spawn = require('child_process').spawn,
   exec = require('child_process').exec;
 
+
 gulp.task('site:restart', ['site:stop'], function(cb) {
-  exec(global.getCommandPath('gulp') + ' site:start --process child', {
-    cwd: global.settings.cwd
-  }, function(err, stdout, stderr) {
-    console.log(stdout);
-    if (err) {
-      return cb(err);
+  var command = "",
+    args = [];
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+  } else {
+    command = "node";
+  }
+
+  args.push(global.getCommandPath('gulp'))
+  args.push("site:start");
+  args.push('--process');
+  args.push("child");
+
+  var startup = spawn(command, args, {
+    cwd: path.join(global.settings.cwd),
+    stdio: 'inherit'
+  });
+
+  startup.on('close', function(code) {
+    if (code !== 0) {
+      console.log('site restart process exited with code: ' + code + ".");
+      cb(code);
+    } else {
+      cb();
     }
-    cb();
   });
 });
 
 gulp.task('site:stop', ['pom'], function(cb) {
   var settings = global.settings,
     name = settings.name,
-    version = settings.version,
-    target = settings.target;
+    version = settings.version;
 
-  var user = gutil.env.user || settings.site.user || 'root';
-  var domain = gutil.env.domain || settings.site.domain || 'localhost';
-  var port = gutil.env.port || settings.site.port || '8421';
+  var site = {
+    user: gutil.env.user || 'root',
+    ips: gutil.env.ips || ['127.0.0.1'],
+    port: gutil.env.port || '8421'
+  };
 
-  var command = "";
+  for (var i = 0, j = 0, len = 1 /*site.ips.length*/ ; i < len; i++) {
 
-  var ssh = user + "@" + domain;
+    var user = site.user;
+    var ip = site.ips[i];
+    var port = site.port;
 
-  if (process.platform === "win32") {
-    command = "cmd /c ";
-  }
-
-  var opr = "";
-
-  var remote = domain !== '127.0.0.1' && domain !== 'localhost'
-  if (remote) {
-    opr += command + " ssh " + ssh + " \"";
-  }
-
-  // opr += "netstat -pan" +
-  // " | grep " + port + 
-  // " | grep -v grep | grep LISTEN" +
-  // " | awk '{print \\\$7}'" +
-  // " | cut -d/ -f1" +
-  // " | sed -e 's/^/kill -9 /g'" +
-  // " | sh -";
-
-  opr += "/usr/sbin/lsof -i tcp:" + port +
-    " | grep -v grep | grep LISTEN" +
-    " | awk '{print " + (remote ? "\\\$2" : "$2") + "}'" +
-    " | sed -e 's/^/kill -9 /g'" +
-    " | sh -";
-
-  if (remote) {
-    opr += "\"";
-  }
-
-  exec(opr, {}, function(err, stdout, stderr) {
-    console.log(stdout);
-    if (err) {
-      return cb(err);
+    if (!user || !ip) {
+      cb("请指定服务器地址和登录用户名。");
+      return;
     }
-    cb();
-  });
+
+    var command = "";
+
+    var ssh = user + "@" + ip;
+
+    if (process.platform === "win32") {
+      command = "cmd /c ";
+    }
+
+    var opr = "";
+
+    var remote = ip !== '127.0.0.1' && ip !== 'localhost'
+    if (remote) {
+      opr += command + " ssh " + ssh + " \"";
+    }
+
+    // opr += "netstat -pan" +
+    // " | grep " + port + 
+    // " | grep -v grep | grep LISTEN" +
+    // " | awk '{print \\\$7}'" +
+    // " | cut -d/ -f1" +
+    // " | sed -e 's/^/kill -9 /g'" +
+    // " | sh -";
+
+    opr += "/usr/sbin/lsof -i tcp:" + port +
+      " | grep -v grep | grep LISTEN" +
+      " | awk '{print " + (remote ? "\\\$2" : "$2") + "}'" +
+      " | sed -e 's/^/kill -9 /g'" +
+      " | sh -";
+
+    if (remote) {
+      opr += "\"";
+    }
+
+    exec(opr, {}, function(err, stdout, stderr) {
+      j++;
+      console.log(stdout);
+      if (err) {
+        return cb(err);
+      }
+      if (j == len) {
+        cb();
+      }
+    });
+  }
 });
 
 gulp.task('site:start', ['pom'], function(cb) {
 
   var settings = global.settings,
     name = settings.name,
-    version = settings.version,
-    target = settings.target;
+    version = settings.version;
 
-  var user = gutil.env.user || settings.site.user || 'root';
-  var domain = gutil.env.domain || settings.site.domain || 'localhost';
-  var port = gutil.env.port || settings.site.port || '8421';
-  var nohup = gutil.env.nohup || settings.site.nohup || false;
-
-  var target = gutil.env.target || settings.env.target || '';
+  var target = gutil.env.target || settings.env.target || settings.target || '';
   var debug = gutil.env.debug || settings.debug || false;
 
-  if (domain === 'localhost' || domain === '127.0.0.1') {
-    var command = null,
-      args = [];
+  var site = {
+    user: gutil.env.user || settings.site.user || 'root',
+    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
+    domain: gutil.env.domain || settings.site.domain || 'localhost',
+    port: gutil.env.port || settings.site.port || "8421",
+    nohup: gutil.env.nohup || settings.site.nohup || false,
+  };
 
-    if (process.platform === "win32") {
-      command = "cmd";
-      args.push("/c");
-      args.push("node");
-    } else {
-      command = "node";
+  for (var i = 0, j = 0, len = 1 /*site.ips.length*/ ; i < len; i++) {
+
+    var user = site.user;
+    var ip = site.ips[i];
+    var port = site.port || '8421';
+    var nohup = site.nohup || false;
+    var domain = site.domain;
+
+    if (!user || !ip) {
+      cb("请指定服务器地址和登录用户名。");
+      return;
     }
 
-    args.push("./startup");
-    args.push('--domain');
-    args.push(domain);
-    args.push('--port');
-    args.push(port);
-    args.push('--target');
-    args.push(target);
-    args.push('--debug');
-    args.push(debug);
+    if (ip === 'localhost' || ip === '127.0.0.1') {
+      var command = null,
+        args = [];
 
-    var startup = spawn(command, args, {
-      cwd: path.join(settings.cwd, './site/')
-    });
-
-    startup.stdout.on('data', function(data) {
-      console.log(data.toString());
-    });
-
-    startup.stderr.on('data', function(data) {
-      console.error(data.toString());
-    });
-
-    startup.on('exit', function(code) {
-      console.log('site startup process exited with code ' + code);
-      cb();
-    });
-  } else {
-    var ssh = user + "@" + domain;
-    var dest = "/home/" + user + "/var/" + domain + "/";
-    var zip = name + ".site@" + version + '.zip';
-
-    var command = "";
-    if (process.platform === "win32") {
-      command = "cmd /c ";
-    }
-
-    var folder = dest + name + ".site/" + version + "/";
-
-    var opr = command + " ssh " + ssh +
-      " \"cd " + folder +
-      " && " + (nohup ? "nohup" : "") +
-      " node site/startup" +
-      " --domain " + domain +
-      " --port " + port +
-      " --target " + target +
-      " --debug " + debug +
-      "\"";
-
-    exec(opr, {
-      maxBuffer: 16000 * 1024
-    }, function(err, stdout, stderr) {
-      console.log(stdout);
-      if (err) {
-        return cb(err);
+      if (process.platform === "win32") {
+        command = "cmd";
+        args.push("/c");
+        args.push("node");
+      } else {
+        command = "node";
       }
-      cb();
-    });
+
+      args.push("./startup");
+      args.push('--ip');
+      args.push(ip);
+      args.push('--port');
+      args.push(port);
+      args.push('--target');
+      args.push(target);
+      args.push('--debug');
+      args.push(debug);
+
+      var startup = spawn(command, args, {
+        cwd: path.join(settings.cwd, './site/'),
+        stdio: 'inherit'
+      });
+
+      startup.on('close', function(code) {
+        if (code !== 0) {
+          console.log('site startup process exited with code: ' + code + '.');
+          cb(code);
+        } else {
+          cb();
+        }
+      });
+    } else {
+      var ssh = user + "@" + ip;
+      var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
+
+      var command = "";
+      if (process.platform === "win32") {
+        command = "cmd /c ";
+      }
+
+      var folder = dest + name + ".site/" + version + "/";
+
+      var opr = command + " ssh " + ssh +
+        " \"cd " + folder +
+        " && " + (nohup ? "nohup" : "") +
+        " node site/startup" +
+        " --ip " + ip +
+        " --port " + port +
+        " --target " + target +
+        " --debug " + debug +
+        "\"";
+
+      exec(opr, {
+        maxBuffer: 16000 * 1024
+      }, function(err, stdout, stderr) {
+        j++;
+        // console.log(stdout);
+        if (err) {
+          return cb(err);
+        }
+        if (j == len) {
+          cb();
+        }
+      });
+    }
   }
 });
 

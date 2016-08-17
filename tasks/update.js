@@ -102,20 +102,17 @@ gulp.task('update:self', function(cb) {
   }
 
   var npm = spawn(command, args, {
-    cwd: cwd
+    cwd: cwd,
+    stdio: 'inherit'
   });
 
-  npm.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  npm.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  npm.on('exit', function(code) {
-    console.log('Finish pomy update self process');
-    cb();
+  npm.on('close', function(code) {
+    if (code !== 0) {
+      console.log('pomy update self process exited with code: ' + code + '.');
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
 

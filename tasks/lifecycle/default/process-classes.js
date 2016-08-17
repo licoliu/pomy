@@ -126,13 +126,42 @@ gulp.task("repack", ["define"], function(cb) {
 });
 
 gulp.task('process-classes', ['compile'], function(cb) {
-  exec(global.getCommandPath('gulp') + ' repack --process child', {
-    cwd: global.settings.cwd
-  }, function(err, stdout, stderr) {
-    console.log(stdout);
-    if (err) {
-      return cb(err);
+  // exec(global.getCommandPath('gulp') + ' repack --process child', {
+  //   cwd: global.settings.cwd
+  // }, function(err, stdout, stderr) {
+  //   console.log(stdout);
+  //   if (err) {
+  //     return cb(err);
+  //   }
+  //   cb();
+  // });
+
+  var command = null,
+    args = [];
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    // args.push("node");
+  } else {
+    command = "node";
+  }
+
+  args.push(global.getCommandPath('gulp'));
+  args.push('repack');
+  args.push('--process');
+  args.push("child");
+
+  var repack = spawn(command, args, {
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
+  });
+
+  repack.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
     }
-    cb();
   });
 });

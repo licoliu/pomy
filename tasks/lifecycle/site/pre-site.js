@@ -30,20 +30,17 @@ gulp.task('site-npm', function(cb) {
   }
 
   var npm = spawn(command, args, {
-    cwd: cwd
+    cwd: cwd,
+    stdio: 'inherit'
   });
 
-  npm.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  npm.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  npm.on('exit', function(code) {
-    console.log('Finish site npm process');
-    cb();
+  npm.on('close', function(code) {
+    if (code !== 0) {
+      console.log('site npm process exit with code: ' + code + '.');
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
 
@@ -66,20 +63,17 @@ gulp.task('pre-site', ['site-npm'], function(cb) {
   args.push('--prod');
 
   var build = spawn(command, args, {
-    cwd: cwd
+    cwd: cwd,
+    stdio: 'inherit'
   });
 
-  build.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  build.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  build.on('exit', function(code) {
-    console.log('Finish site build process');
-    cb();
+  build.on('close', function(code) {
+    if (code !== 0) {
+      console.log('site build process exit with code: ' + code + '.');
+      cb(code);
+    } else {
+      cb();
+    }
   });
 
 });

@@ -6,13 +6,17 @@ var
   gutil = require('gulp-util');
 
 gulp.task('browser:sync', function(cb) {
-  /*
-  var env = gutil.env || global.settings.site || {};
-  browserSync({
-    files: ['../src/main/**'],
-    proxy: (env.domain || 'localhost') + ":" + (env.syncPort || 8000),
-    notify: false
-  });
-  */
+
+  // var env = gutil.env || global.settings.site || {
+  //   ips: ['127.0.0.1']
+  // };
+  // for (var i = 0, len = env.ips.length; i < len; i++) {
+  //   var ip = env.ips[i];
+  //   browserSync({
+  //     files: ['../src/main/**'],
+  //     proxy: ip + ":" + (env.syncPort || 8000),
+  //     notify: false
+  //   });
+  // }
   cb();
 });

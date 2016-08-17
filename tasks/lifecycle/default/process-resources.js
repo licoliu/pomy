@@ -194,27 +194,74 @@ gulp.task('resources', ['fonts', 'images', 'skins:images', 'template', 'css', 's
 });
 
 gulp.task('process-resources', ['generate-resources'], function(cb) {
+  var command = null,
+    args = [];
+
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    // args.push("node");
+  } else {
+    command = "node";
+  }
 
   if (global.settings.debug) {
-    exec(global.getCommandPath('gulp') + ' less skins:less --process child', {
-      cwd: global.settings.cwd
-    }, function(err, stdout, stderr) {
-      console.log(stdout);
-      if (err) {
-        return cb(err);
+    // exec(global.getCommandPath('gulp') + ' less skins:less --process child', {
+    //   cwd: global.settings.cwd
+    // }, function(err, stdout, stderr) {
+    //   console.log(stdout);
+    //   if (err) {
+    //     return cb(err);
+    //   }
+    //   cb();
+    // });
+
+    args.push(global.getCommandPath('gulp'));
+    args.push('less');
+    args.push('skins:less');
+    args.push('--process');
+    args.push("child");
+
+    var less = spawn(command, args, {
+      cwd: global.settings.cwd,
+      stdio: 'inherit'
+    });
+
+    less.on('close', function(code) {
+      if (code !== 0) {
+        cb(code);
+      } else {
+        cb();
       }
-      cb();
     });
   } else {
-    exec(global.getCommandPath('gulp') + ' resources --process child', {
-      cwd: global.settings.cwd
-    }, function(err, stdout, stderr) {
-      console.log(stdout);
-      if (err) {
-        return cb(err);
-      }
+    // exec(global.getCommandPath('gulp') + ' resources --process child', {
+    //   cwd: global.settings.cwd
+    // }, function(err, stdout, stderr) {
+    //   console.log(stdout);
+    //   if (err) {
+    //     return cb(err);
+    //   }
 
-      cb();
+    //   cb();
+    // });
+
+    args.push(global.getCommandPath('gulp'));
+    args.push('resources');
+    args.push('--process');
+    args.push("child");
+
+    var resources = spawn(command, args, {
+      cwd: global.settings.cwd,
+      stdio: 'inherit'
+    });
+
+    resources.on('close', function(code) {
+      if (code !== 0) {
+        cb(code);
+      } else {
+        cb();
+      }
     });
   }
 });

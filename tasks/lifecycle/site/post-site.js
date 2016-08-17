@@ -21,6 +21,6 @@ gulp.task('post-site', ['site'], function() {
     ], {
       base: root + target.root
     })
-    .pipe(zip(name + ".site@" + version + '.zip'))
+    .pipe(zip(name + ".site" /* + "@" + version */ + '.zip'))
     .pipe(gulp.dest(root + target.root));
 });

@@ -34,19 +34,16 @@ gulp.task('dependancy', ['validate'], function(cb) {
   args.push('update');
 
   var bower = spawn(command, args, {
-    cwd: global.settings.cwd
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
   });
 
-  bower.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  bower.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  bower.on('exit', function(code) {
-    cb();
+  bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
 
@@ -65,19 +62,16 @@ gulp.task('update', function(cb) {
   args.push('update');
 
   var bower = spawn(command, args.concat(process.argv.slice(3)), {
-    cwd: global.settings.cwd
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
   });
 
-  bower.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  bower.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  bower.on('exit', function(code) {
-    cb();
+  bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
 
@@ -100,19 +94,16 @@ gulp.task('bower:install', function(cb) {
   args.push('install');
 
   var bower = spawn(command, args.concat(process.argv.slice(3)), {
-    cwd: global.settings.cwd
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
   });
 
-  bower.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  bower.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  bower.on('exit', function(code) {
-    cb();
+  bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
 
@@ -131,18 +122,15 @@ gulp.task('bower:uninstall', function(cb) {
   args.push('uninstall');
 
   var bower = spawn(command, args.concat(process.argv.slice(3)), {
-    cwd: global.settings.cwd
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
   });
 
-  bower.stdout.on('data', function(data) {
-    console.log(data.toString());
-  });
-
-  bower.stderr.on('data', function(data) {
-    console.error(data.toString());
-  });
-
-  bower.on('exit', function(code) {
-    cb();
+  bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
   });
 });
