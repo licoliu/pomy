@@ -33,11 +33,34 @@ gulp.task('copy-jre', function() {
   }
 });
 
-gulp.task('copy-lib', function() {
+gulp.task('copy-pm2', function() {
   var root = global.getRootPath();
-  return gulp.src([
-      root + dest.lib + '/**/*'
-    ], {
+  var pomy = global.getPomyPath();
+  var libs = [];
+  if (global.settings.define === 'node') {
+    libs.push(pomy + "node_modules/pm2/**/*");
+    libs.push(pomy + "node_modules/semver/**/*");
+  }
+
+  return gulp.src(libs, {
+      base: pomy
+    })
+    .pipe(gulp.dest(root + target.classes));
+});
+
+gulp.task('copy-lib', ['copy-pm2'], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  var libs = [];
+  if (global.settings.define === 'node') {
+    libs.push(root + "node_modules/**/*");
+    libs.push("!" + root + "node_modules/pomy/**/*");
+    libs.push("!" + root + "node_modules/.bin/pomy");
+  } else {
+    libs.push(root + dest.lib + '/**/*')
+  }
+
+  return gulp.src(libs, {
       base: root
     })
     .pipe(gulp.dest(root + target.classes));
@@ -68,7 +91,10 @@ gulp.task('copy-miscellaneous', function() {
       root + 'logo.ico',
       root + 'favicon.ico',
       root + 'index.html',
-      root + 'pomy.json'
+      root + 'package.json',
+      root + 'startup.json',
+      root + 'pomy.json',
+      root + 'startup.js'
     ])
     .pipe(gulp.dest(root + target.classes));
 });

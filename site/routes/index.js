@@ -26,12 +26,22 @@ exports.deploy = function(req, res) {
   var version = req.body.version;
   var target = req.body.target;
   var date = moment().format("ddd, MMM Do YYYY, h:mm:ss a"); //req.body.date;
+  var domain = req.body.domain;
+  var ips = req.body.ips;
 
-  var pathname = path.join(folder, "deployments", target + ".md");
+  var dir = folder;
+  if (global.settings.name !== name) {
+    dir = path.join(
+      process.env.HOME,
+      "var/" + global.settings.site.domain + "/documents/" + name + "/" + global.settings.target
+    );
+  }
 
-  var data = fs.existsSync(pathname) ? "" : "date|name|version\n-|:-:|-:\n";
+  var pathname = path.join(dir, "deployments", target + ".md");
 
-  data += date + "|" + name + "|" + version + "\n";
+  var data = fs.existsSync(pathname) ? "" : "date|name|version|domain|ips\n-|:-:|:-:|:-:|-:\n";
+
+  data += date + "|" + name + "|" + version + "|" + domain + "|" + ips + "\n";
 
   fs.appendFileSync(pathname, data, {
     flags: 'a'

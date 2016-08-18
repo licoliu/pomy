@@ -3,10 +3,46 @@
 var
   gulp = require('gulp'),
   fs = require('fs'),
+  path = require('path'),
+  gutil = require('gulp-util'),
   // bower = require('gulp-bower'),
   spawn = require('child_process').spawn;
 
-gulp.task('dependancy', ['validate'], function(cb) {
+gulp.task('dependancy:npm', function(cb) {
+  var command = null,
+    args = [];
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    args.push("npm");
+  } else {
+    command = "npm";
+  }
+
+  args.push('update');
+
+  var registry = gutil.env.registry || global.settings.registry;
+  if (registry) {
+    args.push("--registry");
+    args.push(registry);
+  }
+
+  var root = global.getRootPath();
+  var npm = spawn(command, args, {
+    cwd: path.resolve(root),
+    stdio: 'inherit'
+  });
+
+  npm.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
+  });
+});
+
+gulp.task('dependancy:bower', function(cb) {
   var pomy = global.getPomyPath();
 
   var directory = pomy + 'bower_components';
@@ -39,6 +75,35 @@ gulp.task('dependancy', ['validate'], function(cb) {
   });
 
   bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
+  });
+});
+
+gulp.task('dependancy', ['validate'], function(cb) {
+  var command = null,
+    args = [];
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    args.push("node");
+  } else {
+    command = "node";
+  }
+
+  args.push(global.getCommandPath('gulp'));
+  args.push('dependancy:npm');
+  args.push('dependancy:bower');
+
+  var dependancy = spawn(command, args, {
+    cwd: global.settings.cwd,
+    stdio: 'inherit'
+  });
+
+  dependancy.on('close', function(code) {
     if (code !== 0) {
       cb(code);
     } else {
@@ -127,6 +192,79 @@ gulp.task('bower:uninstall', function(cb) {
   });
 
   bower.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
+  });
+});
+
+
+gulp.task('npm:install', function(cb) {
+  var command = null,
+    args = [];
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    args.push("npm");
+  } else {
+    command = "npm";
+  }
+
+  args.push('install');
+
+  args.concat(process.argv.slice(3));
+
+  var registry = gutil.env.registry || global.settings.registry;
+  if (registry) {
+    args.push("--registry");
+    args.push(registry);
+  }
+
+  var root = global.getRootPath();
+  var npm = spawn(command, args, {
+    cwd: root,
+    stdio: 'inherit'
+  });
+
+  npm.on('close', function(code) {
+    if (code !== 0) {
+      cb(code);
+    } else {
+      cb();
+    }
+  });
+});
+
+gulp.task('npm:uninstall', function(cb) {
+  var command = null,
+    args = [];
+  if (process.platform === "win32") {
+    command = "cmd";
+    args.push("/c");
+    args.push("npm");
+  } else {
+    command = "npm";
+  }
+
+  args.push('uninstall');
+
+  args.concat(process.argv.slice(3));
+
+  var registry = gutil.env.registry || global.settings.registry;
+  if (registry) {
+    args.push("--registry");
+    args.push(registry);
+  }
+
+  var root = global.getRootPath();
+  var npm = spawn(command, args, {
+    cwd: root,
+    stdio: 'inherit'
+  });
+
+  npm.on('close', function(code) {
     if (code !== 0) {
       cb(code);
     } else {

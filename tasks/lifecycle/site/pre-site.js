@@ -7,7 +7,7 @@ var
   gutil = require('gulp-util'),
   spawn = require('child_process').spawn;
 
-gulp.task('site-npm', function(cb) {
+gulp.task('site-npm', ["config:pm2site"], function(cb) {
 
   var cwd = path.join(global.settings.cwd, './site/');
 
@@ -24,9 +24,10 @@ gulp.task('site-npm', function(cb) {
 
   args.push("install");
 
-  if (gutil.env.registry || global.settings.registry) {
+  var registry = gutil.env.registry || global.settings.registry;
+  if (registry) {
     args.push("--registry");
-    args.push(gutil.env.registry || global.settings.registry);
+    args.push(registry);
   }
 
   var npm = spawn(command, args, {

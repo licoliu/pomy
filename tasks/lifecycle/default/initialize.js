@@ -9,7 +9,7 @@ gulp.task('initialize', ['dependancy'], function() {
 
   return gulp.src([
       pomy + "bower_components/jre/jre/**/*",
-      pomy + "bower_components/jre/startup.js",
+      pomy + "bower_components/jre/startup-test.js",
       pomy + "bower_components/jre/index-test.html",
 
       "!" + pomy + "bower_components/jre/jre/jsvm.min.js"

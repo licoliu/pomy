@@ -13,13 +13,13 @@ gulp.task('post-site', ['site'], function() {
   var root = global.getRootPath();
 
   return gulp.src([
-      root + target.root + "/site/**/*",
-      root + target.root + "/package.json",
-      root + target.root + "/pomy.json",
-      root + target.root + "/README.md",
-      root + target.root + "/util/**/*"
+      root + target.site + "/site/**/*",
+      root + target.site + "/package.json",
+      root + target.site + "/pomy.json",
+      root + target.site + "/README.md",
+      root + target.site + "/util/**/*"
     ], {
-      base: root + target.root
+      base: root + target.site
     })
     .pipe(zip(name + ".site" /* + "@" + version */ + '.zip'))
     .pipe(gulp.dest(root + target.root));

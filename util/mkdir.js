@@ -9,9 +9,11 @@ module.exports = function(source, orign) {
   var dir = null;
   for (var i = 0, len = dirs.length; i < len; i++) {
     dir = dirs[i];
-    ref = path.join(ref, dir);
-    if (!fs.existsSync(ref)) {
-      fs.mkdirSync(ref);
+    if (dir) {
+      ref = path.join(ref, dir);
+      if (!fs.existsSync(ref)) {
+        fs.mkdirSync(ref);
+      }
     }
   }
 };

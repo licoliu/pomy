@@ -46,7 +46,8 @@ global.settings.paths = {
 var argvs = minimist(process.argv.slice(2));
 
 var name = global.settings.name;
-var domain = argvs.domain || global.settings.site.domain || 'localhost';
+var ips = global.settings.site.ips;
+var ip = argvs.ip || (ips.length > 0 ? ips[0] : null) || '127.0.0.1';
 var port = argvs.port || global.settings.site.port || 8421;
 var target = argvs.target || global.settings.target || 'local';
 var debug = argvs.debug || global.settings.debug || true;
@@ -60,7 +61,7 @@ var googleWebmasterMeta = configs.googleWebmasterMeta;
 var title = configs.title;
 var description = configs.description;
 
-app.set('domain', domain)
+app.set('domain', ip)
 app.set('port', port)
 
 app.set('views', [path.join(__dirname, './views'),
@@ -121,21 +122,21 @@ if (debug) {
   app.use(errorHandler())
 }
 
-global.settings.site.domain = domain;
+global.settings.site.ips[0] = ip;
 global.settings.site.port = port;
 global.settings.target = target;
 global.settings.debug = debug;
 
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/api");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/docs");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/backlogs");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/site");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/sprints");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/test reports");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/ui");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/deployments");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/changelogs");
-mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/other");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/api");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/docs");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/backlogs");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/site");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/sprints");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/test reports");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/ui");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/deployments");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/changelogs");
+mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/other");
 
 var
   routes = require('./routes'),

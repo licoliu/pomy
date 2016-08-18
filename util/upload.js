@@ -14,7 +14,7 @@ module.exports = function(site, cwd, name, version, cb) {
     }
 
     var ssh = user + "@" + ip;
-    var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
+    var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain;
     var zip = name /* + "@" + version */ + '.zip';
 
     var command = " ";
@@ -22,13 +22,22 @@ module.exports = function(site, cwd, name, version, cb) {
       command = "cmd /c ";
     }
 
-    var folder = dest + name + "/" + version + "/";
+    var
+      sf = dest + "/" + name,
+      sl = "current",
+      folder = sf + "/" + version;
 
     var opr = command + "ssh " + ssh + " \"mkdir -p " + dest + "\" ";
 
-    opr += "&& " + command + "scp -r " + zip + " " + ssh + ":" + dest + " ";
+    opr += "&& " + command + "scp -r " + zip + " " + ssh + ":" + dest + "/ ";
 
-    opr += "&& " + command + "ssh " + ssh + " \"mkdir -p " + folder + " && unzip -o " + dest + zip + " -d " + folder + "\"";
+    opr += "&& " + command + "ssh " + ssh +
+      " \"mkdir -p " + folder +
+      " && unzip -o " + dest + "/" + zip + " -d " + folder + "/" +
+      " && cd " + sf + "/" +
+      " && rm -rf " + sl +
+      " && ln -sf " + folder + " " + sl +
+      "\"";
 
     exec(opr, {
       cwd: cwd,

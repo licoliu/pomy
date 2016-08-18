@@ -1,0 +1,15 @@
+{
+  "apps": [{
+    "name": "pom-test.site",
+    "script": "./startup.js",
+    "exec_mode": "cluster",
+    "watch": true,
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "env_production": {
+      "NODE_ENV": "production"
+    },
+    "args": "--ip 10.18.5.97 --port 8421 --target local --debug true"
+  }]
+}

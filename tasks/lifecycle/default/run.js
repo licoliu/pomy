@@ -8,7 +8,7 @@ var
   exec = require('child_process').exec;
 
 
-gulp.task('site:restart', ['site:stop'], function(cb) {
+gulp.task('restart', ['stop'], function(cb) {
   var command = "",
     args = [];
 
@@ -20,7 +20,7 @@ gulp.task('site:restart', ['site:stop'], function(cb) {
   }
 
   args.push(global.getCommandPath('gulp'))
-  args.push("site:start");
+  args.push("start");
   args.push('--process');
   args.push("child");
 
@@ -39,7 +39,7 @@ gulp.task('site:restart', ['site:stop'], function(cb) {
   });
 });
 
-gulp.task('site:rerun', ['site:delete'], function(cb) {
+gulp.task('rerun', ['delete'], function(cb) {
   var command = "",
     args = [];
 
@@ -51,7 +51,7 @@ gulp.task('site:rerun', ['site:delete'], function(cb) {
   }
 
   args.push(global.getCommandPath('gulp'))
-  args.push("site:start");
+  args.push("start");
   args.push('--process');
   args.push("child");
 
@@ -62,7 +62,7 @@ gulp.task('site:rerun', ['site:delete'], function(cb) {
 
   startup.on('close', function(code) {
     if (code !== 0) {
-      console.log('site restart process exited with code: ' + code + ".");
+      console.log('site renew process exited with code: ' + code + ".");
       cb(code);
     } else {
       cb();
@@ -70,7 +70,7 @@ gulp.task('site:rerun', ['site:delete'], function(cb) {
   });
 });
 
-gulp.task('site:delete', ['pom'], function(cb) {
+gulp.task('delete', ['pom'], function(cb) {
   var settings = global.settings,
     name = settings.name,
     version = settings.version;
@@ -78,7 +78,7 @@ gulp.task('site:delete', ['pom'], function(cb) {
   var site = {
     user: gutil.env.user || settings.site.user || 'root',
     ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    sitePort: gutil.env.sitePort || settings.site.sitePort || '8421',
+    port: gutil.env.port || settings.site.port || '80',
     domain: gutil.env.domain || settings.site.domain || 'localhost',
     nohup: gutil.env.nohup || settings.site.nohup || false,
   };
@@ -87,7 +87,7 @@ gulp.task('site:delete', ['pom'], function(cb) {
 
     var user = site.user;
     var ip = site.ips[i];
-    var sitePort = site.sitePort;
+    var port = site.port;
     var nohup = site.nohup || false;
     var domain = site.domain;
 
@@ -113,10 +113,10 @@ gulp.task('site:delete', ['pom'], function(cb) {
 
     if (remote && nohup) {
       var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
-      var folder = dest + name + ".site/current" /* version */ + "/site/";
+      var folder = dest + name + "/current/" /* version + "/" */ ;
 
-      opr += " cd " + folder +
-        " && ./node_modules/pm2/bin/pm2 delete " + name + ".site";
+      opr += "cd " + folder +
+        " && ./node_modules/pm2/bin/pm2 delete " + name;
     } else {
       j++;
       if (j == len) {
@@ -133,7 +133,7 @@ gulp.task('site:delete', ['pom'], function(cb) {
       j++;
       console.log(stdout);
       // if (err) {
-      // return cb(err);
+      //   return cb(err);
       // }
       if (j == len) {
         cb();
@@ -142,7 +142,7 @@ gulp.task('site:delete', ['pom'], function(cb) {
   }
 });
 
-gulp.task('site:stop', ['pom'], function(cb) {
+gulp.task('stop', ['pom'], function(cb) {
   var settings = global.settings,
     name = settings.name,
     version = settings.version;
@@ -150,7 +150,7 @@ gulp.task('site:stop', ['pom'], function(cb) {
   var site = {
     user: gutil.env.user || settings.site.user || 'root',
     ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    sitePort: gutil.env.sitePort || settings.site.sitePort || '8421',
+    port: gutil.env.port || settings.site.port || '80',
     domain: gutil.env.domain || settings.site.domain || 'localhost',
     nohup: gutil.env.nohup || settings.site.nohup || false,
   };
@@ -159,7 +159,7 @@ gulp.task('site:stop', ['pom'], function(cb) {
 
     var user = site.user;
     var ip = site.ips[i];
-    var sitePort = site.sitePort;
+    var port = site.port;
     var nohup = site.nohup || false;
     var domain = site.domain;
 
@@ -185,20 +185,20 @@ gulp.task('site:stop', ['pom'], function(cb) {
 
     if (remote && nohup) {
       var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
-      var folder = dest + name + ".site/current" /* version */ + "/site/";
+      var folder = dest + name + "/current/" /* version + "/" */ ;
 
-      opr += " cd " + folder +
-        " && ./node_modules/pm2/bin/pm2 stop " + name + ".site";
+      opr += "cd " + folder +
+        " && ./node_modules/pm2/bin/pm2 stop " + name;
     } else {
       // opr += "netstat -pan" +
-      // " | grep " + sitePort + 
+      // " | grep " + port + 
       // " | grep -v grep | grep LISTEN" +
       // " | awk '{print \\\$7}'" +
       // " | cut -d/ -f1" +
       // " | sed -e 's/^/kill -9 /g'" +
       // " | sh -";
 
-      opr += "/usr/sbin/lsof -i tcp:" + sitePort +
+      opr += "/usr/sbin/lsof -i tcp:" + port +
         " | grep -v grep | grep LISTEN" +
         " | awk '{print " + (remote ? "\\\$2" : "$2") + "}'" +
         " | sed -e 's/^/kill -9 /g'" +
@@ -208,7 +208,6 @@ gulp.task('site:stop', ['pom'], function(cb) {
     if (remote) {
       opr += "\"";
     }
-
     exec(opr, {}, function(err, stdout, stderr) {
       j++;
       console.log(stdout);
@@ -222,7 +221,7 @@ gulp.task('site:stop', ['pom'], function(cb) {
   }
 });
 
-gulp.task('site:start', ['pom'], function(cb) {
+gulp.task('start', ['pom'], function(cb) {
 
   var settings = global.settings,
     name = settings.name,
@@ -235,7 +234,7 @@ gulp.task('site:start', ['pom'], function(cb) {
     user: gutil.env.user || settings.site.user || 'root',
     ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
     domain: gutil.env.domain || settings.site.domain || 'localhost',
-    sitePort: gutil.env.sitePort || settings.site.sitePort || "8421",
+    port: gutil.env.port || settings.site.port || "80",
     nohup: gutil.env.nohup || settings.site.nohup || false,
   };
 
@@ -243,7 +242,7 @@ gulp.task('site:start', ['pom'], function(cb) {
 
     var user = site.user;
     var ip = site.ips[i];
-    var sitePort = site.sitePort || '8421';
+    var port = site.port || '8421';
     var nohup = site.nohup || false;
     var domain = site.domain;
 
@@ -270,14 +269,14 @@ gulp.task('site:start', ['pom'], function(cb) {
       args.push('--ip');
       args.push(ip);
       args.push('--port');
-      args.push(sitePort);
+      args.push(port);
       args.push('--target');
       args.push(target);
       args.push('--debug');
       args.push(debug);
 
       var startup = spawn(command, args, {
-        cwd: path.join(settings.cwd, './site/'),
+        cwd: path.resolve(global.getRootPath()),
         stdio: 'inherit'
       });
 
@@ -290,21 +289,23 @@ gulp.task('site:start', ['pom'], function(cb) {
         }
       });
     } else {
+      var ssh = user + "@" + ip;
+      var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
+
       var command = "";
       if (process.platform === "win32") {
         command = "cmd /c ";
       }
 
-      var ssh = user + "@" + ip;
-      var dest = (user === "root" ? "/root" : "/home/" + user) + "/var/" + domain + "/";
-      var folder = dest + name + ".site/current" /* version */ + "/site/";
+      var folder = dest + name + "/current/" /* version + "/" */ ;
 
       var opr = command + " ssh " + ssh +
         " \"cd " + folder +
-        " &&" +
+        " && " +
         (nohup ?
-          " ./node_modules/pm2/bin/pm2 start ./startup.json " + (debug ? "" : "--env production") :
-          " node ./startup.js --ip " + ip + " --port " + sitePort + " --target " + target + " --debug " + debug) +
+          " ./node_modules/pm2/bin/pm2 start ./startup.json " + (debug ? "" : "--env production") // --node-args \\\"ip='" + ip + "' port='" + port + "' target='" + target + "' debug=" + debug + "\\\"" :
+          :
+          " node ./startup.js --ip " + ip + " --port " + port + " --target " + target + " --debug " + debug) +
         "\"";
 
       exec(opr, {
@@ -323,6 +324,6 @@ gulp.task('site:start', ['pom'], function(cb) {
   }
 });
 
-gulp.task('site:run', ['site:start'], function(cb) {
+gulp.task('run', ['start'], function(cb) {
   cb();
 });

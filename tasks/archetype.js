@@ -8,7 +8,7 @@ var argv = require('minimist')(process.argv.slice(2));
 var rename = require('gulp-rename');
 var jeditor = require("gulp-json-editor");
 
-gulp.task('archetype:create', function() {
+gulp.task('archetype:create', ['config:startup'], function() {
   var settings = global.settings;
 
   var dirs = [settings._target.root,

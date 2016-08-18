@@ -19,7 +19,7 @@ gulp.task('site-config', function() {
   return gulp.src(srcs, {
       base: root
     })
-    .pipe(gulp.dest(root + target.root));
+    .pipe(gulp.dest(root + target.site));
 });
 
 gulp.task('site', ['site-config', 'pre-site'], function() {
@@ -41,6 +41,7 @@ gulp.task('site', ['site-config', 'pre-site'], function() {
     pomy + 'site/**/routes/**/*',
     pomy + 'site/**/views/**/*',
     pomy + 'site/package.json',
+    pomy + 'site/startup.json',
     pomy + 'site/README.md',
 
     pomy + 'site/**/public/**/*',
@@ -77,5 +78,5 @@ gulp.task('site', ['site-config', 'pre-site'], function() {
   return gulp.src(srcs, {
       base: pomy
     })
-    .pipe(gulp.dest(root + target.root));
+    .pipe(gulp.dest(root + target.site));
 });

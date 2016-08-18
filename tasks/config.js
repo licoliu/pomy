@@ -68,11 +68,7 @@ global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
 global.settings._target = {
   root: 'target',
   classes: 'target/classes',
-  site: {
-    doc: 'target/site/doc',
-    api: 'target/site/api',
-    markdown: 'target/site/markdown'
-  }
+  site: 'target/site'
 };
 
 global.settings._testunit = {
@@ -125,16 +121,16 @@ gulp.task('pom', function() {
       global.settings.debug = false;
       global.settings.skin = "default";
       break;
-    case "fat":
-    case "production_fat":
-      global.settings.debug = false;
-      global.settings.skin = "fat";
-      break;
     case "uat":
     case "production_uat":
     case "staging":
       global.settings.debug = false;
       global.settings.skin = "uat";
+      break;
+    case "fat":
+    case "production_fat":
+      global.settings.debug = false;
+      global.settings.skin = "fat";
       break;
     case "test":
     case "matrix":
@@ -177,6 +173,11 @@ gulp.task('pom', function() {
     global.settings.site.port = port;
   }
 
+  var sitePort = gutil.env.sitePort;
+  if (sitePort) {
+    global.settings.site.sitePort = sitePort;
+  }
+
   var syncPort = gutil.env.syncPort;
   if (syncPort) {
     global.settings.site.syncPort = syncPort;
@@ -203,13 +204,13 @@ gulp.task('config:bower', ['pom'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-  if (global.settings.jre) {
-    delete global.settings.dependencies.jre;
-    delete global.settings.devDependencies.jre;
-  } else if (!global.settings.dependencies.jre &&
+  if (global.settings.jre &&
+    !global.settings.dependencies.jre &&
     !global.settings.devDependencies.jre) {
     global.settings.dependencies.jre = "^1.0.1";
   }
+  // delete global.settings.dependencies.jre;
+  // delete global.settings.devDependencies.jre;
 
   var dependencies = [];
   for (var name in global.settings.dependencies) {
@@ -239,7 +240,53 @@ gulp.task('config:npm', ['pom'], function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('config', ['config:bower', 'config:npm'], function() {
+gulp.task('config:pm2site', ['pom'], function() {
+  var settings = global.settings,
+    site = global.settings.site,
+    ip = site.ips && site.ips.length > 0 ? site.ips[0] : '127.0.0.1';
+  var pomy = global.getPomyPath();
+  return gulp.src(pomy + "site/startup.json")
+    .pipe(jeditor({
+      "apps": [{
+        "name": settings.name + ".site",
+        "args": "--ip " + ip +
+          " --port " + site.sitePort +
+          " --target " + settings.target +
+          " --debug " + settings.debug
+      }]
+    }))
+    .pipe(gulp.dest(pomy + "site/"));
+});
+
+gulp.task('config:startup', ['pom'], function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+  return gulp.src([
+      pomy + "startup.json",
+      pomy + "startup.js"
+    ])
+    .pip(gulp.dest(root));
+});
+
+gulp.task('config:pm2', ['pom'], function() {
+  var settings = global.settings,
+    site = global.settings.site,
+    ip = site.domain || 'localhost';
+  var root = global.getRootPath();
+  return gulp.src(root + "startup.json")
+    .pipe(jeditor({
+      "apps": [{
+        "name": settings.name,
+        "args": "--ip " + ip +
+          " --port " + site.port +
+          " --target " + settings.target +
+          " --debug " + settings.debug
+      }]
+    }))
+    .pipe(gulp.dest(root));
+});
+
+gulp.task('config', ['config:bower', 'config:npm', 'config:pm2'], function() {
   var settings = getConfigSettings();
   var root = global.getRootPath();
 
