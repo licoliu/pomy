@@ -14,20 +14,22 @@ gulp.task('deploy', ['install'], function(cb) {
     name = settings.name,
     version = settings.version,
     _target = settings._target,
-    target = gutil.env.target || settings.env.target || settings.target || '',
+    target = gutil.env.target || settings.target || 'local',
     debug = gutil.env.debug || settings.debug || false;
 
   var root = global.getRootPath();
 
   var cwd = path.join(root + _target.root + "/");
 
+  var dSite = settings.deploy[target] || {};
+
   var site = {
-    user: gutil.env.user || settings.site.user || 'root',
-    domain: gutil.env.domain || settings.site.domain || 'localhost',
-    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    sitePort: gutil.env.sitePort || settings.site.sitePort || '8421',
-    nohup: gutil.env.nohup || settings.site.nohup || false,
-    scp: gutil.env.scp || settings.site.scp || false
+    user: gutil.env.user || dSite.user || 'root',
+    domain: gutil.env.domain || dSite.domain || 'localhost',
+    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
+    sitePort: gutil.env.sitePort || dSite.sitePort || '8421',
+    nohup: gutil.env.nohup || dSite.nohup || false,
+    scp: gutil.env.scp || dSite.scp || false
   };
 
   //拷贝至特定的ip

@@ -1,6 +1,6 @@
 {
   "apps": [{
-    "name": "pom",
+    "name": "pomy",
     "script": "./startup.js",
     "exec_mode": "cluster",
     "watch": true,

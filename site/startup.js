@@ -23,7 +23,13 @@ var
   app = express();
 
 global.settings = {
-  site: {}
+  deploy: {
+    local: {},
+    test: {},
+    fat: {},
+    uat: {},
+    prod: {}
+  }
 };
 
 var cwd = process.cwd();
@@ -46,11 +52,13 @@ global.settings.paths = {
 var argvs = minimist(process.argv.slice(2));
 
 var name = global.settings.name;
-var ips = global.settings.site.ips;
-var ip = argvs.ip || (ips.length > 0 ? ips[0] : null) || '127.0.0.1';
-var port = argvs.port || global.settings.site.port || 8421;
 var target = argvs.target || global.settings.target || 'local';
 var debug = argvs.debug || global.settings.debug || true;
+
+var dSite = global.settings.deploy[target];
+var ips = dSite.ips;
+var ip = argvs.ip || (ips.length > 0 ? ips[0] : null) || '127.0.0.1';
+var sitePort = argvs.sitePort || dSite.sitePort || 8421;
 
 var configs = require('../package.json');
 var version = configs.version;
@@ -62,7 +70,7 @@ var title = configs.title;
 var description = configs.description;
 
 app.set('domain', ip)
-app.set('port', port)
+app.set('port', sitePort)
 
 app.set('views', [path.join(__dirname, './views'),
   path.join(__dirname, './plugins/markdown/views'),
@@ -122,10 +130,11 @@ if (debug) {
   app.use(errorHandler())
 }
 
-global.settings.site.ips[0] = ip;
-global.settings.site.port = port;
 global.settings.target = target;
 global.settings.debug = debug;
+
+global.settings.deploy[target].ips[0] = ip;
+global.settings.deploy[target].sitePort = sitePort;
 
 mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/api");
 mkdir(process.env.HOME, "var/" + ip + "/documents/" + name + "/" + target + "/docs");

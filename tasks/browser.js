@@ -7,7 +7,7 @@ var
 
 gulp.task('browser:sync', function(cb) {
 
-  // var env = gutil.env || global.settings.site || {
+  // var env = gutil.env || global.settings.deploy[global.settings.target] || {
   //   ips: ['127.0.0.1']
   // };
   // for (var i = 0, len = env.ips.length; i < len; i++) {

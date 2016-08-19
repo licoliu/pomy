@@ -9,18 +9,19 @@ var
   settings = global.settings,
   name = settings.name,
   version = settings.version,
-  target = settings._target;
+  _target = settings._target;
 
 gulp.task('site:deploy', ['post-site'], function(cb) {
 
-  var root = global.getRootPath();
-
-  var cwd = path.join(root + target.root + "/");
+  var root = global.getRootPath(),
+    cwd = path.join(root + _target.root + "/"),
+    target = gutil.env.target || settings.target || 'local',
+    dSite = settings.deploy[target] || {};
 
   var site = {
-    user: gutil.env.user || settings.site.user || 'root',
-    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    domain: gutil.env.domain || settings.site.domain || 'localhost'
+    user: gutil.env.user || dSite.user || 'root',
+    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
+    domain: gutil.env.domain || dSite.domain || 'localhost'
   };
 
   upload(site, cwd, name + ".site", version, function(err) {

@@ -8,7 +8,7 @@ var path = require('path'),
 
 var folder = path.join(
   process.env.HOME,
-  "var/" + global.settings.site.domain + "/documents/" + global.settings.name + "/" + global.settings.target
+  "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
 );
 
 // Show the index page

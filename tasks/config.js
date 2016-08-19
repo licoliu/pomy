@@ -112,36 +112,40 @@ global.settings._dest = {
 
 gulp.task('pom', function() {
   global.settings.env = gutil.env;
-  global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || 'local').toLowerCase();
-  global.settings.target = global.settings.env.target;
+  global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || global.settings.target || 'local').toLowerCase();
   switch (global.settings.env.target) {
     case "production":
     case "prod":
     case "release":
       global.settings.debug = false;
       global.settings.skin = "default";
+      global.settings.target = "prod";
       break;
     case "uat":
     case "production_uat":
     case "staging":
       global.settings.debug = false;
       global.settings.skin = "uat";
+      global.settings.target = "uat";
       break;
     case "fat":
     case "production_fat":
       global.settings.debug = false;
       global.settings.skin = "fat";
+      global.settings.target = "fat";
       break;
     case "test":
     case "matrix":
       global.settings.debug = false;
       global.settings.skin = "test";
+      global.settings.target = "test";
       break;
     case "local":
     case "snapshort":
     default:
       global.settings.debug = true;
       global.settings.skin = "default";
+      global.settings.target = "local";
       break;
   }
 
@@ -155,32 +159,42 @@ gulp.task('pom', function() {
     global.settings.skin = skin;
   }
 
-  if (!global.settings.site) {
-    global.settings.site = {};
+  if (!global.settings.deploy) {
+    global.settings.deploy = {
+      local: {},
+      test: {},
+      fat: {},
+      uat: {},
+      prod: {}
+    };
+  }
+
+  if (!global.settings.deploy[global.settings.target]) {
+    global.settings.deploy[global.settings.target] = {};
   }
 
   var ips = gutil.env.ips;
   if (ips) {
     if (typeof ips === 'string') {
-      global.settings.site.ips = [ips];
+      global.settings.deploy[global.settings.target].ips = [ips];
     } else {
-      global.settings.site.ips = ips;
+      global.settings.deploy[global.settings.target].ips = ips;
     }
   }
 
   var port = gutil.env.port;
   if (port) {
-    global.settings.site.port = port;
+    global.settings.deploy[global.settings.target].port = port;
   }
 
   var sitePort = gutil.env.sitePort;
   if (sitePort) {
-    global.settings.site.sitePort = sitePort;
+    global.settings.deploy[global.settings.target].sitePort = sitePort;
   }
 
   var syncPort = gutil.env.syncPort;
   if (syncPort) {
-    global.settings.site.syncPort = syncPort;
+    global.settings.deploy[global.settings.target].syncPort = syncPort;
   }
 
   global.settings.author = gutil.env.author || global.settings.author || '';
@@ -242,7 +256,7 @@ gulp.task('config:npm', ['pom'], function() {
 
 gulp.task('config:pm2site', ['pom'], function() {
   var settings = global.settings,
-    site = global.settings.site,
+    site = settings.deploy[settings.target] || {},
     ip = site.ips && site.ips.length > 0 ? site.ips[0] : '127.0.0.1';
   var pomy = global.getPomyPath();
   return gulp.src(pomy + "site/startup.json")
@@ -270,7 +284,7 @@ gulp.task('config:startup', ['pom'], function() {
 
 gulp.task('config:pm2', ['pom'], function() {
   var settings = global.settings,
-    site = global.settings.site,
+    site = settings.deploy[settings.target] || {},
     ip = site.domain || 'localhost';
   var root = global.getRootPath();
   return gulp.src(root + "startup.json")

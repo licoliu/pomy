@@ -73,14 +73,16 @@ gulp.task('rerun', ['delete'], function(cb) {
 gulp.task('delete', ['pom'], function(cb) {
   var settings = global.settings,
     name = settings.name,
-    version = settings.version;
+    version = settings.version,
+    target = gutil.env.target || settings.target || 'local',
+    dSite = settings.deploy[target] || {};
 
   var site = {
-    user: gutil.env.user || settings.site.user || 'root',
-    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    port: gutil.env.port || settings.site.port || '80',
-    domain: gutil.env.domain || settings.site.domain || 'localhost',
-    nohup: gutil.env.nohup || settings.site.nohup || false,
+    user: gutil.env.user || dSite.user || 'root',
+    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
+    port: gutil.env.port || dSite.port || '80',
+    domain: gutil.env.domain || dSite.domain || 'localhost',
+    nohup: gutil.env.nohup || dSite.nohup || false,
   };
 
   for (var i = 0, j = 0, len = 1 /*site.ips.length*/ ; i < len; i++) {
@@ -145,14 +147,16 @@ gulp.task('delete', ['pom'], function(cb) {
 gulp.task('stop', ['pom'], function(cb) {
   var settings = global.settings,
     name = settings.name,
-    version = settings.version;
+    version = settings.version,
+    target = gutil.env.target || settings.target || 'local',
+    dSite = settings.deploy[target] || {};
 
   var site = {
-    user: gutil.env.user || settings.site.user || 'root',
-    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    port: gutil.env.port || settings.site.port || '80',
-    domain: gutil.env.domain || settings.site.domain || 'localhost',
-    nohup: gutil.env.nohup || settings.site.nohup || false,
+    user: gutil.env.user || dSite.user || 'root',
+    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
+    port: gutil.env.port || dSite.port || '80',
+    domain: gutil.env.domain || dSite.domain || 'localhost',
+    nohup: gutil.env.nohup || dSite.nohup || false,
   };
 
   for (var i = 0, j = 0, len = 1 /*site.ips.length*/ ; i < len; i++) {
@@ -225,17 +229,17 @@ gulp.task('start', ['pom'], function(cb) {
 
   var settings = global.settings,
     name = settings.name,
-    version = settings.version;
-
-  var target = gutil.env.target || settings.env.target || settings.target || '';
-  var debug = gutil.env.debug || settings.debug || false;
+    version = settings.version,
+    debug = gutil.env.debug || settings.debug || false,
+    target = gutil.env.target || settings.target || 'local',
+    dSite = settings.deploy[target] || {};
 
   var site = {
-    user: gutil.env.user || settings.site.user || 'root',
-    ips: gutil.env.ips || settings.site.ips || ['127.0.0.1'],
-    domain: gutil.env.domain || settings.site.domain || 'localhost',
-    port: gutil.env.port || settings.site.port || "80",
-    nohup: gutil.env.nohup || settings.site.nohup || false,
+    user: gutil.env.user || dSite.user || 'root',
+    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
+    domain: gutil.env.domain || dSite.domain || 'localhost',
+    port: gutil.env.port || dSite.port || "80",
+    nohup: gutil.env.nohup || dSite.nohup || false,
   };
 
   for (var i = 0, j = 0, len = 1 /*site.ips.length*/ ; i < len; i++) {
