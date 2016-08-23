@@ -279,7 +279,7 @@ gulp.task('config:startup', ['pom'], function() {
       pomy + "startup.json",
       pomy + "startup.js"
     ])
-    .pip(gulp.dest(root));
+    .pipe(gulp.dest(root));
 });
 
 gulp.task('config:pm2', ['pom'], function() {
