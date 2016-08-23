@@ -3,12 +3,27 @@
 var
   gulp = require('gulp'),
   fs = require('fs'),
+  util = require('util'),
   path = require('path'),
   gutil = require('gulp-util'),
+  jeditor = require("gulp-json-editor"),
   // bower = require('gulp-bower'),
   spawn = require('child_process').spawn;
 
-gulp.task('dependancy:npm', function(cb) {
+gulp.task('dependancy:npmunpomy', function() {
+  var settings = util._extend({}, global.settings);
+  var root = global.getRootPath();
+
+  delete settings.devDependencies.pomy;
+
+  return gulp.src([root + "package.json"])
+    .pipe(jeditor({
+      devDependencies: settings.devDependencies
+    }))
+    .pipe(gulp.dest(root));
+});
+
+gulp.task('dependancy:npm', ['dependancy:npmunpomy'], function(cb) {
   var command = null,
     args = [];
   if (process.platform === "win32") {
@@ -40,6 +55,17 @@ gulp.task('dependancy:npm', function(cb) {
       cb();
     }
   });
+});
+
+gulp.task('dependancy:npmpomy', ['dependancy:npm'], function() {
+  var settings = util._extend({}, global.settings);
+  var root = global.getRootPath();
+
+  return gulp.src([root + "package.json"])
+    .pipe(jeditor({
+      devDependencies: settings.devDependencies
+    }))
+    .pipe(gulp.dest(root));
 });
 
 gulp.task('dependancy:bower', function(cb) {
@@ -89,13 +115,13 @@ gulp.task('dependancy', ['validate'], function(cb) {
   if (process.platform === "win32") {
     command = "cmd";
     args.push("/c");
-    args.push("node");
+    // args.push("node");
   } else {
     command = "node";
   }
 
   args.push(global.getCommandPath('gulp'));
-  args.push('dependancy:npm');
+  args.push('dependancy:npmpomy');
   args.push('dependancy:bower');
 
   var dependancy = spawn(command, args, {

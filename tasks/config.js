@@ -8,6 +8,7 @@ var
   util = require('util'),
   path = require('path'),
   config = require('config-file'),
+  rename = require('gulp-rename'),
   jeditor = require("gulp-json-editor"),
   minimist = require('minimist'),
   getConfigSettings = function() {
@@ -300,7 +301,21 @@ gulp.task('config:pm2', ['pom'], function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('config', ['config:bower', 'config:npm', 'config:pm2'], function() {
+gulp.task('config:configure', ['pom'], function() {
+  var root = global.getRootPath(),
+    settings = global.settings,
+    target = settings.target,
+    base = root + settings._src.root;
+
+  return gulp.src([base + "/**/*." + target])
+    .pipe(rename(function(path) {
+      // path.dirname path.basename path.extname
+      path.extname = ".js";
+    }))
+    .pipe(gulp.dest(base));
+});
+
+gulp.task('config', ['config:bower', 'config:npm', 'config:configure', 'config:pm2'], function() {
   var settings = getConfigSettings();
   var root = global.getRootPath();
 

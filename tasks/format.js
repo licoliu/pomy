@@ -96,7 +96,15 @@
 
  gulp.task('format:js', ['jsbeautifyrc'], function() {
    var root = global.getRootPath();
-   return gulp.src(root + src.js + "/**/*.js")
+   return gulp.src([
+       root + src.js + "/**/*.js",
+
+       root + src.js + "/**/*.local",
+       root + src.js + "/**/*.test",
+       root + src.js + "/**/*.fat",
+       root + src.js + "/**/*.uat",
+       root + src.js + "/**/*.prod"
+     ])
      .pipe(prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
@@ -124,7 +132,15 @@
 
  gulp.task('format:test', ['format:test-jsrt'], function() {
    var root = global.getRootPath();
-   return gulp.src(root + testunit.js + "/**/*.js")
+   return gulp.src([
+       root + testunit.js + "/**/*.js",
+
+       root + testunit.js + "/**/*.local",
+       root + testunit.js + "/**/*.test",
+       root + testunit.js + "/**/*.fat",
+       root + testunit.js + "/**/*.uat",
+       root + testunit.js + "/**/*.prod"
+     ])
      .pipe(prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'

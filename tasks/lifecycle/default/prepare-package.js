@@ -70,7 +70,12 @@ gulp.task('copy-classes', function() {
   var root = global.getRootPath();
   if (global.settings.debug) {
     return gulp.src([
-        root + src.root + '/**/*'
+        root + src.root + '/**/*',
+        "!" + root + src.root + '/**/*.prod',
+        "!" + root + src.root + '/**/*.uat',
+        "!" + root + src.root + '/**/*.fat',
+        "!" + root + src.root + '/**/*.test',
+        "!" + root + src.root + '/**/*.local'
       ], {
         base: root
       })

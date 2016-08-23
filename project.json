@@ -20,12 +20,34 @@
   },
   "homepage": "",
   "dependencies": {},
-  "devDependencies": {},
-  "site": {
-    "domain": "localhost",
-    "port": 8421,
-    "user": "",
-    "nohup": true
+  "devDependencies": {
+    "pomy": "^1.4.0"
+  },
+  "deploy": {
+    "local": {
+      "ips": [
+        "127.0.0.1"
+      ],
+      "domain": "localhost",
+      "port": 80,
+      "sitePort": 8421,
+      "syncPort": 8000,
+      "user": "root",
+      "nohup": true,
+      "scp": true
+    },
+    "prod": {
+      "ips": [
+        "127.0.0.1"
+      ],
+      "domain": "localhost",
+      "port": 80,
+      "sitePort": 8421,
+      "syncPort": 8000,
+      "user": "root",
+      "nohup": true,
+      "scp": true
+    }
   },
   "owner": {
     "local": "",
