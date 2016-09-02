@@ -130,7 +130,11 @@ var Kore = function() {
         title = req.body.title,
         id = req.body.id,
         json_response = {
-          data: '',
+          id: null,
+          name: "",
+          title: "",
+          mtime: null,
+          data: "",
           error: false
         }
 
@@ -151,11 +155,22 @@ var Kore = function() {
         if (!unmd && pathname) {
           unmd = fs.readFileSync(pathname, 'utf8');
         }
+
+        if (pathname && fs.existsSync(pathname)) {
+          var stat = fs.statSync(pathname);
+          if (!stat.isDirectory()) {
+            json_response.id = stat.ino; //stat.ctime.getTime(),
+            json_response.name = path.basename(pathname);
+            json_response.title = pathname;
+            json_response.mtime = stat.mtime;
+          }
+        }
       }
 
       var html = _getHtml(unmd)
 
       json_response.data = html
+
       res.json(json_response)
     },
     downloadHtml: function(req, res) {

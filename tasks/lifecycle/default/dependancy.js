@@ -68,7 +68,7 @@ gulp.task('dependancy:npmpomy', ['dependancy:npm'], function() {
     .pipe(gulp.dest(root));
 });
 
-gulp.task('dependancy:bower', function(cb) {
+gulp.task('dependancy:bower', ['dependancy:npmpomy'], function(cb) {
   var pomy = global.getPomyPath();
 
   var directory = pomy + 'bower_components';
@@ -121,7 +121,6 @@ gulp.task('dependancy', ['validate'], function(cb) {
   }
 
   args.push(global.getCommandPath('gulp'));
-  args.push('dependancy:npmpomy');
   args.push('dependancy:bower');
 
   var dependancy = spawn(command, args, {
