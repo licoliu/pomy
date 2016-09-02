@@ -271,6 +271,12 @@ var Kore = function() {
 const Core = new Kore();
 
 /* Start Dillinger Routes */
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 
 // save a markdown file and send header to download it directly as response
 app.post('/markdown/factory/fetch_markdown', Core.fetchMd)

@@ -187,6 +187,13 @@ app.use(github)
 app.use(googledrive)
 app.use(onedrive)
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
+
 http.createServer(app).listen(app.get('port'), function createServerCb() {
   console.log('Express server listening on port ' + app.get('port'));
   console.log('\nhttp://' + app.get('domain') + ':' + app.get('port') + '\n');
