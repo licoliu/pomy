@@ -14,11 +14,11 @@ gulp.task('dependancy:npmunpomy', function() {
   var settings = util._extend({}, global.settings);
   var root = global.getRootPath();
 
-  delete settings.devDependencies.pomy;
+  delete settings.dependencies.pomy;
 
   return gulp.src([root + "package.json"])
     .pipe(jeditor({
-      devDependencies: settings.devDependencies
+      dependencies: settings.dependencies
     }))
     .pipe(gulp.dest(root));
 });
@@ -42,6 +42,8 @@ gulp.task('dependancy:npm', ['dependancy:npmunpomy'], function(cb) {
     args.push(registry);
   }
 
+  args.push("--production");
+
   var root = global.getRootPath();
   var npm = spawn(command, args, {
     cwd: path.resolve(root),
@@ -57,18 +59,7 @@ gulp.task('dependancy:npm', ['dependancy:npmunpomy'], function(cb) {
   });
 });
 
-gulp.task('dependancy:npmpomy', ['dependancy:npm'], function() {
-  var settings = util._extend({}, global.settings);
-  var root = global.getRootPath();
-
-  return gulp.src([root + "package.json"])
-    .pipe(jeditor({
-      devDependencies: settings.devDependencies
-    }))
-    .pipe(gulp.dest(root));
-});
-
-gulp.task('dependancy:bower', ['dependancy:npmpomy'], function(cb) {
+gulp.task('dependancy:bower', function(cb) {
   var pomy = global.getPomyPath();
 
   var directory = pomy + 'bower_components';
@@ -121,7 +112,11 @@ gulp.task('dependancy', ['validate'], function(cb) {
   }
 
   args.push(global.getCommandPath('gulp'));
-  args.push('dependancy:bower');
+  if (settings.repositoryManager === 'npm') {
+    args.push('dependancy:npm');
+  } else {
+    args.push('dependancy:bower');
+  }
 
   var dependancy = spawn(command, args, {
     cwd: global.settings.cwd,

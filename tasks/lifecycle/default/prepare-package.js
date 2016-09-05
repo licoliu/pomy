@@ -37,7 +37,7 @@ gulp.task('copy-pm2', function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
   var libs = [];
-  if (global.settings.define === 'node') {
+  if (global.settings.repositoryManager === 'npm') {
     libs.push(pomy + "node_modules/pm2/**/*");
     libs.push(pomy + "node_modules/semver/**/*");
   }
@@ -52,7 +52,7 @@ gulp.task('copy-lib', ['copy-pm2'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
   var libs = [];
-  if (global.settings.define === 'node') {
+  if (global.settings.repositoryManager === 'npm') {
     libs.push(root + "node_modules/**/*");
     libs.push("!" + root + "node_modules/pomy/**/*");
     libs.push("!" + root + "node_modules/.bin/pomy");

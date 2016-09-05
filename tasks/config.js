@@ -222,28 +222,35 @@ gulp.task('config:bower', ['pom'], function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-  if (global.settings.jre &&
-    !global.settings.dependencies.jre &&
-    !global.settings.devDependencies.jre) {
-    global.settings.dependencies.jre = "^1.0.1";
-  }
-  // delete global.settings.dependencies.jre;
-  // delete global.settings.devDependencies.jre;
+  var params = {};
 
-  var dependencies = [];
-  for (var name in global.settings.dependencies) {
-    dependencies.push(name);
-  }
-  var overrides = util._extend({
-    "normalizeMulti": [{
-      "dependencies": dependencies
-    }]
-  }, global.settings.overrides);
-  return gulp.src(pomy + "bower.json")
-    .pipe(jeditor({
+  if (settings.repositoryManager !== 'npm') {
+    if (global.settings.jre &&
+      !global.settings.dependencies.jre &&
+      !global.settings.devDependencies.jre) {
+      global.settings.dependencies.jre = "^1.0.1";
+    }
+    // delete global.settings.dependencies.jre;
+    // delete global.settings.devDependencies.jre;
+
+    var dependencies = [];
+    for (var name in global.settings.dependencies) {
+      dependencies.push(name);
+    }
+    var overrides = util._extend({
+      "normalizeMulti": [{
+        "dependencies": dependencies
+      }]
+    }, global.settings.overrides);
+
+    params = {
       overrides: overrides,
       dependencies: global.settings.dependencies
-    }))
+    };
+  }
+
+  return gulp.src(pomy + "bower.json")
+    .pipe(jeditor(params))
     .pipe(gulp.dest(pomy));
 });
 
@@ -251,7 +258,10 @@ gulp.task('config:npm', ['pom'], function() {
   var root = global.getRootPath();
 
   var settings = getConfigSettings();
-  delete settings.dependencies;
+
+  if (settings.repositoryManager !== 'npm') {
+    delete settings.dependencies;
+  }
 
   return gulp.src(root + "package.json")
     .pipe(jeditor(settings))
