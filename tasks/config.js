@@ -33,8 +33,9 @@ var
 
 global.getRootPath = function() {
   var cwd = process.cwd();
-  if (/\/node_modules\/pomy$/g.test(cwd) ||
-    /\\\\node_modules\\\\pomy$/g.test(cwd)) {
+  if (/\/node_modules\/pomy(\/?)$/g.test(cwd) ||
+    /\\node_modules\\pomy(\\?)$/g.test(cwd) ||
+    /\\\\node_modules\\\\pomy(\\\\?)$/g.test(cwd)) {
     return '../../';
   }
   return (minimist(process.argv.slice(2)).process === 'child') ? '../../' : './';
@@ -42,8 +43,9 @@ global.getRootPath = function() {
 
 global.getPomyPath = function() {
   var cwd = process.cwd();
-  if (/\/node_modules\/pomy$/g.test(cwd) ||
-    /\\\\node_modules\\\\pomy$/g.test(cwd)) {
+  if (/\/node_modules\/pomy(\/?)$/g.test(cwd) ||
+    /\\node_modules\\pomy(\\?)$/g.test(cwd) ||
+    /\\\\node_modules\\\\pomy(\\\\?)$/g.test(cwd)) {
     return './';
   }
   return (minimist(process.argv.slice(2)).process === 'child') ? './' : './node_modules/pomy/';
@@ -63,8 +65,9 @@ global.getCommandPath = function(cmd) {
 global.settings = config(global.getRootPath() + "pomy.json") || {};
 
 var cwd = process.cwd();
-global.settings.cwd = /\/node_modules\/pomy$/g.test(cwd) ||
-  /\\\\node_modules\\\\pomy$/g.test(cwd) ? cwd : path.join(cwd, './node_modules/pomy/');
+global.settings.cwd = /\/node_modules\/pomy(\/?)$/g.test(cwd) ||
+  /\\node_modules\\pomy(\\?)$/g.test(cwd) ||
+  /\\\\node_modules\\\\pomy(\\\\?)$/g.test(cwd) ? cwd : path.join(cwd, './node_modules/pomy');
 
 global.settings._target = {
   root: 'target',
