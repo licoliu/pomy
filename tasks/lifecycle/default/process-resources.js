@@ -99,7 +99,10 @@ gulp.task('skins:images', function() {
 
 gulp.task('template', function() {
   var root = global.getRootPath();
-  return gulp.src(root + src.template + "/**/*.html")
+  return gulp.src([
+      root + src.template + "/**/*.html",
+      root + src.template + "/**/*.ejs"
+    ])
     .pipe(gulpif(!global.settings.debug, minifyhtml({
       empty: true,
       cdata: true,

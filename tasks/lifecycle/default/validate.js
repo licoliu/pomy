@@ -11,12 +11,23 @@ var
 
 gulp.task('jshint', function() {
   var root = global.getRootPath();
-  return gulp.src([
+
+  var srcs = null,
+    jre = global.settings.jre;
+
+  if (jre) {
+    srcs = [
+      root + src.jsrt + "/**/*.js",
+      root + testunit.jsrt + "/**/*.js"
+    ];
+  } else {
+    srcs = [
       root + src.js + "/**/*.js",
-      // root + src.jsrt + "/**/*.js",
-      // root + testunit.jsrt + "/**/*.js",
       root + testunit.js + "/**/*.js"
-    ])
+    ];
+  }
+
+  return gulp.src(srcs)
     .pipe(jsHint())
     .pipe(jsHint.reporter('default'));
 });

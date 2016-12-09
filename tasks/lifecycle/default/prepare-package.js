@@ -98,8 +98,10 @@ gulp.task('copy-miscellaneous', function() {
       root + 'index.html',
       root + 'package.json',
       root + 'startup.json',
+      root + 'README.md',
       root + 'pomy.json',
-      root + 'startup.js'
+      root + 'startup.js',
+      root + '*.js'
     ])
     .pipe(gulp.dest(root + target.classes));
 });

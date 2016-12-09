@@ -117,38 +117,47 @@ global.settings._dest = {
 gulp.task('pom', function() {
   global.settings.env = gutil.env;
   global.settings.env.target = (gutil.env.t || gutil.env.target || gutil.env.type || global.settings.target || 'local').toLowerCase();
+
+  var loglevel = (gutil.env.loglevel || '').toLowerCase();
+  var skin = (gutil.env.skin || '').toLowerCase();
+
   switch (global.settings.env.target) {
     case "production":
     case "prod":
     case "release":
       global.settings.debug = false;
-      global.settings.skin = "default";
+      global.settings.skin = skin || "default";
+      global.settings.loglevel = loglevel || "error";
       global.settings.target = "prod";
       break;
     case "uat":
     case "production_uat":
     case "staging":
       global.settings.debug = false;
-      global.settings.skin = "uat";
+      global.settings.skin = skin || "uat";
+      global.settings.loglevel = loglevel || "error";
       global.settings.target = "uat";
       break;
     case "fat":
     case "production_fat":
       global.settings.debug = false;
-      global.settings.skin = "fat";
+      global.settings.skin = skin || "fat";
+      global.settings.loglevel = loglevel || "warn";
       global.settings.target = "fat";
       break;
     case "test":
     case "matrix":
       global.settings.debug = false;
-      global.settings.skin = "test";
+      global.settings.skin = skin || "test";
+      global.settings.loglevel = loglevel || "info";
       global.settings.target = "test";
       break;
     case "local":
     case "snapshort":
     default:
       global.settings.debug = true;
-      global.settings.skin = "default";
+      global.settings.skin = skin || "default";
+      global.settings.loglevel = loglevel || "debug";
       global.settings.target = "local";
       break;
   }
