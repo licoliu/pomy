@@ -56,9 +56,9 @@ gulp.task('copy-lib', ['copy-pm2'], function() {
     libs.push(root + "node_modules/**/*");
     libs.push("!" + root + "node_modules/pomy/**/*");
     libs.push("!" + root + "node_modules/.bin/pomy");
-  } else {
-    libs.push(root + dest.lib + '/**/*')
   }
+
+  libs.push(root + dest.lib + '/**/*');
 
   return gulp.src(libs, {
       base: root

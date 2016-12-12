@@ -53,7 +53,7 @@ var argvs = minimist(process.argv.slice(2));
 
 var name = global.settings.name;
 var target = argvs.target || global.settings.target || 'local';
-var debug = argvs.debug || global.settings.debug || true;
+var debug = !!(argvs.debug || global.settings.debug);
 
 var dSite = global.settings.deploy[target];
 var ips = dSite.ips;
