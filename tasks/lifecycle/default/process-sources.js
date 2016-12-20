@@ -8,7 +8,8 @@ var
   src = global.settings._src,
   settings = global.settings,
   spawn = require('child_process').spawn,
-  rename = require('gulp-rename');
+  rename = require('gulp-rename'),
+  filter = require('gulp-filter');
 
 gulp.task('process-samegroup', function(cb) {
   var root = global.getRootPath();
@@ -19,7 +20,7 @@ gulp.task('process-samegroup', function(cb) {
   var overrides = {};
 
   for (var dep in settings.dependencies) {
-    if (dep.indexOf(settings.group) !== 0) {
+    if (dep.indexOf(settings.group) !== 0 || dep === "jre") {
       overrides[dep] = {
         ignore: true
       };
@@ -35,15 +36,11 @@ gulp.task('process-samegroup', function(cb) {
     }), {
       base: directory
     })
+    .pipe(filter(["**/*/src/main/**/*", "**/*/classes/**/*"]))
     .pipe(rename(function(path) {
-      if (/^([.A-z]*\/(src|src\/main|classes)$)/g.test(path.dirname)) {
-        path.dirname = "";
-        path.basename = "";
-      } else {
-        path.dirname = path.dirname
-          .replace(/^([.A-z]*\/(src\/main|classes)[/])/g, "/")
-          .replace(/[.]/g, "/");
-      }
+      path.dirname = path.dirname
+        .replace(/^([.A-z]*\/(src\/main|classes)[/]?)/g, "/")
+        .replace(/[.]/g, "/");
     }))
     .pipe(gulp.dest(root + src.main));
 });
@@ -57,7 +54,7 @@ gulp.task('process-diffgroup', function(cb) {
   var overrides = {};
 
   for (var dep in settings.dependencies) {
-    if (dep.indexOf(settings.group) === 0) {
+    if (dep.indexOf(settings.group) === 0 || dep === "jre") {
       overrides[dep] = {
         ignore: true
       };
