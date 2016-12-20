@@ -45,8 +45,9 @@ gulp.task('archetype:create', ['config:startup'], function() {
   var params = util._extend({}, argv);
   delete params._;
   params.artifact = params.artifact || params.name || path.parse(path.resolve(root)).name;
-  params.name = params.artifact;
   params.group = params.group || path.parse(path.resolve(root, "../")).name;
+
+  params.name = params.group + "." + params.artifact;
 
   var configPath = null;
 
