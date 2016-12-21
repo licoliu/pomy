@@ -23,6 +23,44 @@
   "devDependencies": {
     "pomy": "^1.4.0"
   },
+  "resolutions": {},
+  "overrides": {
+    "normalizeMulti": [{
+      "dependencies": [],
+      "normalize": {
+        "images": [
+          "*.jpeg",
+          "*.png",
+          "*.jpg",
+          "*.gif"
+        ],
+        "fonts": [
+          "*.eot",
+          "*.otf",
+          "*.svg",
+          "*.ttf",
+          "*.woff",
+          "*.woff2"
+        ],
+        "js": [
+          "*.js"
+        ],
+        "css": [
+          "*.css",
+          "*.css.map"
+        ],
+        "less": [
+          "*.less"
+        ],
+        "sass": [
+          "*.sass"
+        ],
+        "scss": [
+          "*.scss"
+        ]
+      }
+    }]
+  },
   "deploy": {
     "local": {
       "ips": [

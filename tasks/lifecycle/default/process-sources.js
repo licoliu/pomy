@@ -19,7 +19,14 @@ gulp.task('process-samegroup', function(cb) {
   var bowerJson = pomy + 'bower.json';
   var overrides = {};
 
-  for (var dep in settings.dependencies) {
+  var result = {
+    dependencies: {},
+    overrides: {}
+  };
+
+  global.analyzeDep(global.settings, result);
+
+  for (var dep in result.dependencies) {
     if (dep.indexOf(settings.group) !== 0 || dep === "jre") {
       overrides[dep] = {
         ignore: true
@@ -53,7 +60,14 @@ gulp.task('process-diffgroup', function(cb) {
   var bowerJson = pomy + 'bower.json';
   var overrides = {};
 
-  for (var dep in settings.dependencies) {
+  var result = {
+    dependencies: {},
+    overrides: {}
+  };
+
+  global.analyzeDep(global.settings, result);
+
+  for (var dep in result.dependencies) {
     if (dep.indexOf(settings.group) === 0 || dep === "jre") {
       overrides[dep] = {
         ignore: true

@@ -95,7 +95,22 @@ gulp.task('dependancy:bower', function(cb) {
     if (code !== 0) {
       cb(code);
     } else {
-      cb();
+      args = [];
+      args.push(global.getCommandPath('gulp'));
+      args.push('config:bower-after');
+
+      var config = spawn(command, args, {
+        cwd: global.settings.cwd,
+        stdio: 'inherit'
+      });
+
+      config.on('close', function(code) {
+        if (code !== 0) {
+          cb(code);
+        } else {
+          cb();
+        }
+      });
     }
   });
 });

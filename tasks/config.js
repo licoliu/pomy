@@ -62,6 +62,32 @@ global.getCommandPath = function(cmd) {
   }
 };
 
+global.analyzeDep = function(settings, result) {
+  if (!result) {
+    result = {};
+  }
+
+  if (!result.dependencies) {
+    result.dependencies = {};
+  }
+
+  if (!result.overrides) {
+    result.overrides = {};
+  }
+
+  var pomy = global.getPomyPath();
+  var directory = pomy + 'bower_components';
+
+  for (var name in settings.dependencies) {
+    if (result.dependencies[name]) {
+      continue;
+    }
+    result.dependencies[name] = settings.dependencies[name];
+    result.overrides = util._extend(result.overrides, settings.overrides);
+    global.analyzeDep(config(directory + "/" + name + "/pomy.json") || {}, result);
+  }
+};
+
 global.settings = config(global.getRootPath() + "pomy.json") || {};
 
 var cwd = process.cwd();
@@ -254,7 +280,43 @@ gulp.task('config:bower', ['pom'], function() {
 
     params = {
       overrides: overrides,
-      dependencies: global.settings.dependencies
+      dependencies: global.settings.dependencies,
+      resolutions: global.settings.resolutions
+    };
+  }
+
+  return gulp.src(pomy + "bower.json")
+    .pipe(jeditor(params))
+    .pipe(gulp.dest(pomy));
+});
+
+gulp.task('config:bower-after', function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
+
+  var params = {};
+
+  if (global.settings.repositoryManager !== 'npm') {
+    var result = {
+      dependencies: {},
+      overrides: {}
+    };
+
+    global.analyzeDep(global.settings, result);
+
+    var deps = [];
+    for (var nn in result.dependencies) {
+      deps.push(nn);
+    }
+
+    params = {
+      overrides: util._extend({
+          "normalizeMulti": [{
+            "dependencies": deps
+          }]
+        },
+        result.overrides),
+      dependencies: result.dependencies
     };
   }
 
