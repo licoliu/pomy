@@ -11,6 +11,9 @@
   "skin": "default",
   "define": "cmd",
   "keywords": "",
+  "main": [
+    "./src/main/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": ""

@@ -95,7 +95,8 @@ gulp.task('copy-miscellaneous', function() {
   return gulp.src([
       root + 'logo.ico',
       root + 'favicon.ico',
-      root + 'index.html',
+      root + 'index*.html',
+      root + 'index*.ejs',
       root + 'package.json',
       root + 'startup.json',
       root + 'README.md',
