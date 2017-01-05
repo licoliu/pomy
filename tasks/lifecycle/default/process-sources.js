@@ -9,7 +9,8 @@ var
   settings = global.settings,
   spawn = require('child_process').spawn,
   rename = require('gulp-rename'),
-  filter = require('gulp-filter');
+  filter = require('gulp-filter'),
+  path = require('path');
 
 gulp.task('process-samegroup', function(cb) {
   var root = global.getRootPath();
@@ -44,10 +45,10 @@ gulp.task('process-samegroup', function(cb) {
       base: directory
     })
     .pipe(filter(["**/*/src/main/**/*", "**/*/classes/**/*"]))
-    .pipe(rename(function(path) {
-      path.dirname = path.dirname
-        .replace(/^([.A-z]*\/(src\/main|classes)[/]?)/g, "/")
-        .replace(/[.]/g, "/");
+    .pipe(rename(function(_path) {
+      _path.dirname = _path.dirname
+        .replace(/^([.A-z]*(\/|\\)(src(\/|\\)main|classes)[/]?)/g, path.sep)
+        .replace(/[.]/g, path.sep);
     }))
     .pipe(gulp.dest(root + src.main));
 });
