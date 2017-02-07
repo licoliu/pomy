@@ -6,6 +6,8 @@ var
 
 
 gulp.task('initialize:jre', function() {
+  var root = global.getRootPath();
+  var pomy = global.getPomyPath();
   return gulp.src([
       pomy + "bower_components/jre/jre/**/*",
       pomy + "bower_components/jre/startup-test.js",
@@ -30,6 +32,8 @@ gulp.task('initialize', ['dependancy'], function(cb) {
   if (jre) {
     cb();
   } else {
+    var command = "",
+      args = [];
     if (process.platform === "win32") {
       command = "cmd";
       args.push("/c");

@@ -23,11 +23,13 @@
    return gulp.src([
        root + src.template + "/**/*.html",
        root + src.template + "/**/*.ejs"
-     ])
+     ], {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc'
      }))
-     .pipe(gulp.dest(root + src.template))
+     .pipe(gulp.dest(root))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
@@ -44,11 +46,13 @@
        root + src.less + "/**/*.less",
        root + src.sass + "/**/*.sass",
        root + src.scss + "/**/*.scss"
-     ])
+     ], {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc'
      }))
-     .pipe(gulp.dest(root + src.css))
+     .pipe(gulp.dest(root))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
@@ -66,11 +70,13 @@
        root + src.skins + "/**/*.less",
        root + src.skins + "/**/*.sass",
        root + src.skins + "/**/*.scss"
-     ])
+     ], {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc'
      }))
-     .pipe(gulp.dest(root + src.skins))
+     .pipe(gulp.dest(root))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
@@ -82,12 +88,14 @@
 
  gulp.task('format:jsrt', ['jsbeautifyrc'], function() {
    var root = global.getRootPath();
-   return gulp.src(root + src.jsrt + "/**/*.js")
+   return gulp.src(root + src.jsrt + "/**/*.js", {
+       base: root
+     })
      .pipe(gulpif(global.settings.jre, prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
      })))
-     .pipe(gulp.dest(root + src.jsrt))
+     .pipe(gulp.dest(root))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
@@ -104,12 +112,14 @@
        root + src.js + "/**/*.fat",
        root + src.js + "/**/*.uat",
        root + src.js + "/**/*.prod"
-     ])
+     ], {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
      }))
-     .pipe(gulp.dest(root + src.js))
+     .pipe(gulp.dest(root))
      .pipe(livereload());
    //.pipe(browserSync.reload({
    //  stream: true
@@ -122,12 +132,14 @@
 
  gulp.task('format:test-jsrt', ['jsbeautifyrc'], function() {
    var root = global.getRootPath();
-   return gulp.src(root + testunit.jsrt + "/**/*.js")
+   return gulp.src(root + testunit.jsrt + "/**/*.js", {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
      }))
-     .pipe(gulp.dest(root + testunit.jsrt));
+     .pipe(gulp.dest(root));
  });
 
  gulp.task('format:test', ['format:test-jsrt'], function() {
@@ -140,12 +152,14 @@
        root + testunit.js + "/**/*.fat",
        root + testunit.js + "/**/*.uat",
        root + testunit.js + "/**/*.prod"
-     ])
+     ], {
+       base: root
+     })
      .pipe(prettify({
        config: root + '.jsbeautifyrc',
        mode: 'VERIFY_AND_WRITE'
      }))
-     .pipe(gulp.dest(root + testunit.js))
+     .pipe(gulp.dest(root))
      .pipe(livereload())
      //.pipe(browserSync.reload({
      //  stream: true
