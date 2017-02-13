@@ -96,6 +96,11 @@ gulp.task('dependancy:bower', function(cb) {
       cb(code);
     } else {
       args = [];
+
+      if (process.platform === "win32") {
+        args.push("/c");
+      }
+
       args.push(global.getCommandPath('gulp'));
       args.push('config:bower-after');
 
