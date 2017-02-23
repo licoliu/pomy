@@ -57,6 +57,8 @@ global.getCommandPath = function(cmd) {
     return path.resolve(global.settings.cwd, "./node_modules/.bin/" + cmd);
   } else if (fs.existsSync(path.join(global.settings.cwd, "../.bin/" + cmd))) {
     return path.resolve(global.settings.cwd, "../.bin/" + cmd);
+  } else if (fs.existsSync(path.join(global.settings.cwd, "../node_modules/.bin/" + cmd))) {
+    return path.resolve(global.settings.cwd, "../node_modules/.bin/" + cmd);
   } else {
     return cmd;
   }

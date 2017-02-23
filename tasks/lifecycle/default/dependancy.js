@@ -85,6 +85,7 @@ gulp.task('dependancy:bower', function(cb) {
 
   args.push(global.getCommandPath('bower'));
   args.push('update');
+  args.push('--allow-root');
 
   var bower = spawn(command, args, {
     cwd: global.settings.cwd,
