@@ -29,6 +29,38 @@ var
     delete settings.cwd;
 
     return settings;
+  },
+  normalize = {
+    "images": [
+      "*.jpeg",
+      "*.png",
+      "*.jpg",
+      "*.gif"
+    ],
+    "fonts": [
+      "*.eot",
+      "*.otf",
+      "*.svg",
+      "*.ttf",
+      "*.woff",
+      "*.woff2"
+    ],
+    "js": [
+      "*.js"
+    ],
+    "css": [
+      "*.css",
+      "*.css.map"
+    ],
+    "less": [
+      "*.less"
+    ],
+    "sass": [
+      "*.sass"
+    ],
+    "scss": [
+      "*.scss"
+    ]
   };
 
 global.getRootPath = function() {
@@ -276,7 +308,8 @@ gulp.task('config:bower', ['pom'], function() {
     }
     var overrides = util._extend({
       "normalizeMulti": [{
-        "dependencies": dependencies
+        "dependencies": dependencies,
+        "normalize": normalize
       }]
     }, global.settings.overrides);
 
@@ -288,7 +321,29 @@ gulp.task('config:bower', ['pom'], function() {
   }
 
   return gulp.src(pomy + "bower.json")
-    .pipe(jeditor(params))
+    .pipe(jeditor(function(json) {
+      if (params.overrides) {
+        json.overrides = params.overrides;
+      } else {
+        json.overrides = {
+          "normalizeMulti": [{
+            "dependencies": params.dependencies || [],
+            "normalize": normalize
+          }]
+        };
+      }
+      if (params.dependencies) {
+        json.dependencies = params.dependencies;
+      } else {
+        json.dependencies = [];
+      }
+      if (params.resolutions) {
+        json.resolutions = params.resolutions;
+      } else {
+        json.resolutions = {};
+      }
+      return json;
+    }))
     .pipe(gulp.dest(pomy));
 });
 
@@ -296,7 +351,8 @@ gulp.task('config:bower-after', function() {
   var root = global.getRootPath();
   var pomy = global.getPomyPath();
 
-  var params = {};
+  var overrides = null,
+    dependencies = null;
 
   if (global.settings.repositoryManager !== 'npm') {
     var result = {
@@ -311,19 +367,35 @@ gulp.task('config:bower-after', function() {
       deps.push(nn);
     }
 
-    params = {
-      overrides: util._extend({
-          "normalizeMulti": [{
-            "dependencies": deps
-          }]
-        },
-        result.overrides),
-      dependencies: result.dependencies
-    };
+    overrides = util._extend({
+        "normalizeMulti": [{
+          "dependencies": deps,
+          "normalize": normalize
+        }]
+      },
+      result.overrides);
+    dependencies = result.dependencies;
   }
 
   return gulp.src(pomy + "bower.json")
-    .pipe(jeditor(params))
+    .pipe(jeditor(function(json) {
+      if (overrides) {
+        json.overrides = overrides;
+      } else {
+        json.overrides = {
+          "normalizeMulti": [{
+            "dependencies": dependencies || [],
+            "normalize": normalize
+          }]
+        };
+      }
+      if (dependencies) {
+        json.dependencies = dependencies;
+      } else {
+        json.dependencies = [];
+      }
+      return json;
+    }))
     .pipe(gulp.dest(pomy));
 });
 
