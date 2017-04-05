@@ -2,12 +2,62 @@
 
 var
   gulp = require('gulp'),
+  path = require('path'),
+  gulpif = require('gulp-if'),
+  uglify = require('gulp-uglify'),
+  filter = require('gulp-filter'),
+  rename = require('gulp-rename'),
+  minifyCss = require('gulp-minify-css'),
   // exec = require('child_process').exec,
   spawn = require('child_process').spawn,
   src = global.settings._src,
   dest = global.settings._dest,
   testunit = global.settings._testunit,
   target = global.settings._target;
+
+gulp.task('output', function(cb) {
+  if (!global.settings.output) {
+    return cb();
+  }
+
+  var jsFilter = filter('**/*.js', {
+    restore: true
+  });
+  var cssFilter = filter('**/*.css', {
+    restore: true
+  });
+
+  var root = global.getRootPath();
+
+  var main = [];
+  if (Array.isArray(global.settings.main)) {
+    for (var i in global.settings.main) {
+      main.push(path.join(root, global.settings.main[i]));
+    }
+  } else {
+    main = global.settings.main;
+  }
+
+  return gulp.src(main)
+    .pipe(filter([
+      "**/*.*",
+      "../../**/*.*"
+    ]))
+    .pipe(jsFilter)
+    .pipe(gulpif(!global.settings.debug, uglify({
+      mangle: {
+        except: ['require', 'exports', 'module']
+      }
+    })))
+    .pipe(jsFilter.restore)
+    .pipe(cssFilter)
+    .pipe(gulpif(!global.settings.debug, minifyCss()))
+    .pipe(cssFilter.restore)
+    .pipe(rename(function(_path) {
+      _path.dirname = "";
+    }))
+    .pipe(gulp.dest(path.join(root, global.settings.output)));
+});
 
 gulp.task('copy-jre', function() {
   var root = global.getRootPath();
@@ -108,12 +158,12 @@ gulp.task('copy-miscellaneous', function() {
 });
 
 /* 将运行时前端文件拷贝至target
- *	1.jre, 
- *	2.lib, 
- *	3.classes,
- *	4.logo.ico, 
- *	5.index.html, 
- *	6.pomy.json
+ *  1.jre, 
+ *  2.lib, 
+ *  3.classes,
+ *  4.logo.ico, 
+ *  5.index.html, 
+ *  6.pomy.json
  */
 gulp.task('prepare-package', ['test'], function(cb) {
   // exec(global.getCommandPath('gulp') + ' copy-jre copy-lib copy-classes copy-miscellaneous --process child', {
@@ -141,6 +191,7 @@ gulp.task('prepare-package', ['test'], function(cb) {
   args.push('copy-lib');
   args.push('copy-classes');
   args.push('copy-miscellaneous');
+  args.push('output');
   args.push('--process');
   args.push("child");
 
