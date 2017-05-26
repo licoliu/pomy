@@ -106,6 +106,7 @@ gulp.task('template', function() {
   var root = global.getRootPath();
   return gulp.src([
       root + src.template + "/**/*.html",
+      root + src.template + "/**/*.svg",
       root + src.template + "/**/*.ejs"
     ])
     .pipe(gulpif(!global.settings.debug, minifyhtml({
