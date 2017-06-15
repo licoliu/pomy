@@ -12,7 +12,6 @@ module.exports =
     var service = {
       currentDocument: {},
       files: [],
-
       getItem: getItem,
       getItemById: getItemById,
       getItemByIndex: getItemByIndex,
@@ -118,6 +117,7 @@ module.exports =
       }
       return item;
     }
+
     /**
      *    Get item from the files array by index.
      *
@@ -300,6 +300,15 @@ module.exports =
     }
 
     function save(manual) {
+      /**
+       * 如果有冲突，先解决冲突
+       */
+      if (service.currentDocument.body.match(/(\n[<]{12}\s{4}server)|(\n[>]{12}\s{4}local)|(\n[=]{12})/)) {
+        $rootScope.conflict = true;
+        return;
+      } else {
+        $rootScope.conflict = false;
+      }
       if (!angular.isDefined(manual)) {
         manual = false;
       }
@@ -309,9 +318,18 @@ module.exports =
       }
 
       if (service.currentDocument.id) {
+        // service.resource.update({
+        //   id: service.currentDocument.id
+        // }, service.currentDocument);
         service.resource.update({
           id: service.currentDocument.id
-        }, service.currentDocument);
+        }, service.currentDocument).$promise.then(function(data) {
+          service.currentDocument.mtime = data.mtime;
+          if (data.body !== service.currentDocument.body) {
+            service.setCurrentDocumentBody(data.body);
+            $rootScope.$emit('document.refresh');
+          }
+        });
       }
 
       return localStorage.setItem('currentDocument', angular.toJson(service.currentDocument));

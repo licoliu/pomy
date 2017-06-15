@@ -8,7 +8,7 @@ var path = require('path'),
   Github = require(path.resolve(__dirname, '../plugins/github/github.js')).Github,
   GoogleDrive = require('../plugins/googledrive/googledrive.js').GoogleDrive,
   OneDrive = require('../plugins/onedrive/onedrive.js').OneDrive;
-
+diff = require('../plugins/text_diff/index');
 var folder = path.join(
   process.env.HOME,
   "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
@@ -59,7 +59,8 @@ exports.getDocument = function(req, res) {
       id: stat.ino,
       name: path.basename(pathname),
       title: path.relative(folder, pathname),
-      body: body.toString()
+      body: body.toString(),
+      mtime: stat.mtime.getTime() //修改时间
     };
   }
   return res.json(file);
@@ -83,12 +84,31 @@ exports.updateDocument = function(req, res) {
   var body = req.body.body;
 
   var pathname = folderDetect.getSync(id, folder, filters.md);
-  fs.writeFileSync(pathname, body, {
-    flags: 'a'
-  });
+
+  /**
+   * diff
+   */
+
+  var mtime = fs.statSync(pathname).mtime.getTime(),
+    diffResult = {
+      conflict: false,
+      value: ''
+    };
+  if (req.body.mtime !== mtime) {
+    diffResult = diff(fs.readFileSync(pathname, 'utf8'), body);
+    body = diffResult.value;
+  }
+  if (body !== fs.readFileSync(pathname, 'utf8') && diffResult.conflict === false) {
+    fs.writeFileSync(pathname, body, {
+      flags: 'a'
+    });
+  }
+  mtime = fs.statSync(pathname).mtime.getTime();
 
   return res.json({
-    id: id
+    id: id,
+    mtime: mtime,
+    body: body
   });
 }
 

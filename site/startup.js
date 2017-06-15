@@ -136,7 +136,6 @@ global.settings.debug = debug;
 
 global.settings.deploy[target].ips[0] = ip;
 global.settings.deploy[target].sitePort = sitePort;
-
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/api");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/docs");
 mkdir(process.env.HOME, "var/" + domain + "/documents/" + name + "/" + target + "/backlogs");

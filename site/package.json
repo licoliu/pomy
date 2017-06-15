@@ -1,7 +1,7 @@
 {
   "name": "pomy",
   "description": "pomy.",
-  "version": "1.5.11",
+  "version": "1.5.12",
   "author": {
     "name": "lico",
     "email": "lico.atom@gmail.com"
@@ -35,6 +35,7 @@
     "dbox": "^0.6.3",
     "debug": "^2.2.0",
     "depd": "^1.1.0",
+    "diff": "^3.2.0",
     "ejs": "^2.3.4",
     "errorhandler": "^1.4.2",
     "es6-promise": "^3.0.2",

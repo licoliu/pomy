@@ -38,7 +38,6 @@ module.exports =
 
     $rootScope.documents = documentsService.getItems();
     $rootScope.expandedNodes = [];
-
     $rootScope.editor.on('change', debounce(doAutoSave, 2000));
     $rootScope.$on('autosave', doAutoSave);
 

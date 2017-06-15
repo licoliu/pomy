@@ -32,6 +32,8 @@ module.exports =
     $rootScope.editor.setOption('minLines', 50);
     $rootScope.editor.setOption('maxLines', 90000);
 
+    $rootScope.conflict = false;
+
     updateDocument = function() {
       $rootScope.currentDocument = documentsService.getCurrentDocument();
       return $rootScope.editor.getSession().setValue($rootScope.currentDocument.body);

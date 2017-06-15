@@ -10,6 +10,6 @@
     "env_production": {
       "NODE_ENV": "production"
     },
-    "args": ""
+    "args": "--ip 127.0.0.1 --port 8421 --target local --debug true"
   }]
 }
