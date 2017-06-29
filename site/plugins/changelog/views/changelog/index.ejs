@@ -54,7 +54,9 @@
                   <ul class="readmes">
                     <li name="{{changelog.name}}" class="readme" expand="{{changelog.isExpand}}" first="{{$first}}" last="{{$last}}" ng-repeat="changelog in changelogs | limitTo:limitTo">
                       <h2>
-                        <strong>{{changelog.name}}</strong>
+                        <a ng-href="/markdown/#?id={{changelog.id}}">
+                          <strong>{{changelog.name}}</strong>
+                        </a>
                       </h2>
                       <h3>{{changelog.mtime}}</h3>
                       <p></p>
