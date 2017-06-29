@@ -1,7 +1,7 @@
 {
   "group": "com.atomunion",
   "artifact": "pomy",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "name": "pomy",
   "title": "pomy - a software project management and comprehension tool",
   "description": "Based on the concept of a project object model (POM), POMY can manage a project's build, reporting and documentation from a central piece of information.",
@@ -68,11 +68,10 @@
       ],
       "domain": "localhost",
       "port": 80,
-      "sitePort": 8421,
       "syncPort": 8000,
       "user": "root",
       "nohup": true,
-      "scp": true
+      "scp": false
     },
     "prod": {
       "ips": [
@@ -80,12 +79,21 @@
       ],
       "domain": "localhost",
       "port": 80,
-      "sitePort": 8421,
       "syncPort": 8000,
       "user": "root",
       "nohup": true,
       "scp": true
     }
+  },
+  "site": {
+    "ips": [
+      "127.0.0.1"
+    ],
+    "domain": "localhost",
+    "port": 8421,
+    "user": "root",
+    "nohup": true,
+    "scp": true
   },
   "owner": {
     "local": "https://github.com/licoliu/pomy"

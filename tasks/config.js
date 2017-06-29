@@ -242,6 +242,10 @@ gulp.task('pom', function() {
     };
   }
 
+  if (!global.settings.site) {
+    global.settings.site = {};
+  }
+
   if (!global.settings.deploy[global.settings.target]) {
     global.settings.deploy[global.settings.target] = {};
   }
@@ -262,7 +266,7 @@ gulp.task('pom', function() {
 
   var sitePort = gutil.env.sitePort;
   if (sitePort) {
-    global.settings.deploy[global.settings.target].sitePort = sitePort;
+    global.settings.site.port = sitePort;
   }
 
   var syncPort = gutil.env.syncPort;
@@ -415,15 +419,15 @@ gulp.task('config:npm', ['pom'], function() {
 
 gulp.task('config:pm2site', ['pom'], function() {
   var settings = global.settings,
-    site = settings.deploy[settings.target] || {},
-    ip = site.ips && site.ips.length > 0 ? site.ips[0] : '127.0.0.1';
+    site = settings.site || {},
+    ip = site.domain ? site.domain : (site.ips && site.ips.length > 0 ? site.ips[0] : '127.0.0.1');
   var pomy = global.getPomyPath();
   return gulp.src(pomy + "site/startup.json")
     .pipe(jeditor({
       "apps": [{
         "name": settings.name + ".site",
         "args": "--ip " + ip +
-          " --port " + site.sitePort +
+          " --port " + site.port +
           " --target " + settings.target +
           " --debug " + settings.debug
       }]

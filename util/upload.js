@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 
 module.exports = function(site, cwd, name, version, cb) {
   var user = site.user,
-    domain = site.domain;
+    domain = site.domain || "www";
   for (var i = 0, j = 0, len = site.ips.length; i < len; i++) {
     var ip = site.ips[i];
 

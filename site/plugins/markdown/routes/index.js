@@ -11,7 +11,8 @@ var path = require('path'),
 diff = require('../plugins/text_diff/index');
 var folder = path.join(
   process.env.HOME,
-  "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
+  // "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
+  "var/" + (global.settings.site.domain || global.settings.site.ips[0] || "www") + "/documents/" + global.settings.name
 );
 
 // Show the index page

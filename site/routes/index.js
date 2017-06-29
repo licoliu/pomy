@@ -8,7 +8,8 @@ var path = require('path'),
 
 var folder = path.join(
   process.env.HOME,
-  "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
+  // "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target
+  "var/" + (global.settings.site.domain || global.settings.site.ips[0] || "www") + "/documents/" + global.settings.name
 );
 
 // Show the index page
@@ -33,7 +34,8 @@ exports.deploy = function(req, res) {
   if (global.settings.name !== name) {
     dir = path.join(
       process.env.HOME,
-      "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + name + "/" + global.settings.target
+      // "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + name + "/" + global.settings.target
+      "var/" + (global.settings.site.domain || global.settings.site.ips[0] || "www") + "/documents/" + global.settings.name
     );
   }
 

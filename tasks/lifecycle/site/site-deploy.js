@@ -16,18 +16,27 @@ gulp.task('site:deploy', ['post-site'], function(cb) {
   var root = global.getRootPath(),
     cwd = path.join(root + _target.root + "/"),
     target = gutil.env.target || settings.target || 'local',
-    dSite = settings.deploy[target] || {};
+    dSite = settings.deploy[target] || {},
+    sSite = settings.site;
 
   var site = {
-    user: gutil.env.user || dSite.user || 'root',
-    ips: gutil.env.ips || dSite.ips || ['127.0.0.1'],
-    domain: gutil.env.domain || dSite.domain || 'localhost'
+    user: gutil.env.user || sSite.user || 'root',
+    ips: gutil.env.ips || sSite.ips || ['127.0.0.1'],
+    domain: gutil.env.domain || sSite.domain || 'localhost'
   };
 
   upload(site, cwd, name + ".site", version, function(err) {
     if (err) {
       cb(err);
     } else {
+
+      console.log("###################################################");
+      console.log("############# pomy site:deploy finished. ###############");
+      console.log("###################################################");
+      return cb();
+
+      // restart
+      /*
       var command = "",
         args = [];
 
@@ -50,7 +59,7 @@ gulp.task('site:deploy', ['post-site'], function(cb) {
 
       renew.on('close', function(code) {
         if (code !== 0) {
-          console.log('site renew process exited with code: ' + code + ".");
+          console.log('site restart process exited with code: ' + code + ".");
           cb(code);
         } else {
           console.log("###################################################");
@@ -59,6 +68,7 @@ gulp.task('site:deploy', ['post-site'], function(cb) {
           cb();
         }
       });
+      */
     }
   });
 });
