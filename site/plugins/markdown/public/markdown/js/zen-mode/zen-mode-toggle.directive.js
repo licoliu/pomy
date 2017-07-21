@@ -12,6 +12,9 @@ module.exports =
       replace: true,
       controller: 'diZenMode',
       controllerAs: 'zenmode',
+      scope: {
+        view: '='
+      },
       template: require('raw!./zen-mode-toggle.directive.html')
     };
 
