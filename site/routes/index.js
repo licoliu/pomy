@@ -26,7 +26,7 @@ exports.deploy = function(req, res) {
   var name = req.body.name;
   var version = req.body.version;
   var target = req.body.target;
-  var date = moment().format("ddd, MMM Do YYYY, h:mm:ss a"); //req.body.date;
+  var date = moment(req.body.date || ("" + new Date())).format("ddd, MMM Do YYYY, h:mm:ss a Z"); // moment().utc().zone(-8).format("ddd, MMM Do YYYY, h:mm:ss a Z")
   var domain = req.body.domain;
   var ips = req.body.ips;
 
