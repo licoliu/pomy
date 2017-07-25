@@ -74,5 +74,6 @@
   "scripts": {},
   "bin": {
     "pomy": "./bin/pomy.js"
-  }
+  },
+  "resolutions": {}
 }

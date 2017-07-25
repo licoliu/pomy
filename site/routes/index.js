@@ -5,7 +5,6 @@ var path = require('path'),
   moment = require('moment'),
   folderDetect = require('../../util/folder-detect'),
   filters = require('../../util/filters');
-
 var folder = path.join(
   process.env.HOME,
   // "var/" + global.settings.deploy[global.settings.target].domain + "/documents/" + global.settings.name + "/" + global.settings.target

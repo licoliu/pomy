@@ -1,9 +1,9 @@
 'use strict';
-
+var md = require('md').md;
 module.exports =
   angular
   .module('diZenMode', ['diZenMode.directives'])
-  .controller('diZenMode', function($rootScope, $compile, documentsService) {
+  .controller('diZenMode', function($scope, $rootScope, $compile, documentsService) {
 
     var
       vm = this,
@@ -29,8 +29,10 @@ module.exports =
 
         scope.$close = function() {
           vm.isZen = !vm.isZen;
-          documentsService.setCurrentDocumentBody(vm.zen.getSession().getValue());
-          $rootScope.$emit('document.refresh');
+          if ($scope.view === 'edit') {
+            documentsService.setCurrentDocumentBody(vm.zen.getSession().getValue());
+            $rootScope.$emit('document.refresh');
+          }
           el.remove();
           scope.$destroy();
           return false;
@@ -39,14 +41,17 @@ module.exports =
         require('brace/mode/markdown');
         require('../documents/theme-dillinger');
 
-        vm.zen = ace.edit('zen');
-        vm.zen.getSession().setMode('ace/mode/markdown');
-        vm.zen.setTheme('ace/theme/dillinger');
-        vm.zen.getSession().setUseWrapMode(true);
-        vm.zen.renderer.setShowGutter(false);
-        vm.zen.setShowPrintMargin(false);
-        vm.zen.getSession().setValue(documentsService.getCurrentDocumentBody());
-
+        if ($scope.view === 'edit') {
+          vm.zen = ace.edit('zen');
+          vm.zen.getSession().setMode('ace/mode/markdown');
+          vm.zen.setTheme('ace/theme/dillinger');
+          vm.zen.getSession().setUseWrapMode(true);
+          vm.zen.renderer.setShowGutter(false);
+          vm.zen.setShowPrintMargin(false);
+          vm.zen.getSession().setValue(documentsService.getCurrentDocumentBody());
+        } else {
+          document.getElementById('zen').innerHTML = '<div style="overflow-y: scroll;height: 100%;">' + md.render($rootScope.editor.getSession().getValue()) + '</div>';
+        }
         el.addClass('on');
       }
       return false;
