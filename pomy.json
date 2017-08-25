@@ -1,7 +1,7 @@
 {
   "group": "com.atomunion",
   "artifact": "pomy",
-  "version": "1.5.16",
+  "version": "1.5.17",
   "name": "pomy",
   "title": "pomy - a software project management and comprehension tool",
   "keywords": "POMY, Surface, JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
