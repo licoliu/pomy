@@ -143,8 +143,7 @@ gulp.task('copy-classes', function() {
 gulp.task('copy-miscellaneous', function() {
   var root = global.getRootPath();
   return gulp.src([
-      root + 'logo.ico',
-      root + 'favicon.ico',
+      root + '*.ico',
       root + 'index*.html',
       root + 'index*.ejs',
       root + 'package.json',
@@ -161,7 +160,7 @@ gulp.task('copy-miscellaneous', function() {
  *  1.jre, 
  *  2.lib, 
  *  3.classes,
- *  4.logo.ico, 
+ *  4.*.ico, 
  *  5.index.html, 
  *  6.pomy.json
  */

@@ -22,7 +22,7 @@ exports.getChangelogs = function(req, res) {
   var position = path.join(folder, "changelogs");
 
   var changelogs = folderDetect.detectAllSync(position, filters.md, function(target) {
-    target.mtime = moment(target.mtime).format("ddd, MMM Do YYYY, h:mm:ss a");
+    target.mtime = moment(target.mtime).format("ddd, MMM DD YYYY, hh:mm:ss a Z");
     target.name = target.name.replace(/(.md)$/g, "");
   }).children;
 

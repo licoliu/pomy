@@ -1,9 +1,11 @@
 {
   "group": "com.atomunion",
   "artifact": "pomy",
-  "version": "1.5.15",
+  "version": "1.5.16",
   "name": "pomy",
   "title": "pomy - a software project management and comprehension tool",
+  "keywords": "POMY, Surface, JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
+  "author": "lico",
   "description": "Based on the concept of a project object model (POM), POMY can manage a project's build, reporting and documentation from a central piece of information.",
   "private": false,
   "license": "MIT",
@@ -11,16 +13,15 @@
   "loglevel": "error",
   "skin": "default",
   "define": "cmd",
-  "keywords": "POMY, Surface, JSRT, Node.js, Gulp, Angularjs, Markdown, API Document, JsDoc, Open Source",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:licoliu/pomy.git"
-  },
-  "bugs": {
-    "url": "https://github.com/licoliu/pomy/issues"
-  },
-  "homepage": "https://github.com/licoliu/pomy",
+  "servletPath": "",
   "repositoryManager": "bower",
+  "registry": "https://registry.npm.taobao.org",
+  "googleWebmasterMeta": "",
+  "target": "local",
+  "snapshort": true,
+  "main": [
+    "./src/main/**/*"
+  ],
   "dependencies": {},
   "devDependencies": {},
   "resolutions": {},
@@ -95,16 +96,25 @@
     "nohup": true,
     "scp": true
   },
-  "owner": {
+  "params": {
+    "local": {},
+    "prod": {}
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:licoliu/pomy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/licoliu/pomy/issues"
+  },
+  "homepage": "https://github.com/licoliu/pomy",
+  "online": {
     "local": "https://github.com/licoliu/pomy"
   },
   "manual": {
     "url": "https://github.com/licoliu/pomy",
     "email": "lico.atom@gmail.com"
   },
-  "registry": "https://registry.npm.taobao.org",
-  "googleWebmasterMeta": "",
-  "author": "lico",
   "developers": [{
     "id": "lico",
     "name": "lico liu",
@@ -115,7 +125,5 @@
   "organization": {
     "name": "atomunion",
     "url": "https://github.com/atomunion"
-  },
-  "target": "local",
-  "snapshort": true
+  }
 }

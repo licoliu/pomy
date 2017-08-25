@@ -11,25 +11,6 @@ var
   rename = require('gulp-rename'),
   jeditor = require("gulp-json-editor"),
   minimist = require('minimist'),
-  getConfigSettings = function() {
-    var settings = util._extend({}, global.settings);
-
-    var version = "" + settings.version;
-    var vs = version.split(".");
-    if (vs.length > 3) {
-      vs.splice(3, vs.length - 3);
-    }
-    settings.version = vs.join(".");
-
-    delete settings._src;
-    delete settings._dest;
-    delete settings._testunit;
-    delete settings._target;
-    delete settings.env;
-    delete settings.cwd;
-
-    return settings;
-  },
   normalize = {
     "images": [
       "*.jpeg",
@@ -62,6 +43,26 @@ var
       "*.scss"
     ]
   };
+
+global.getConfigSettings = function() {
+  var settings = util._extend({}, global.settings);
+
+  var version = "" + settings.version;
+  var vs = version.split(".");
+  if (vs.length > 3) {
+    vs.splice(3, vs.length - 3);
+  }
+  settings.version = vs.join(".");
+
+  delete settings._src;
+  delete settings._dest;
+  delete settings._testunit;
+  delete settings._target;
+  delete settings.env;
+  delete settings.cwd;
+
+  return settings;
+};
 
 global.getRootPath = function() {
   var cwd = process.cwd();
@@ -222,6 +223,8 @@ gulp.task('pom', function() {
       break;
   }
 
+  util._extend(global.settings, global.settings.params[global.settings.target]);
+
   var version = gutil.env.update || gutil.env.targetversion || gutil.env.tv || gutil.env.v || gutil.env.version;
   if (version) {
     global.settings.version = version;
@@ -287,7 +290,7 @@ gulp.task('pom', function() {
   var root = global.getRootPath();
 
   return gulp.src([root + "pomy.json", root + "bower.json"])
-    .pipe(jeditor(getConfigSettings()))
+    .pipe(jeditor(global.getConfigSettings()))
     .pipe(gulp.dest(root));
 });
 
@@ -406,7 +409,7 @@ gulp.task('config:bower-after', function() {
 gulp.task('config:npm', ['pom'], function() {
   var root = global.getRootPath();
 
-  var settings = getConfigSettings();
+  var settings = global.getConfigSettings();
 
   if (settings.repositoryManager !== 'npm') {
     delete settings.dependencies;
@@ -478,7 +481,7 @@ gulp.task('config:configure', ['pom'], function() {
 });
 
 gulp.task('config', ['config:bower', 'config:npm', 'config:configure', 'config:pm2'], function() {
-  var settings = getConfigSettings();
+  var settings = global.getConfigSettings();
   var root = global.getRootPath();
 
   rc(settings.name, settings);

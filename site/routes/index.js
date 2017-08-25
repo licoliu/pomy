@@ -25,7 +25,7 @@ exports.deploy = function(req, res) {
   var name = req.body.name;
   var version = req.body.version;
   var target = req.body.target;
-  var date = moment(req.body.date || ("" + new Date())).format("ddd, MMM Do YYYY, h:mm:ss a Z"); // moment().utc().zone(-8).format("ddd, MMM Do YYYY, h:mm:ss a Z")
+  var date = moment(req.body.date || new Date()).format("ddd, MMM DD YYYY, hh:mm:ss a Z"); // moment().utc().zone(-8).format("ddd, MMM Do YYYY, h:mm:ss a Z")
   var domain = req.body.domain;
   var ips = req.body.ips;
 
@@ -83,12 +83,12 @@ exports.getDeployments = function(req, res) {
     }
 
     var target = target.name.replace(/(.md)$/g, ""),
-      owner = global.settings.owner;
+      online = global.settings.online;
 
     deployments.push({
       target: target,
       records: records,
-      site: owner ? owner[target] : null
+      site: online ? online[target] : null
     });
   }).children;
 

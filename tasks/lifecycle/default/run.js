@@ -39,7 +39,7 @@ gulp.task('restart', ['stop'], function(cb) {
   });
 });
 
-gulp.task('rerun', ['delete'], function(cb) {
+gulp.task('rebuild', ['delete'], function(cb) {
   var command = "",
     args = [];
 
@@ -62,7 +62,7 @@ gulp.task('rerun', ['delete'], function(cb) {
 
   startup.on('close', function(code) {
     if (code !== 0) {
-      console.log('site renew process exited with code: ' + code + ".");
+      console.log('site rebuild process exited with code: ' + code + ".");
       cb(code);
     } else {
       cb();
